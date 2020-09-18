@@ -21,6 +21,7 @@ export default {
 .title-contain {
     position: relative;
     line-height: 44px;
+    border:none;
     height: 44px;
   .title-header {
     text-align: center;
