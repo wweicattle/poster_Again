@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import Poster from "components/Poster"
+import Poster from "components/Poster/Poster"
 export default {
   name:"App",
   data: function () {

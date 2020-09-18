@@ -1,10 +1,11 @@
 <template>
   <div class="title-contain">
-      <div class="icon-left">
-          <van-icon name="arrow-left" />
-      </div>
+    <div class="icon-left">
+      <slot name="iconLeft">
+        <van-icon name="arrow-left" />
+      </slot>
+    </div>
     <div class="title-header">
-      
       <slot name="header"></slot>
     </div>
   </div>
@@ -19,19 +20,18 @@ export default {
 </script>
 <style lang="scss">
 .title-contain {
-    position: relative;
-    line-height: 44px;
-    border:none;
-    height: 44px;
+  position: relative;
+  line-height: 44px;
+  border: none;
+  height: 44px;
   .title-header {
     text-align: center;
   }
-  .icon-left
-  {
-      position: absolute;
-      left: 0;
-      color: #fff;
-      font-size: 22px;
+  .icon-left {
+    position: absolute;
+    left: 0;
+    color: #fff;
+    font-size: 22px;
   }
 }
 </style>
