@@ -21,9 +21,8 @@ export default {
 <style lang="scss">
 .title-contain {
   position: relative;
-  line-height: 44px;
-  border: none;
-  height: 44px;
+  line-height: 43px;
+  height: 43px;
   .title-header {
     text-align: center;
   }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fabric.js/4.1.0/fabric.js"></script>
+    <style>
+        #z{
+            
+            border: 1px solid red;
+            background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg") ;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            
+        }
+    </style>
+</head>
+<canvas id="z" width="400" height="400"></canvas>
+<script>
+    var canvas=new fabric.Canvas("z");
+    var reac=new fabric.Rect({
+        left:100,
+        top:100,
+        fill:"red",
+        width:60,
+        height:60
+    })
+    var reac1=new fabric.Rect({
+        left:100,
+        top:100,
+        fill:"#f40",
+        width:60,
+        height:60
+    })
+    canvas.add(reac)
+    canvas.add(reac1)
+
+    
+</script>
+<body>
+
+</body>
+
+</html>

@@ -4,18 +4,18 @@
       <!-- 这是标题 -->
       <title-header>
         <div slot="header" class="title-header">生成海报</div>
-      </title-header>
+      </title-header> 
       <!--  -->
-      <!-- <div class="line-content"></div> -->
+      <div class="line-content"></div>
       <!-- <van-divider  hairline dashed :style="{  margin: '0 ' }"/> -->
       <!-- 这是海报设计内容 -->
       <div class="poster-content">
         <!-- poster上部 -->
-        <div class="poster-content-detail">
+        <div class="poster-content-top">
           <div class="poster-contenr-footer" ref="posterPhoto">
             <!-- <video width="100%" height="400px" controls>
-            <source src="../assets/qq.mp4" type="video/mp4" />
-            </video>-->
+            <source src="../../assets/qq.mp4" type="video/mp4" />
+            </video> -->
             <div class="poster-person">
               <div class="per-code">
                 <img src="~assets/code.png" alt />
@@ -40,7 +40,14 @@
         <!-- poster下部 -->
         <div class="poster-content-bottom">
           <div class="print-btn-contains">
-            <div class="poster-oprate">操作设置</div>
+            <div class="poster-oprate">
+              <van-button>
+              添加文字
+              </van-button>
+               <van-button>
+              添加图片
+              </van-button>
+            </div>
             <div class="print—cicle-btn">
               <div class="btn-name" @click="screenShot">生成海报</div>
             </div>
@@ -54,7 +61,7 @@
           </div>
         </div>
       </div>
-      <input type="file" name id="input" value="wwww" />
+      <!-- <input type="file" name id="input" value="wwww" /> -->
     </div>
     <!-- 保存到本地图片组件 -->
     <save-postr
@@ -96,7 +103,7 @@ export default {
       let a = this.$refs.posterPhoto.scrollWidth;
       let b = this.$refs.posterPhoto.scrollHeight;
       html2canvas(this.$refs.posterPhoto, {
-        width: a,
+        width: a-15,
         height: b,
         y: 79,
       }).then((canvas) => {
@@ -130,7 +137,7 @@ export default {
   font-size: 17px;
 }
 .line-content {
-  border-top: 1px solid #000;
+  border-top: 1PX solid #ccc;
 
   // box-shadow: 0 0 0 0.5px #000;
 }
@@ -139,11 +146,11 @@ export default {
   height: 622px;
   position: relative;
   padding-top: 35px;
-  .poster-content-detail {
+  .poster-content-top {
     left: 0;
     right: 0;
-    width: 295px;
-    height: 447px;
+    width: 265px;
+    height: 407px;
     margin: auto;
     background: #fff;
     .poster-contenr-footer {
@@ -155,7 +162,7 @@ export default {
       .poster-person {
         padding: 0 26px;
         box-sizing: border-box;
-        width: 295px;
+        width: 265px;
         position: absolute;
         bottom: 20px;
 
@@ -198,7 +205,7 @@ export default {
   }
   .poster-content-bottom {
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 106px;
     background: #fff;

@@ -9,8 +9,8 @@ import 'lib-flexible'
 
 
 
-import myTouch from './myTouch.js'
-myTouch(Vue)
+
+
 new Vue({
   router,
   store,

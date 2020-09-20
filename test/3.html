@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fabric.js/4.1.0/fabric.js"></script>
+    <style>
+        #z {
+
+            border: 1px solid red;
+            /* background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg"); */
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #img {
+            display: none;
+            /* width: 500px; */
+        }
+    </style>
+</head>
+<img id="img"
+    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg"
+    alt="">
+<canvas id="z" width="400" height="400"></canvas>
+<script>
+    var canvas = new fabric.Canvas("z");
+    console.log(canvas.width);
+    // var f = getComputedStyle(img)
+    // var width = Number(f.width.split("px")[0])
+    // console.log(width);
+    var text = new fabric.Textbox("wuweilorem", {
+        left: 0,
+        top: 100,
+        width: 50,
+        fill: "red",
+        fontFamily: "Comic Sans",
+        textDecoration: "underline",
+        editingBorderColor: 'blue'
+    })
+    canvas.add(text)
+    var imginstance = new fabric.Image("img", {
+        left: 100,
+        top: 100,
+        // width: 160,
+        // height: 160
+    })
+    // canvas.add(imginstance)
+    // var t = fabric.Image.fromURL("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg", function (da) {
+    //     da.scale(0.1);
+    //     canvas.add(da)
+    // })
+    fabric.Image.fromURL("./aa.png", function (da) {
+        da.scale(0.1);
+        canvas.add(da)
+    })
+
+    fabric.Image.fromURL("./timg.jpg", function (da) {
+        da.scale(0.1);
+        canvas.add(da)
+    })
+
+    document.body.ondblclick=function(){
+        console.log(canvas.getActiveObject());
+        canvas.remove(canvas.getActiveObject())
+    }
+    // canvas.getActiveObject(t).remove()
+    //   this.canvas.remove(el);
+
+        // 背景图设置
+    // fabric.Image.fromURL('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg', (img) => {
+    //     img.set({
+    //         // 通过scale来设置图片大小，这里设置和画布一样大
+    //         scaleX: canvas.width / img.width,
+    //         scaleY: canvas.height / img.height,
+    //     });
+    //     // 设置背景
+    //     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+    //     canvas.renderAll();
+    // });
+
+    // fabric.Image.fromURL('./aa.png', (img) => {
+    //     img.set({
+    //         // 通过scale来设置图片大小，这里设置和画布一样大
+    //         scaleX: canvas.width / img.width,
+    //         scaleY: canvas.height / img.height,
+    //     });
+    //     // 设置背景
+    //     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+    //     canvas.renderAll();
+    // })
+
+    // var imginstance =
+
+
+
+
+</script>
+
+<body>
+
+</body>
+
+</html>

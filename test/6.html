@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fabric.js/4.1.0/fabric.js"></script>
+    <style>
+        #z {
+
+            border: 1px solid red;
+            /* background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg") ; */
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .sss{
+            font-size: 40px;
+            color: #f40;
+        }
+    </style>
+</head>
+<div class="sss">rem</div>
+<img src="" id="img" alt="">
+<canvas id="z" width="400" height="400"></canvas>
+<input type="text" value="50" id="input">
+<button id="body">clicdelete</button>
+<button id="ss">clicdelete22222</button>
+
+<script>
+
+    // input.oninput = function () {
+    var canvas = new fabric.Canvas("z");
+    var text = new fabric.Textbox("rem", {
+        left: 0,
+        top: 100,
+        width: 50,
+        fill: "red",
+        fontFamily: "Comic Sans",
+        // fontSize: input.value,
+        textDecoration: "underline",
+        editingBorderColor: 'blue'
+    })
+    var text1 = new fabric.Textbox("wuweilorem", {
+        left: 0,
+        top: 100,
+        width: 50,
+        fill: "green",
+        fontFamily: "Comic Sans",
+        // fontSize: input.value,
+        textDecoration: "underline",
+        editingBorderColor: 'blue'
+    })
+    var text2 = new fabric.Textbox("sadad", {
+        left: 0,
+        top: 100,
+        width: 50,
+        fill: "#f40",
+        fontFamily: "Comic Sans",
+        // fontSize: input.value,
+        textDecoration: "underline",
+        editingBorderColor: 'blue'
+    })
+
+    fabric.Image.fromURL('./aa.png', (img) => {
+        img.set({
+            // 通过scale来设置图片大小，这里设置和画布一样大
+            scaleX: canvas.width / img.width,
+            scaleY: canvas.height / img.height,
+        });
+        // 设置背景
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        canvas.renderAll();
+    });
+    // setInterval(() => {
+    //     input.value = Number(input.value)+10;
+    // }, (1000));
+    canvas.add(text)
+    canvas.add(text1)
+    canvas.add(text2)
+text.on("removed",function(e){
+    // console.log();
+    // console.log(e.target);
+    // console.log(canvas.item(1));
+    // console.log(e.target);
+    // console.log(canvas.getObjects());
+    console.log(22);
+    // sf=e.target;
+    // console.log(canvas.item(canvas.getObjects().indexOf(e.target)));
+})
+
+
+
+    // convas.on('selection:created', (e) => {
+    //     // 选中图层事件触发时，动态更新赋值
+    //     this.selectedObj = e.target
+    // })
+    // canvas.on('selection:cleared ', (e) => {
+    //     // e.target.fontSize = "green"
+    //     console.log(e.target) // e.target为当前编辑的Object
+    //     // ...旋转，缩放，移动等编辑图层的操作都监听到
+    //     // 所以如果有撤销/恢复的场景，这里可以保存编辑状态
+    // });
+    // }
+    canvas.on('selection:created', (e) => {
+        // 选中图层事件触发时，动态更新赋值
+        f = e.target
+        console.log(f);
+    })
+    // canvas.on('selection:modified', (e) => {
+    //     // 选中图层事件触发时，动态更新赋值
+    //     f = e.target
+    //     console.log(f);
+
+
+    // })
+    canvas.on('selection:updated', (e) => {
+        // 选中图层事件触发时，动态更新赋值
+        f = e.target
+        console.log(f.fontSize);
+
+
+    })
+    // input.onblur = function () {
+    //     // ss=
+    //     console.log(f);
+    //    canvas.remove(f)
+    //     // canvas.renderAll()
+    //     // const dataURL = canvas.toDataURL({
+    //     //     format: 'jpeg', // jpeg或png
+    //     //     quality: 1 // 图片质量，仅jpeg时可用
+    //     //     // 截取指定位置和大小
+    //     //     //left: 100, 
+    //     //     //top: 100,
+    //     //     //width: 200,
+    //     //     //height: 200
+    //     // });
+    //     // // console.log(dataURL);
+    //     // img.src = dataURL
+    // }
+
+
+
+    
+    ss.onclick = function () {
+        console.log(f);
+    canvas.remove(canvas.item(canvas.getObjects().indexOf(f)))
+    canvas.renderAll()
+
+        // canvas.remove(canvas.getActiveObject())
+        // canvas.renderAll()
+    }
+
+
+    body.onclick = function () {
+        // console.log(canvas.getObjects().indexOf(0));
+        f.fontSize = 0.5 + Number(f.fontSize)
+        
+        
+        f.fill = "#f40"
+        f.opacity=0.5
+        console.log(f.opacity);
+        // canvas.add(text1)
+        // canvas.add(text)
+        // canvas.add(text2)
+        canvas.renderAll()
+
+    }
+    input.onclick=function(){
+        console.log(canvas.getObjects());
+    }
+</script>
+
+<body>
+
+</body>
+
+</html>

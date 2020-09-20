@@ -65,7 +65,7 @@ export default {
   background: #fff;
   color: #000000;
   font-size: 17px;
-  font-weight: 550;
+  // font-weight: 550;
   .title-name {
     white-space: nowrap;
     overflow: hidden;
@@ -76,28 +76,35 @@ export default {
 }
 .save-poster-contain {
   position: relative;
-  //   height: 667px;
   .poster-img-contain {
-    width: 70%;
+    border-radius: 10px;
+    width: 80%;
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
     margin-top: 50px;
     height: 380px;
+    line-height: 380px;
+    background: #f5efef;
+    text-align: center;
+    padding-top: 14px;
     img {
-      width: 100%;
-      height: 100%;
+      width: 80%;
+      height: 96%;
+      
       object-fit: fill;
     }
   }
   .save-btn-contain {
-    position: absolute;
+    background: #fff;
+    position: fixed;
     left: 0;
     right: 0;
     margin: auto;
     width: 90%;
-    top: 500px;
+    padding-bottom: 20px;
+    bottom: 0;
     .save-oprate {
       margin-top: 10px;
       display: flex;
