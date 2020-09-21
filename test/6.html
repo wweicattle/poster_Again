@@ -14,7 +14,8 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
-        .sss{
+
+        .sss {
             font-size: 40px;
             color: #f40;
         }
@@ -28,7 +29,6 @@
 <button id="ss">clicdelete22222</button>
 
 <script>
-
     // input.oninput = function () {
     var canvas = new fabric.Canvas("z");
     var text = new fabric.Textbox("rem", {
@@ -78,16 +78,16 @@
     canvas.add(text)
     canvas.add(text1)
     canvas.add(text2)
-text.on("removed",function(e){
-    // console.log();
-    // console.log(e.target);
-    // console.log(canvas.item(1));
-    // console.log(e.target);
-    // console.log(canvas.getObjects());
-    console.log(22);
-    // sf=e.target;
-    // console.log(canvas.item(canvas.getObjects().indexOf(e.target)));
-})
+    text.on("removed", function (e) {
+        // console.log();
+        // console.log(e.target);
+        // console.log(canvas.item(1));
+        // console.log(e.target);
+        // console.log(canvas.getObjects());
+        console.log(22);
+        // sf=e.target;
+        // console.log(canvas.item(canvas.getObjects().indexOf(e.target)));
+    })
 
 
 
@@ -121,31 +121,31 @@ text.on("removed",function(e){
 
 
     })
-    // input.onblur = function () {
-    //     // ss=
+    input.onblur = function () {
+        // ss=
     //     console.log(f);
     //    canvas.remove(f)
-    //     // canvas.renderAll()
-    //     // const dataURL = canvas.toDataURL({
-    //     //     format: 'jpeg', // jpeg或png
-    //     //     quality: 1 // 图片质量，仅jpeg时可用
-    //     //     // 截取指定位置和大小
-    //     //     //left: 100, 
-    //     //     //top: 100,
-    //     //     //width: 200,
-    //     //     //height: 200
-    //     // });
-    //     // // console.log(dataURL);
-    //     // img.src = dataURL
-    // }
+    //     canvas.renderAll()
+        const dataURL = canvas.toDataURL({
+            format: 'jpeg', // jpeg或png
+            quality: 1 // 图片质量，仅jpeg时可用
+            // 截取指定位置和大小
+            //left: 100, 
+            //top: 100,
+            //width: 200,
+            //height: 200
+        });
+        // console.log(dataURL);
+        img.src = dataURL
+    }
 
 
 
-    
+
     ss.onclick = function () {
         console.log(f);
-    canvas.remove(canvas.item(canvas.getObjects().indexOf(f)))
-    canvas.renderAll()
+        canvas.remove(canvas.item(canvas.getObjects().indexOf(f)))
+        canvas.renderAll()
 
         // canvas.remove(canvas.getActiveObject())
         // canvas.renderAll()
@@ -155,10 +155,10 @@ text.on("removed",function(e){
     body.onclick = function () {
         // console.log(canvas.getObjects().indexOf(0));
         f.fontSize = 0.5 + Number(f.fontSize)
-        
-        
+
+
         f.fill = "#f40"
-        f.opacity=0.5
+        f.opacity = 0.5
         console.log(f.opacity);
         // canvas.add(text1)
         // canvas.add(text)
@@ -166,7 +166,7 @@ text.on("removed",function(e){
         canvas.renderAll()
 
     }
-    input.onclick=function(){
+    input.onclick = function () {
         console.log(canvas.getObjects());
     }
 </script>
