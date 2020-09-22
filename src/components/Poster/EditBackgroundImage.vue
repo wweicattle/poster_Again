@@ -8,7 +8,6 @@
       @cancel="cancelBtn"
     >
       <div class="img-contain">
-        <img :src="img" alt @click="imgindex(-1)" />
         <img
           v-for="(img,index) in imageList"
           v-lazy="img"
@@ -36,8 +35,6 @@ export default {
       show: true,
       textContent: "",
       imageList: [
-        "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        "https://img.yzcdn.cn/vant/apple-2.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
@@ -45,7 +42,6 @@ export default {
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
-
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",
         " https://img.yzcdn.cn/vant/apple-4.jpg",

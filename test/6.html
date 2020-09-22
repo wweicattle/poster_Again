@@ -23,14 +23,32 @@
 </head>
 <div class="sss">rem</div>
 <img src="" id="img" alt="">
+<canvas id="zs" width="400" height="400"></canvas>
 <canvas id="z" width="400" height="400"></canvas>
-<input type="text" value="50" id="input">
+<input type="text" value="reeeeeeeeeeeeeeeee" id="input">
 <button id="body">clicdelete</button>
 <button id="ss">clicdelete22222</button>
-
+<img id="image" alt="">
 <script>
-    // input.oninput = function () {
+    // var t=require("./aa.png")
+    // console.log(t)
     var canvas = new fabric.Canvas("z");
+    // input.onclick=function(){
+    //      // input.oninput = function () {
+    // var canvass = document.getElementById('z');
+    // var image = new Image();
+    // var ctx = canvass.getContext('2d');
+    // image.setAttribute('crossorigin', 'anonymous');
+    // image.onload = function () {
+    //     ctx.drawImage(image, 0, 0);
+    //     document.getElementById('image').src = canvass.toDataURL('image/png');
+    // };
+    // image.src = 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2839262297,1897381364&fm=26&gp=0.jpg';
+    // }
+   
+
+
+
     var text = new fabric.Textbox("rem", {
         left: 0,
         top: 100,
@@ -62,32 +80,35 @@
         editingBorderColor: 'blue'
     })
 
-    fabric.Image.fromURL('./aa.png', (img) => {
-        img.set({
-            // 通过scale来设置图片大小，这里设置和画布一样大
-            scaleX: canvas.width / img.width,
-            scaleY: canvas.height / img.height,
+
+
+    fabric.Image.fromURL(
+        './aa.png', (img) => {
+            img.set({
+                // 通过scale来设置图片大小，这里设置和画布一样大
+                scaleX: canvas.width / img.width,
+                scaleY: canvas.height / img.height,
+            });
+            // 设置背景
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+            canvas.renderAll();
         });
-        // 设置背景
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        canvas.renderAll();
-    });
     // setInterval(() => {
     //     input.value = Number(input.value)+10;
     // }, (1000));
     canvas.add(text)
     canvas.add(text1)
     canvas.add(text2)
-    text.on("removed", function (e) {
-        // console.log();
-        // console.log(e.target);
-        // console.log(canvas.item(1));
-        // console.log(e.target);
-        // console.log(canvas.getObjects());
-        console.log(22);
-        // sf=e.target;
-        // console.log(canvas.item(canvas.getObjects().indexOf(e.target)));
-    })
+    // text.on("removed", function (e) {
+    //     // console.log();
+    //     // console.log(e.target);
+    //     // console.log(canvas.item(1));
+    //     // console.log(e.target);
+    //     // console.log(canvas.getObjects());
+    //     console.log(22);
+    //     // sf=e.target;
+    //     // console.log(canvas.item(canvas.getObjects().indexOf(e.target)));
+    // })
 
 
 
@@ -118,14 +139,12 @@
         // 选中图层事件触发时，动态更新赋值
         f = e.target
         console.log(f.fontSize);
-
-
     })
-    input.onblur = function () {
-        // ss=
-    //     console.log(f);
-    //    canvas.remove(f)
-    //     canvas.renderAll()
+    
+
+
+    ss.onclick = function () {
+        // console.log(f);
         const dataURL = canvas.toDataURL({
             format: 'jpeg', // jpeg或png
             quality: 1 // 图片质量，仅jpeg时可用
@@ -135,40 +154,44 @@
             //width: 200,
             //height: 200
         });
-        // console.log(dataURL);
+        console.log(dataURL);
         img.src = dataURL
-    }
-
-
-
-
-    ss.onclick = function () {
-        console.log(f);
-        canvas.remove(canvas.item(canvas.getObjects().indexOf(f)))
-        canvas.renderAll()
-
-        // canvas.remove(canvas.getActiveObject())
+        // canvas.remove(canvas.item(canvas.getObjects().indexOf(f)))
         // canvas.renderAll()
     }
-
 
     body.onclick = function () {
         // console.log(canvas.getObjects().indexOf(0));
         f.fontSize = 0.5 + Number(f.fontSize)
-
-
         f.fill = "#f40"
         f.opacity = 0.5
         console.log(f.opacity);
-        // canvas.add(text1)
-        // canvas.add(text)
-        // canvas.add(text2)
         canvas.renderAll()
 
     }
     input.onclick = function () {
-        console.log(canvas.getObjects());
+
+        
+    fabric.Image.fromURL(
+        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2839262297,1897381364&fm=26&gp=0.jpg', (img) => {
+            img.set({
+                // 通过scale来设置图片大小，这里设置和画布一样大
+                scaleX: canvas.width / img.width,
+                scaleY: canvas.height / img.height,
+            });
+            // 设置背景
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+            canvas.renderAll();
+           
+        });
+     
+setTimeout(()=>{
+    console.log(canvas.getObjects())
+},3000)
     }
+
+
+
 </script>
 
 <body>

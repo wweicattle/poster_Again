@@ -7,69 +7,60 @@
       </title-header>
       <!--  -->
       <div class="line-content"></div>
-      <!-- <van-divider  hairline dashed :style="{  margin: '0 ' }"/> -->
       <!-- 这是海报设计内容 -->
       <div class="poster-content">
         <!-- poster上部 -->
         <div class="poster-content-top">
-          <!-- <div class="poster-contenr-footer" ref="posterPhoto">
-            <video width="100%" height="400px" controls>
-            <source src="../../assets/qq.mp4" type="video/mp4" />
-            </video>
+          <div class="poster-contenr-footer" ref="posterPhoto">
             <div class="poster-person">
-              <div class="per-code">
-                <img src="~assets/code.png" alt />
-                <div class="per-componeny">
-                  <div>长按识别二维码</div>
-                  <div class="com-name">LILANZ利郎</div>
-                </div>
-              </div>
+              <div class="per-code"></div>
 
-              <div class="per-actor">
-                <div class="actor">
-                  <img src="~assets/avator.png" alt />
-                </div>
-                <div class="actorName">
-                
-                  李晓晓
-                </div>
-              </div>
+              <div class="per-actor"></div>
             </div>
-          </div>-->
-
-          <!-- <div class="sss" ref="img">
-            <img
-            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg"
-            alt
-          />
-          </div>-->
-          <div class="canvas-contains" ref="canvasRef">
-            <canvas width="265" height="407" ref="zz"></canvas>
+            <!-- 进行画布设置 -->
+            <div class="canvas-contains yes" ref="canvasRef">
+              <!-- <img :src="ss" alt=""> -->
+              <canvas width="155" height="407" ref="zz"></canvas>
+            </div>
           </div>
-          <button @click="ss">clicknmeObj</button>
         </div>
         <!-- poster下部 -->
-        <div class="poster-content-bottom">
+        <div class="poster-content-bottom" v-if="!isShowEditText">
           <div class="print-btn-contains">
             <div class="poster-oprate">
               <van-button @click="isshowAddTextVisable = true">添加文字</van-button>
-              <van-button>添加图片</van-button>
+              <van-uploader
+                ref="fileUploadRef"
+                :after-read="afterRead"
+                :max-size="500 * 1024"
+                @oversize="onOversize"
+              >
+                <van-button @click="addPhotoBtn">添加图片</van-button>
+              </van-uploader>
+
               <van-button @click="isshowEditVisable=true">修改背景</van-button>
             </div>
             <div class="print—cicle-btn">
               <div class="btn-name" @click="screenShot">生成海报</div>
             </div>
+            <div class="testApi">
+              <!-- <button @click="load">登录</button>
+              <button> 背景图获取</button>
+              <button>二维码地址</button>
+              <button>头像</button>
+              <button>所有粉丝</button>
+              <button>群发模板</button>-->
+            </div>
           </div>
 
-          <div class="change-btnPoster">
+          <!-- <div class="change-btnPoster">
             <ul>
               <li>模板</li>
               <li>自定义</li>
             </ul>
-          </div>
+          </div>-->
         </div>
       </div>
-      <!-- <input type="file" name id="input" value="wwww" /> -->
     </div>
     <!-- 保存到本地图片组件 -->
     <save-postr
@@ -92,6 +83,9 @@
       @closeVisable="isshowEditVisable=false"
       @sendPhotoUrl="sendPhotoUrlBtn"
     ></edit-back-image>
+
+    <!-- 修改画布的组件 -->
+    <edit-text v-if="isShowEditText" @closedEditText="isShowEditText=false"></edit-text>
   </div>
 </template>
 <script>
@@ -99,14 +93,25 @@ import html2canvas from "html2canvas";
 import TitleHeader from "components/common/Title";
 import SavePostr from "components/Poster/SavePoster";
 import AddText from "components/Poster/AddText";
+import EditText from "components/Poster/EditText";
 import EditBackImage from "components/Poster/EditBackgroundImage";
-
+import axios from "axios";
 import { fabric } from "fabric";
-// import "utils/cardCode.js"
+var img = require("./../../assets/timg.jpg");
+import {
+  requestUserCode,
+  requestUserInfo,
+  requestUserAvator,
+} from "network/home";
+import { eventBus } from "utils/eventbus";
+
 export default {
   name: "Poster",
   data() {
     return {
+      ss: "",
+      fileList: null,
+      isShowEditText: false,
       backPhotoUrl: "",
       isshowEditVisable: false,
       // 添加文字的内容
@@ -127,8 +132,43 @@ export default {
     TitleHeader,
     AddText,
     EditBackImage,
+    EditText,
   },
   methods: {
+    onOversize(file) {
+      console.log(file);
+      console.log("文件大小不能超过 500kb");
+      // 警告通知
+      this.$notify({ type: "warning", message: "上传图片大小必须小于500kb!" });
+    },
+    afterRead(s) {
+      console.log(s.content);
+      if (s.file.size > 500 * 1024) {
+        this.$notify({
+          type: "warning",
+          message: "上传图片大小必须小于500kb!",
+        });
+      } else {
+        this.ss = s.content;
+        fabric.Image.fromURL(this.ss, (da)=>{
+          da.scale(0.3);
+          this.canvas.add(da);
+        });
+      }
+    },
+    // 添加图片到画布的事件
+    addPhotoBtn() {
+      console.log(this.$refs.addPhotoBtn);
+    },
+    load() {
+      axios
+        .get(
+          "http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx?action=logininfo&ctrl=&systemid=1"
+        )
+        .then((da) => {
+          console.log(da);
+        });
+    },
     // 进行海报截图
     takePosterPhoto() {
       // var canvas = document.getElementById("canvas"), //获取canvas
@@ -142,21 +182,19 @@ export default {
       //   ctx.drawImage(img, 0, 0);
       //   base64 = canvas.toDataURL("image/png");
       // };
-      setTimeout(() => {
-        const dataURL = this.canvas.toDataURL({
-          format: "jpeg", // jpeg或png
-          quality: 0.8, // 图片质量，仅jpeg时可用,
-          // 截取指定位置和大小
-          // left: 100,
-          // top: 100,
-          // width: 200,
-          // height: 200
-        });
+      const dataURL = this.canvas.toDataURL({
+        format: "jpeg", // jpeg或png
+        quality: 0.8, // 图片质量，仅jpeg时可用,
+        // 截取指定位置和大小
+        // left: 100,
+        // top: 100,
+        // width: 200,
+        // height: 200
+      });
 
-        // // console.log(dataURL);
-        this.takePhotoUrl = dataURL;
-        console.log(this.takePhotoUrl);
-      }, 3000);
+      // // console.log(dataURL);
+      this.takePhotoUrl = dataURL;
+      console.log(this.takePhotoUrl);
 
       // }
     },
@@ -185,26 +223,30 @@ export default {
       this.canvas.add(a);
     },
 
-    // 添加照片事件
-    editBackPhoto() {
-      fabric.Image.fromURL(this.backPhotoUrl, (img) => {
-        img.set({
-          // // 通过scale来设置图片大小，这里设置和画布一样大
-          scaleX: this.canvas.width / img.width,
-          scaleY: this.canvas.height / img.height,
-          // width: that.canvasWidth,
-          // height: canvas.getHeight(),
-          // originX: "left",
-          // originY: "top",
-        });
-
-        // 设置背景
-        this.canvas.setBackgroundImage(
-          img,
-          this.canvas.renderAll.bind(this.canvas)
-        );
-        this.canvas.renderAll();
-      });
+    // 修改背景图片事件
+    editBackPhoto(url) {
+      fabric.Image.fromURL(
+        url,
+        (img) => {
+          img.set({
+            // // 通过scale来设置图片大小，这里设置和画布一样大
+            scaleX: this.canvas.width / img.width,
+            scaleY: this.canvas.height / img.height,
+            // width: that.canvasWidth,
+            // height: canvas.getHeight(),
+            // originX: "left",
+            // originY: "top",
+          });
+          img.crossOrigin = "anonymous";
+          // 设置背景
+          this.canvas.setBackgroundImage(
+            img,
+            this.canvas.renderAll.bind(this.canvas)
+          );
+          this.canvas.renderAll();
+        },
+        { crossOrigin: "anonymous" }
+      );
     },
 
     // 显示添加文本组件事件变量
@@ -218,70 +260,77 @@ export default {
       var canvas = new fabric.Canvas(this.$refs.zz);
       this.canvas = canvas;
 
-      // 背景图片设置
-      fabric.Image.fromURL(
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg",
-        (img) => {
-          img.set({
-            // // 通过scale来设置图片大小，这里设置和画布一样大
-            scaleX: this.canvas.width / img.width,
-            scaleY: this.canvas.height / img.height,
-            // width: that.canvasWidth,
-            // height: canvas.getHeight(),
-            // originX: "left",
-            // originY: "top",
-          });
-          // 设置背景
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-          canvas.renderAll();
-        }
-      );
+      // // 背景图片设置
+      // fabric.Image.fromURL(
+      //   "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg",
+      //   (img) => {
+      //     img.set({
+      //       // // 通过scale来设置图片大小，这里设置和画布一样大
+      //       scaleX: this.canvas.width / img.width,
+      //       scaleY: this.canvas.height / img.height,
+      //       // width: that.canvasWidth,
+      //       // height: canvas.getHeight(),
+      //       // originX: "left",
+      //       // originY: "top",
+      //     });
+      //     // 设置背景
+      //     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+      //     canvas.renderAll();
+      //   }
+      // );
 
       this.codeNum =
-        "http://p.qpic.cn/wwhead/duc2TvpEgSSdsPInfahzxxJxrSQlMcdj6uImzK86zRwnicLlXsdicHEhkl9eibww5ZaERoR642gDLk/0";
+        "http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=http://p.qpic.cn/wwhead/duc2TvpEgSSdsPInfahzxxJxrSQlMcdjibHj8smTa4ZbOrlMOibffuTHphK01z60Mr8nxdKOUURAo/0";
       this.actorNum =
-        "http://p.qlogo.cn/bizmail/7NMZiaypxPUicQoKWogla0rCFRvHorPZqLAMb1xibBoGsUkibAJ0CpMEeA/0";
+        "http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=http://p.qpic.cn/wwhead/duc2TvpEgSSdsPInfahzxxJxrSQlMcdjibHj8smTa4ZbOrlMOibffuTHphK01z60Mr8nxdKOUURAo/0";
       // 二维码添加
-      fabric.Image.fromURL(that.codeNum, function (da) {
-        da.scale(0.1);
-        da.set({
-          left: 20,
-          top: 320,
-        });
-        da.set({
-          borderColor: "green",
-          cornerColor: "orange",
-          cornerSize: 8,
-          transparentCorners: true,
-        });
-        // canvas.setActiveObject(da);
-
-        da.scaleToHeight(60, false); //缩放图片的高度到400
-        da.scaleToWidth(60, false); //缩放图片的宽度到400
-        canvas.add(da);
-      });
+      fabric.Image.fromURL(
+        that.codeNum,
+        function (da) {
+          da.scale(0.1);
+          da.set({
+            left: 20,
+            top: 320,
+          });
+          da.set({
+            borderColor: "green",
+            cornerColor: "orange",
+            cornerSize: 8,
+            transparentCorners: true,
+          });
+          // canvas.setActiveObject(da);
+          // da.set("c")
+          da.scaleToHeight(60, false); //缩放图片的高度到400
+          da.scaleToWidth(60, false); //缩放图片的宽度到400
+          canvas.add(da);
+        },
+        { crossOrigin: "Anonymous" }
+      );
 
       //  头像添加
-      fabric.Image.fromURL(this.actorNum, function (da) {
-        da.scale(0.1);
-        da.set({
-          left: 200,
-          top: 320,
-        });
+      fabric.Image.fromURL(
+        this.actorNum,
+        function (da) {
+          da.scale(0.1);
+          da.set({
+            left: 200,
+            top: 320,
+          });
 
-        da.set({
-          borderColor: "green",
-          cornerColor: "orange",
-          cornerSize: 8,
-          transparentCorners: true,
-        });
-        // canvas.setActiveObject(da);
+          da.set({
+            borderColor: "green",
+            cornerColor: "orange",
+            cornerSize: 8,
+            transparentCorners: true,
+          });
+          // canvas.setActiveObject(da);
 
-        da.scaleToHeight(45, false); //缩放图片的高度到400
-        da.scaleToWidth(45, false); //缩放图片的宽度到400
-        canvas.add(da);
-      });
-
+          da.scaleToHeight(45, false); //缩放图片的高度到400
+          da.scaleToWidth(45, false); //缩放图片的宽度到400
+          canvas.add(da);
+        },
+        { crossOrigin: "Anonymous" }
+      );
       this.text2 = new fabric.Textbox("sadad", {
         left: 90,
         top: 330,
@@ -319,86 +368,71 @@ export default {
         editingBorderColor: "blue",
       });
       canvas.add(this.text4);
-    },
-    ss() {
-      this.takePosterPhoto();
-      var that = this;
-      console.log(this.canvas.width);
-      console.log(111);
-      this.num = 222;
-      console.log(this.canvas.getObjects());
-      console.log(this.codeNum);
-      this.codeNum =
-        "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png";
-      this.canvas.renderAll();
 
-      //  fabric.Image.fromURL(
-      //       that.codeNum,
-      //       function (da) {
-      //         da.scale(0.1);
-      //         da.set({
-      //           left: 20,
-      //           top: 320,
-      //         });
-      //         da.set({
-      //           borderColor: "green",
-      //           cornerColor: "orange",
-      //           cornerSize: 8,
-      //           transparentCorners: true,
-      //         });
-      //         // canvas.setActiveObject(da);
+      // 点击画布中的对象时
+      this.canvas.on("selection:created", (e) => {
+        // 选中图层事件触发时，动态更新赋值
+        this.initFabricEvent(e.target);
+      });
+      this.canvas.on("selection:updated", (e) => {
+        // 选中图层事件触发时，动态更新赋值
+        this.initFabricEvent(e.target);
+      });
 
-      //         da.scaleToHeight(60, false); //缩放图片的高度到400
-      //         da.scaleToWidth(60, false); //缩放图片的宽度到400
-      //         that.canvas.add(da);
-      //       }
-      //     );
+      this.$nextTick(() => {
+        console.log(this.canvas.getActiveObject());
+      });
     },
+    //初始化画布监听事件
+    initFabricEvent(event) {
+      this.isShowEditText = true;
+      console.log(221323);
+      this.$nextTick(() => {
+        eventBus.$emit("init", { event, canvas: this.canvas });
+      });
+    },
+    // 进行导出截图
     async screenShot() {
-      this.takePosterPhoto();
-      // const toast = await this.$toast.loading({
-      //   message: "正在生成中....",
-      //   forbidClick: true,
-      //   overlay: true,
-      //   loadingType: "spinner",
-      // });
-      // this.isshowSavePoster = true;
-      // // let a = this.$refs.ss.scrollWidth;
-      // // let b = this.$refs.ss.scrollHeight;
-      // html2canvas(this.$refs.ss, {
-      //   width: 300,
-      //   height:300,
-      //   y: 79,
-      // }).then((canvas) => {
-      //   // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
-      //   this.imgsrc = canvas.toDataURL("image/png");
-      // });
+      // this.takePosterPhoto();
+      const toast = await this.$toast.loading({
+        message: "正在生成中....",
+        forbidClick: true,
+        overlay: true,
+        loadingType: "spinner",
+      });
+      this.isshowSavePoster = true;
+      // let a = this.$refs.ss.scrollWidth;
+      // let b = this.$refs.ss.scrollHeight;
+      html2canvas(document.querySelector(".yes"), {
+        allowTaint: true,
+        taintTest: false,
+        // width: 1000,X
+        // height: 1000,
+        // y: 79,
+      }).then((canvas) => {
+        // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
+        this.imgsrc = canvas.toDataURL("image/png");
+      });
     },
     changePosterState() {
       this.isshowSavePoster = false;
+      window.location.href = "/";
     },
   },
   mounted() {
+    // 进行计算画布的大小
+    this.$refs.zz.width = this.$refs.posterPhoto.clientWidth;
+    console.log(this.$refs.posterPhoto.clientWidth);
+    this.$refs.zz.height = this.$refs.posterPhoto.clientHeight;
     // 初始化画布
     this.canvasDetail();
     var that = this;
     let f = this.$refs.canvasRef.$el;
-    window.onresize = function () {
-      console.log(document.querySelector(".canvas-contains").clientWidth);
-      console.log(that);
-      // console.log(111);
-      // console.log(f);
-      // this.canvasWidth = getComputedStyle(f).width.split("px")[0];
-      // console.log(this.canvasWidth);
-    };
   },
   watch: {
     canvasWidth(news, olds) {
       console.log(news, olds);
       this.canvas.setWidth(news);
-      //  this.canvas.setHeight(407)
-
-      // this.canvasDetail();
       this.canvas.renderAll();
     },
   },
@@ -458,69 +492,27 @@ export default {
       border: 1px solid #ccc;
       // background: fuchsia;
     }
-    // .poster-contenr-footer {
-    //   // background: url(~assets/timg.jpg);
-    //   background-repeat: no-repeat;
-    //   background-size: 100% 100%;
-    //   height: 100%;
-    //   position: relative;
-    //   top: 0;
-    //   // z-index: 100;
-    //   .poster-person {
-    //     padding: 0 26px;
-    //     box-sizing: border-box;
-    //     width: 265px;
-    //     position: absolute;
-    //     bottom: 20px;
-
-    //     display: flex;
-    //     justify-content: space-between;
-    //     .per-code {
-    //       display: flex;
-    //       align-items: center;
-    //       img {
-    //         width: 54px;
-    //         height: 54px;
-    //       }
-    //       .per-componeny {
-    //         line-height: 1.5;
-    //         margin-left: 10px;
-    //         font-size: 12px;
-    //         width: 84px;
-    //         .com-name {
-    //           font-weight: 1000;
-    //         }
-    //       }
-    //     }
-    //     .per-actor {
-    //       text-align: center;
-    //       width: 47px;
-    //       img {
-    //         width: 100%;
-    //         height: 47px;
-    //         border-radius: 50%;
-    //         object-fit: fill;
-    //       }
-    //       .actorName {
-    //         padding-top: 5px;
-    //         font-size: 14px;
-    //         font-weight: 600;
-    //       }
-    //     }
-    //   }
-    // }
+    .poster-contenr-footer {
+      // background: url(~assets/timg.jpg);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      height: 100%;
+      position: relative;
+      top: 0;
+    }
   }
   .poster-content-bottom {
     width: 100%;
     position: fixed;
     bottom: 0;
-    height: 106px;
+    height: 76px;
     background: #fff;
     padding-top: 7px;
     .print-btn-contains {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
+      align-items: flex-end;
     }
     .print—cicle-btn {
       width: 62px;

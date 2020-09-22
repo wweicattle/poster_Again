@@ -5,7 +5,7 @@
         <van-icon name="arrow-left" @click="$emit('backeditposter')" />
       </div>
       <div slot="header" class="title-header">
-        <div class="title-name">喜庆风中秋国庆喜庆风中秋国庆喜庆风中秋国庆</div>
+        <div class="title-name">保存海报</div>
       </div>
     </title-header>
     <div class="save-poster-contain">
@@ -18,6 +18,7 @@
           size="large"
           color="linear-gradient(to right, #ff6034, #ee0a24)"
           icon="down"
+          class="saveBtn"
         >保存到相册</van-button>
         <div class="save-oprate">
           <van-button plain hairline type="primary" icon="edit">编辑</van-button>
@@ -109,6 +110,9 @@ export default {
       margin-top: 10px;
       display: flex;
       justify-content: space-between;
+    }
+    .saveBtn{
+      background: #3c5b8d !important;
     }
     // bottom: 60px;
   }
