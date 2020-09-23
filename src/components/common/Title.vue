@@ -1,5 +1,5 @@
 <template>
-  <div class="title-contain">
+  <div class="title-contain" style="borderBottom: 1px solid #fff;">
     <div class="icon-left">
       <slot name="iconLeft">
         <van-icon name="arrow-left" />
@@ -20,9 +20,13 @@ export default {
 </script>
 <style lang="scss">
 .title-contain {
-  position: relative;
+  top: 0;
+  width: 100%;
+  position: fixed;
   line-height: 43px;
   height: 43px;
+  z-index: 10;
+  
   .title-header {
     text-align: center;
   }

@@ -16,22 +16,22 @@
             :style="{ color: '#999', borderColor: '#999', padding: '0 8px' }"
           >点击图片 长按进行保存图片</van-divider>
         </div>
-      </div>
-
+      </div> 
       <div class="save-btn-contain">
-        <!-- <van-button
+      <!-- <van-button
           type="primary"
           size="large"
           color="linear-gradient(to right, #ff6034, #ee0a24)"
           icon="down"
           class="saveBtn"
-        >保存到相册</van-button>-->
-        <div class="save-oprate">
-          <van-button  round @click="addCreateBtn">再创建一个</van-button>
-          <van-button  type="primary" round style="color:#fff;background:#5192fc">分享</van-button>
-        </div>
+      >保存到相册</van-button>-->
+      <div class="save-oprate">
+        <van-button round @click="addCreateBtn">再创建一个</van-button>
+        <van-button type="primary" round style="color:#fff;background:#5192fc">分享</van-button>
       </div>
     </div>
+    </div>
+   
   </div>
 </template>
 <script>
@@ -60,11 +60,11 @@ export default {
     },
   },
   methods: {
-    addCreateBtn(){
-      window.location.href="/"
+    addCreateBtn() {
+      window.location.href = "/";
       // this.$router.push("/index")
       // console.log(t);
-    }
+    },
   },
 };
 </script>
@@ -83,23 +83,22 @@ export default {
   }
 }
 .save-poster-contain {
-  position: relative;
+  border-radius: 10px;
+  width: 80%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 80px;
+  height: 436px;
+  // line-height: 380px;
+  background: #f5efef;
+  text-align: center;
+  padding-top: 14px;
   .poster-img-contain {
-    border-radius: 10px;
-    width: 80%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    margin-top: 50px;
-    height: 420px;
-    // line-height: 380px;
-    background: #f5efef;
-    text-align: center;
-    padding-top: 14px;
     img {
       width: 80%;
-      height: 86%;
+      height: 80%;
       object-fit: fill;
     }
     .poster-remind-contain {
@@ -109,15 +108,16 @@ export default {
       // border: 1px solid red;
     }
   }
-
-  .save-btn-contain {
+  
+}
+.save-btn-contain {
     background: #3c5b8d;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
+    bottom: -65px;
     margin: auto;
-    width: 80%;
-    bottom: 80px;
+    width: 100%;
     .save-oprate {
       display: flex;
       justify-content: space-between;
@@ -130,5 +130,4 @@ export default {
 
     // bottom: 60px;
   }
-}
 </style>

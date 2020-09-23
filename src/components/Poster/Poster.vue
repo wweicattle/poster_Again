@@ -465,12 +465,17 @@ export default {
       this.isshowSavePoster = true;
       // let a = this.$refs.ss.scrollWidth;
       // let b = this.$refs.ss.scrollHeight;
+      console.log()
+      let hs=document.querySelector(".title-header").clientHeight;
+      let h=document.querySelector(".poster-content");
+      let paddingTop=getComputedStyle(h).paddingTop.split("px")[0]
+      let totalTop=hs+Number(paddingTop)+1;
       html2canvas(document.querySelector(".yes"), {
         allowTaint: true,
         taintTest: false,
         // width: 1000,X
         // height: 1000,
-        y: 78,
+        y: totalTop,
       }).then((canvas) => {
         // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
         this.imgsrc = canvas.toDataURL("image/png");
@@ -540,11 +545,13 @@ export default {
   font-size: 17px;
 }
 .line-content {
-  border-top: 1px solid #ccc;
+  // border-top: 1px solid #ccc;
+ 
 
   // box-shadow: 0 0 0 0.5px #000;
 }
 .poster-content {
+  margin-top: 44px;
   background: #3c5b8d;
   height: 622px;
   position: relative;
@@ -556,6 +563,7 @@ export default {
     background: #fff;
     position: relative;
     .canvas-contains {
+
       width: 100%;
       height: 100%;
       position: relative;
