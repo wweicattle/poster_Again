@@ -16,7 +16,7 @@ module.exports = {
     devServer: {
       proxy: {
         '/api': {
-          target: 'htt/tm.lilanz.com/oa/project/facepass/pushmessage.ashxp:/',
+          target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
           changeOrigin: true,
           pathRewrite: {
             '^/api': ''

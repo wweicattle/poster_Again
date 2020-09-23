@@ -9,8 +9,8 @@
     >
       <div class="img-contain">
         <img
-          v-for="(img,index) in imageList"
-          v-lazy="img"
+          v-for="(img,index) in imageLists"
+          v-lazy="img.urladdress"
           :key="index"
           class="imgContent"
           @click="imgindex(index)"
@@ -28,34 +28,26 @@ export default {
       type: Boolean,
       default: false,
     },
+    imageLists:{
+      type:Array,
+    }
   },
   data: function () {
     return {
       img,
       show: true,
       textContent: "",
-      imageList: [
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-        " https://img.yzcdn.cn/vant/apple-4.jpg",
-      ],
     };
   },
-  mounted() {},
+  mounted() {
+    
+  },
   methods: {
     imgindex(index) {
-      if (index == -1) {
-        this.selectImgUrl = img;
-        return;
-      }
-      this.selectImgUrl = this.imageList[index];
+      // 后台所给接口一开始是不允许跨域，所以后台给中转了一下
+      let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
+      console.log(url);
+      this.selectImgUrl =url;
     },
     cancelBtn() {
       this.$emit("closeVisable");
@@ -68,9 +60,12 @@ export default {
       this.$emit("sendPhotoUrl", this.selectImgUrl);
     },
   },
+  watch(){
+    
+  }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .addtext-cotnains {
   width: 100%;
   position: fixed;
@@ -95,11 +90,13 @@ export default {
   .img-contain {
     margin: 10px 5px 0;
     height: 300px;
+    display: flex;
+    justify-content: space-around;
     overflow-y: scroll;
     .imgContent {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
+      width: 32%;
+      height: 36%;
+      object-fit:cover;
       &:hover {
         border: 1px solid #ccc;
         opacity: 0.7;

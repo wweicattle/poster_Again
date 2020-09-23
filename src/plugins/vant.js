@@ -8,7 +8,7 @@ import {
   Dialog,
   Lazyload,
   Uploader,
-  Notify 
+  Notify ,
 } from 'vant';
 Vue.use(Button);
 Vue.use(Icon);
@@ -18,7 +18,6 @@ Vue.use(Toast);
 Vue.use(Dialog);
 Vue.use(Uploader);
 Vue.use(Notify);
-
 
 // 注册时可以配置额外的选项
 Vue.use(Lazyload, {

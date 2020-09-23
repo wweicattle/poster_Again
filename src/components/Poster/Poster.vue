@@ -43,14 +43,14 @@
             <div class="print—cicle-btn">
               <div class="btn-name" @click="screenShot">生成海报</div>
             </div>
-            <div class="testApi">
-              <!-- <button @click="load">登录</button>
-              <button> 背景图获取</button>
+            <!-- <div class="testApi">
+              <button @click="load">登录</button>
+              <button @click="loadone">背景图获取</button>
               <button>二维码地址</button>
               <button>头像</button>
               <button>所有粉丝</button>
-              <button>群发模板</button>-->
-            </div>
+              <button>群发模板</button>
+            </div>-->
           </div>
 
           <!-- <div class="change-btnPoster">
@@ -82,10 +82,13 @@
       v-if="isshowEditVisable"
       @closeVisable="isshowEditVisable=false"
       @sendPhotoUrl="sendPhotoUrlBtn"
+      :imageLists="backImages.data"
     ></edit-back-image>
 
     <!-- 修改画布的组件 -->
-    <edit-text v-if="isShowEditText" @closedEditText="isShowEditText=false"></edit-text>
+    <edit-text v-if="isShowEditText" @closedEditText="isShowEditText=false" @showEditColor="isshowEditColor=true"></edit-text>
+    <edit-color v-if="isshowEditColor" @closedEditText="isshowEditColor=false"></edit-color>
+
   </div>
 </template>
 <script>
@@ -95,6 +98,8 @@ import SavePostr from "components/Poster/SavePoster";
 import AddText from "components/Poster/AddText";
 import EditText from "components/Poster/EditText";
 import EditBackImage from "components/Poster/EditBackgroundImage";
+import EditColor from "components/Poster/EditColor";
+
 import axios from "axios";
 import { fabric } from "fabric";
 var img = require("./../../assets/timg.jpg");
@@ -102,6 +107,8 @@ import {
   requestUserCode,
   requestUserInfo,
   requestUserAvator,
+  requestSendGroupMess,
+  requestBacImage,
 } from "network/home";
 import { eventBus } from "utils/eventbus";
 
@@ -109,6 +116,11 @@ export default {
   name: "Poster",
   data() {
     return {
+      isshowEditColor:false,
+      avator: null,
+      usercode: null,
+      backImages: null,
+      userInfo: {},
       ss: "",
       fileList: null,
       isShowEditText: false,
@@ -133,6 +145,7 @@ export default {
     AddText,
     EditBackImage,
     EditText,
+    EditColor
   },
   methods: {
     onOversize(file) {
@@ -150,7 +163,7 @@ export default {
         });
       } else {
         this.ss = s.content;
-        fabric.Image.fromURL(this.ss, (da)=>{
+        fabric.Image.fromURL(this.ss, (da) => {
           da.scale(0.3);
           this.canvas.add(da);
         });
@@ -160,14 +173,88 @@ export default {
     addPhotoBtn() {
       console.log(this.$refs.addPhotoBtn);
     },
-    load() {
-      axios
-        .get(
-          "http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx?action=logininfo&ctrl=&systemid=1"
-        )
-        .then((da) => {
-          console.log(da);
+    loadone() {
+      //   requestUserInfo().then(da=>{
+      //   console.log(da);
+      // })
+    },
+    // 后台接口问题需要进行二次请求才可以
+    repeatRequest(obj, request) {
+      var that = this;
+      if (obj.data.errcode !== 0) {
+        request(this.userInfo).then((da) => {
+          this.repeatRequest(da, request);
         });
+      } else {
+        console.log(request === requestUserAvator);
+        console.log(obj.data);
+        switch (request) {
+          case requestUserAvator:
+            that.avator = obj.data;
+            break;
+          case requestUserCode:
+            that.usercode = obj.data;
+            break;
+          case requestBacImage:
+            that.backImages = obj.data;
+            break;
+        }
+        if (this.avator && this.usercode && this.backImages) {
+          // 初始化画布
+          this.canvasDetail();
+        }
+      }
+    },
+
+    // 获取导购信息，头像
+    async initGetData() {
+      this.userInfo = await new Promise((res) => {
+        requestUserInfo().then((da) => {
+          console.log(da);
+          if (da.data.errcode === 0) {
+            res(da.data.data);
+          } else {
+            this.$toast("defeat");
+            return;
+          }
+        });
+      }); // 登录信息可以
+
+      // 获取二维码成功
+      new Promise((res) => {
+        requestUserCode(this.userInfo).then((da) => {
+          this.repeatRequest(da, requestUserCode);
+          res();
+        });
+      });
+      //
+      new Promise((res) => {
+        requestUserAvator(this.userInfo).then((da) => {
+          this.repeatRequest(da, requestUserAvator);
+        });
+        res();
+      });
+      // 背景图可以
+      new Promise((res) => {
+        requestBacImage().then((da) => {
+          this.repeatRequest(da, requestBacImage);
+          res();
+        });
+      });
+
+      // requestSendGroupMess(this.userInfo.cid).then((da) => {
+      //   this.repeatRequest(da);
+      // });
+
+      // axios.get("http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx?action=logininfo&ctrl=&systemid=1").then(da=>{
+      //   this.repeatRequest(da);
+      // })
+
+      // console.log(requestUserInfo);
+
+      // requestUserAvator().then(da=>{
+      //   console.log(da);
+      // }),
     },
     // 进行海报截图
     takePosterPhoto() {
@@ -253,6 +340,7 @@ export default {
     addTextBtn() {
       this.isshowAddTextVisable = true;
     },
+
     // 初始化画布事件
     canvasDetail() {
       var that = this;
@@ -260,37 +348,37 @@ export default {
       var canvas = new fabric.Canvas(this.$refs.zz);
       this.canvas = canvas;
 
-      // // 背景图片设置
-      // fabric.Image.fromURL(
-      //   "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600507592033&di=c6b40221562e5a59974f3e23887743eb&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121116%2F9252150_144336550000_2.jpg",
-      //   (img) => {
-      //     img.set({
-      //       // // 通过scale来设置图片大小，这里设置和画布一样大
-      //       scaleX: this.canvas.width / img.width,
-      //       scaleY: this.canvas.height / img.height,
-      //       // width: that.canvasWidth,
-      //       // height: canvas.getHeight(),
-      //       // originX: "left",
-      //       // originY: "top",
-      //     });
-      //     // 设置背景
-      //     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-      //     canvas.renderAll();
-      //   }
-      // );
+      let code = `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.usercode.data}`;
+      let actorUrl = `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.avator.data.avatar}`;
 
-      this.codeNum =
-        "http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=http://p.qpic.cn/wwhead/duc2TvpEgSSdsPInfahzxxJxrSQlMcdjibHj8smTa4ZbOrlMOibffuTHphK01z60Mr8nxdKOUURAo/0";
-      this.actorNum =
-        "http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=http://p.qpic.cn/wwhead/duc2TvpEgSSdsPInfahzxxJxrSQlMcdjibHj8smTa4ZbOrlMOibffuTHphK01z60Mr8nxdKOUURAo/0";
+      fabric.Image.fromURL(
+        actorUrl,
+        function (da) {
+          da.set({
+            left: that.symbolWidth * 7.5,
+            top: that.symbolHeight + 7,
+          });
+
+          da.set({
+            borderColor: "green",
+            cornerColor: "orange",
+            cornerSize: 8,
+            transparentCorners: true,
+          });
+         
+          da.scaleToWidth(that.symbolWidth * 1.3, false); //缩放图片的宽度到400
+          canvas.add(da);
+        },
+        { crossOrigin: "Anonymous" }
+      );
+
       // 二维码添加
       fabric.Image.fromURL(
-        that.codeNum,
+        code,
         function (da) {
-          da.scale(0.1);
           da.set({
-            left: 20,
-            top: 320,
+            left: that.symbolWidth,
+            top: that.symbolHeight,
           });
           da.set({
             borderColor: "green",
@@ -300,51 +388,28 @@ export default {
           });
           // canvas.setActiveObject(da);
           // da.set("c")
-          da.scaleToHeight(60, false); //缩放图片的高度到400
-          da.scaleToWidth(60, false); //缩放图片的宽度到400
+          console.log(that.symbolHeight);
+          da.scaleToHeight(that.symbolWidth * 2.2, false); //缩放图片的高度到400
+          // da.scaleToWidth(60, false); //缩放图片的宽度到400
           canvas.add(da);
         },
         { crossOrigin: "Anonymous" }
       );
 
-      //  头像添加
-      fabric.Image.fromURL(
-        this.actorNum,
-        function (da) {
-          da.scale(0.1);
-          da.set({
-            left: 200,
-            top: 320,
-          });
-
-          da.set({
-            borderColor: "green",
-            cornerColor: "orange",
-            cornerSize: 8,
-            transparentCorners: true,
-          });
-          // canvas.setActiveObject(da);
-
-          da.scaleToHeight(45, false); //缩放图片的高度到400
-          da.scaleToWidth(45, false); //缩放图片的宽度到400
-          canvas.add(da);
-        },
-        { crossOrigin: "Anonymous" }
-      );
-      this.text2 = new fabric.Textbox("sadad", {
-        left: 90,
-        top: 330,
+      this.text2 = new fabric.Textbox("长按保存二维码", {
+        left: that.symbolWidth * 3.2,
+        top: that.symbolHeight + 15,
         width: 50,
         fill: "#999",
         fontFamily: "Comic Sans",
-        fontSize: 13,
+        fontSize: 11,
         textDecoration: "underline",
         editingBorderColor: "blue",
       });
       canvas.add(this.text2);
       this.text3 = new fabric.Textbox("LILANGZ 利郎", {
-        left: 90,
-        top: 350,
+        left: that.symbolWidth * 3.2,
+        top: that.symbolHeight + 30,
         width: 100,
         fill: "#000",
         fontFamily: "Comic Sans",
@@ -356,14 +421,14 @@ export default {
       canvas.add(this.text3);
 
       // 添加名字
-      var name = "李晓晓";
+      var name = this.userInfo.cname || "moren";
       this.text4 = new fabric.Textbox(name, {
-        left: 200,
-        top: 370,
+        left: that.symbolWidth * 7.5,
+        top: that.symbolWidth * 1.3 + that.symbolHeight + 8,
         width: 100,
         fill: "#000",
         fontFamily: "Comic Sans",
-        fontSize: 12,
+        fontSize: 10,
         textDecoration: "underline",
         editingBorderColor: "blue",
       });
@@ -378,28 +443,25 @@ export default {
         // 选中图层事件触发时，动态更新赋值
         this.initFabricEvent(e.target);
       });
-
-      this.$nextTick(() => {
-        console.log(this.canvas.getActiveObject());
-      });
     },
+
     //初始化画布监听事件
     initFabricEvent(event) {
       this.isShowEditText = true;
-      console.log(221323);
       this.$nextTick(() => {
         eventBus.$emit("init", { event, canvas: this.canvas });
       });
     },
+
     // 进行导出截图
     async screenShot() {
       // this.takePosterPhoto();
-      const toast = await this.$toast.loading({
-        message: "正在生成中....",
-        forbidClick: true,
-        overlay: true,
-        loadingType: "spinner",
-      });
+      // const toast = await this.$toast.loading({
+      //   message: "正在生成中....",
+      //   forbidClick: true,
+      //   overlay: true,
+      //   loadingType: "spinner",
+      // });
       this.isshowSavePoster = true;
       // let a = this.$refs.ss.scrollWidth;
       // let b = this.$refs.ss.scrollHeight;
@@ -408,26 +470,30 @@ export default {
         taintTest: false,
         // width: 1000,X
         // height: 1000,
-        // y: 79,
+        y: 78,
       }).then((canvas) => {
         // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
         this.imgsrc = canvas.toDataURL("image/png");
       });
     },
+
     changePosterState() {
       this.isshowSavePoster = false;
+      // 刷新页面
       window.location.href = "/";
     },
   },
   mounted() {
+    // 组件加载获取导购数据
+    this.initGetData();
+
     // 进行计算画布的大小
     this.$refs.zz.width = this.$refs.posterPhoto.clientWidth;
     console.log(this.$refs.posterPhoto.clientWidth);
     this.$refs.zz.height = this.$refs.posterPhoto.clientHeight;
-    // 初始化画布
-    this.canvasDetail();
-    var that = this;
-    let f = this.$refs.canvasRef.$el;
+    console.log(this.$refs.zz.width, this.$refs.zz.height);
+    this.symbolHeight = Math.ceil((this.$refs.zz.height / 4) * 3);
+    this.symbolWidth = Math.ceil(this.$refs.zz.width / 10);
   },
   watch: {
     canvasWidth(news, olds) {
@@ -439,6 +505,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.testApi {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+}
 #sss {
   display: none;
   width: 60px;
@@ -489,7 +560,7 @@ export default {
       height: 100%;
       position: relative;
       top: 0;
-      border: 1px solid #ccc;
+      // border: 1px solid #ccc;
       // background: fuchsia;
     }
     .poster-contenr-footer {

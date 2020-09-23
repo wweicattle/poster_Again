@@ -2,8 +2,9 @@
   <div class="edittext-cotnains">
     <ul>
       <li @click="addOpcity">透明</li>
-      <li>对齐</li>
-      <li>间距</li>
+      <!-- <li>对齐</li>
+      <li>间距</li> -->
+      <!-- <li @click="editColorBtn">颜色</li> -->
       <li @click="addStrongBtn">加粗</li>
       <li @click="deleteCom">删除</li>
     </ul>
@@ -27,12 +28,13 @@ export default {
       console.log(this.canvas.getObjects().length, this.event);
       this.canvas.getObjects().forEach((val, index) => {
         val.on("deselected", (options) => {
-          console.log(33333);
 
           // this.isShowEditText = false;
           this.$emit("closedEditText");
         });
       });
+          console.log(this.canvas.getObjects())
+
       //     this.event.fontSize
       //   // f.fontSize = 0.5 + Number(f.fontSize)
       //   // f.fill = "#f40"
@@ -42,14 +44,20 @@ export default {
     });
   },
   methods: {
+    editColorBtn(){
+      this.$emit("showEditColor")
+    },
+    // 添加透明度
     addOpcity() {
-      this.event.opacity = 0.5;
+      this.event.opacity =this.event.opacity-0.5 ;
       this.canvas.discardActiveObject();
       this.canvas.renderAll();
     },
     addStrongBtn() {
       // this.canvas.deactivateAll();
-      this.event.fontWeight = 850;
+      if(!Number(this.event.fontWeight))this.event.fontWeight=100;
+      this.event.fontWeight =this.event.fontWeight+50;
+      console.log(this.event.fontWeight);
       this.canvas.discardActiveObject();
       this.canvas.renderAll();
     },

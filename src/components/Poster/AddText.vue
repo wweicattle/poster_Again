@@ -51,7 +51,7 @@ export default {
   top: 0;
   margin: auto;
   .van-dialog {
-    border-radius: inherit;
+    border-radius:15px !important;
   }
   #textArea {
     padding-top: 10px;
@@ -62,6 +62,7 @@ export default {
     margin: auto;
     font-size: 12px;
     color: #000;
+    border-radius: none;
   }
 }
 </style>
