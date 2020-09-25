@@ -5,8 +5,13 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/index',
+    path: '/',
     name: 'Home',
+    component:() => import(/* webpackChunkName: "about" */ 'views/home/index.vue')
+  },
+  {
+    path: '/editPoster',
+    name: 'Poster',
     component:() => import(/* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
   },
   // {

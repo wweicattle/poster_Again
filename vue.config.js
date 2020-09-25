@@ -21,6 +21,13 @@ module.exports = {
           pathRewrite: {
             '^/api': ''
           }
+        },
+        '/apis': {
+          target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
+          changeOrigin: true,
+          pathRewrite: {
+            '/apis': ''
+          }
         }
       }
         

@@ -2,7 +2,7 @@
   <div class="addtext-cotnains">
     <van-dialog
       v-model="show"
-      title="标题"
+      title="文字"
       show-cancel-button
       @confirm="confirmBtn"
       @cancel="cancelBtn"
@@ -51,7 +51,12 @@ export default {
   top: 0;
   margin: auto;
   .van-dialog {
-    border-radius:15px !important;
+    border-radius: 15px !important;
+    .van-dialog__footer {
+      .van-dialog__confirm {
+        color: rgb(81, 146, 252);
+      }
+    }
   }
   #textArea {
     padding-top: 10px;

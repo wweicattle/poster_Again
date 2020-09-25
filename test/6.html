@@ -160,35 +160,37 @@
         // canvas.renderAll()
     }
 
-    body.onclick = function () {
+    input.onclick = function () {
         // console.log(canvas.getObjects().indexOf(0));
         f.fontSize = 0.5 + Number(f.fontSize)
-        f.fill = "#f40"
-        f.opacity = 0.5
-        console.log(f.opacity);
+        f.fill = "rgb(255,0,0)"
+        // f.opacity = 0.5
+        if(f.fontWeight=="normal")
+        f.fontWeight=800;
+        console.log(f);
         canvas.renderAll()
 
     }
-    input.onclick = function () {
+//     input.onclick = function () {
 
         
-    fabric.Image.fromURL(
-        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2839262297,1897381364&fm=26&gp=0.jpg', (img) => {
-            img.set({
-                // 通过scale来设置图片大小，这里设置和画布一样大
-                scaleX: canvas.width / img.width,
-                scaleY: canvas.height / img.height,
-            });
-            // 设置背景
-            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-            canvas.renderAll();
+//     fabric.Image.fromURL(
+//         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2839262297,1897381364&fm=26&gp=0.jpg', (img) => {
+//             img.set({
+//                 // 通过scale来设置图片大小，这里设置和画布一样大
+//                 scaleX: canvas.width / img.width,
+//                 scaleY: canvas.height / img.height,
+//             });
+//             // 设置背景
+//             canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+//             canvas.renderAll();
            
-        });
+//         });
      
-setTimeout(()=>{
-    console.log(canvas.getObjects())
-},3000)
-    }
+// setTimeout(()=>{
+//     console.log(canvas.getObjects())
+// },3000)
+//     }
 
 
 

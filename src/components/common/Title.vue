@@ -26,9 +26,11 @@ export default {
   line-height: 43px;
   height: 43px;
   z-index: 10;
-  
+  background: #33496C;
   .title-header {
     text-align: center;
+    font-size: 17px;
+
   }
   .icon-left {
     position: absolute;

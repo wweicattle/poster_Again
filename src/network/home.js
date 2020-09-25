@@ -11,13 +11,16 @@ export function requestUserInfo() {
 
 // 获取背景图列表
 export function requestBacImage() {
-  let params={
-    action:"fans",
-    ctrl:"getbgpiclist",
+  let params = {
+    action: "fans",
+    ctrl: "getbgpiclist",
+    // pagesize:10,
+    servername:"svr-saletool133"
+
     // pagesize:10,
   }
-  let url = "/api"
-  return request.post(url,qs.stringify(params))
+  let url = "/apis"
+  return request.post(url, qs.stringify(params))
 }
 
 
@@ -27,40 +30,45 @@ export function requestUserCode(obj) {
     action: "fans",
     ctrl: "getcontactme",
     cid: obj.cid,
+    servername:"svr-saletool133"
+
   }
-  let url = `/api?action=fans&ctrl=getcontactme&cid=${obj.cid}`
-  return request.get(url)
+  let url = `/apis`
+  return request.post(url, qs.stringify(params))
+
 }
 
 
 // 获取导购的头像和名称
 export function requestUserAvator(obj) {
-  let url = `/api/?action=fans&ctrl=getavatar&cid=${obj.cid}`
+  // let url = `/ss/?action=fans&ctrl=getavatar&cid=${obj.cid}`
   let params = {
-    actions: "fans",
+    action: "fans",
     ctrl: "getavatar",
     cid: obj.cid,
+    servername:"svr-saletool133"
+
   }
-  return request.get(url)
+  let url = `/apis`
+  return request.post(url, qs.stringify(params))
 }
 
 // 
 export function requestFansList(obj) {
   // obj为{sadffsdfsdgsg，gdsgdsgsgs}这样
-  let url = `/api/?action=fans&ctrl=getfanslist&cid=${obj.cid}}`
+  let url = `/apis`
   let params = {
-    actions: "fans",
-    ctrl: "getcontactme",
+    action: "fans",
+    ctrl: "getfanslist",
     cid: obj.cid,
-    cuserid: obj.cid,
-    remarks: "",
-    state: "",
-    skipverify: ""
+    servername:"svr-saletool133"
+
+    
   }
-  return request.get(url, params)
+  return request.post(url, qs.stringify(params))
 }
 export function requestSendGroupMess(obj) {
-  let url = `/api/?action=fans&ctrl=addmsgtemplate`
+  let url = `/ss/?action=fans&ctrl=addmsgtemplate`
   let params = {
     cid: obj.cid,
     fansuserids: "",
@@ -69,7 +77,8 @@ export function requestSendGroupMess(obj) {
     title: "",
     url: "",
     picurl: "",
-    desc: ""
+    desc: "",
+    servername:"svr-saletool133"
   }
   console.log(qs.stringify(params));
 

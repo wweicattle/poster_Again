@@ -3,8 +3,8 @@
     <ul>
       <li @click="addOpcity">透明</li>
       <!-- <li>对齐</li>
-      <li>间距</li> -->
-      <!-- <li @click="editColorBtn">颜色</li> -->
+      <li>间距</li>-->
+      <li @click="editColorBtn">颜色</li>
       <li @click="addStrongBtn">加粗</li>
       <li @click="deleteCom">删除</li>
     </ul>
@@ -28,12 +28,11 @@ export default {
       console.log(this.canvas.getObjects().length, this.event);
       this.canvas.getObjects().forEach((val, index) => {
         val.on("deselected", (options) => {
-
-          // this.isShowEditText = false;
+          // console.log(22);
           this.$emit("closedEditText");
         });
       });
-          console.log(this.canvas.getObjects())
+      console.log(this.canvas.getObjects());
 
       //     this.event.fontSize
       //   // f.fontSize = 0.5 + Number(f.fontSize)
@@ -44,21 +43,19 @@ export default {
     });
   },
   methods: {
-    editColorBtn(){
-      this.$emit("showEditColor")
+    editColorBtn() {
+      this.$emit("showEditColor", { event: this.event, canvas: this.canvas });
     },
     // 添加透明度
     addOpcity() {
-      this.event.opacity =this.event.opacity-0.5 ;
-      this.canvas.discardActiveObject();
+      this.event.opacity==1?this.event.opacity=0.5:this.event.opacity =1;
+      // this.canvas.discardActiveObject();
       this.canvas.renderAll();
     },
     addStrongBtn() {
-      // this.canvas.deactivateAll();
-      if(!Number(this.event.fontWeight))this.event.fontWeight=100;
-      this.event.fontWeight =this.event.fontWeight+50;
-      console.log(this.event.fontWeight);
-      this.canvas.discardActiveObject();
+      if (this.event.fontWeight == "normal") this.event.fontWeight = 400;
+      this.event.fontWeight += 100;
+      // this.canvas.discardActiveObject();
       this.canvas.renderAll();
     },
     deleteCom() {

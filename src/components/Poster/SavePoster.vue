@@ -16,26 +16,23 @@
             :style="{ color: '#999', borderColor: '#999', padding: '0 8px' }"
           >点击图片 长按进行保存图片</van-divider>
         </div>
-      </div> 
+      </div>
       <div class="save-btn-contain">
-      <!-- <van-button
-          type="primary"
-          size="large"
-          color="linear-gradient(to right, #ff6034, #ee0a24)"
-          icon="down"
-          class="saveBtn"
-      >保存到相册</van-button>-->
-      <div class="save-oprate">
-        <van-button round @click="addCreateBtn">再创建一个</van-button>
-        <van-button type="primary" round style="color:#fff;background:#5192fc">分享</van-button>
+        <div class="save-oprate">
+          <van-button round @click="addCreateBtn">再创建一个</van-button>
+          <van-button type="primary" round style="color:#fff;background:#5192fc" @click="sharePosterBtn">分享</van-button>
+        </div>
       </div>
     </div>
-    </div>
-   
+
+    <!-- 信息群发 -->
+    <send-mess :isshow="isshowSendMess" v-if="isshowSendMess" @changeVisable="isshowSendMess=false"/>
   </div>
 </template>
 <script>
 import TitleHeader from "components/common/Title";
+import SendMess from "components/Poster/SendMess";
+
 
 export default {
   name: "SavePoster",
@@ -49,10 +46,13 @@ export default {
     },
   },
   data: function () {
-    return {};
+    return {
+      isshowSendMess:false
+    };
   },
   components: {
     TitleHeader,
+    SendMess
   },
   computed: {
     iconLeftStyle() {
@@ -65,6 +65,12 @@ export default {
       // this.$router.push("/index")
       // console.log(t);
     },
+    // sendMessageBtn(){
+    //   this.
+    // }
+    sharePosterBtn(){
+      this.isshowSendMess=true;
+    }
   },
 };
 </script>
@@ -72,7 +78,6 @@ export default {
 .title-header {
   background: #fff;
   color: #000000;
-  font-size: 17px;
   // font-weight: 550;
   .title-name {
     white-space: nowrap;
@@ -105,29 +110,38 @@ export default {
       width: 100%;
       position: absolute;
       bottom: 0;
-      // border: 1px solid red;
-    }
-  }
-  
-}
-.save-btn-contain {
-    background: #3c5b8d;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -65px;
-    margin: auto;
-    width: 100%;
-    .save-oprate {
-      display: flex;
-      justify-content: space-between;
-      .van-button {
-        width: 120px;
-        height: 40px;
-        color: #5192fc;
+      .van-divider {
+        color:#c4bebe !important;
+        font-size: 12px;
+        // border: 1px solid red;
+        &::before {
+          border-top-color: #ccc !important;
+        }
+        &::after {
+          border-top-color: #ccc !important;
+        }
       }
     }
-
-    // bottom: 60px;
   }
+}
+.save-btn-contain {
+  background: #33496C;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -65px;
+  margin: auto;
+  width: 100%;
+  .save-oprate {
+    display: flex;
+    justify-content: space-between;
+    .van-button {
+      width: 120px;
+      height: 40px;
+      color: #5192fc;
+    }
+  }
+
+  // bottom: 60px;
+}
 </style>

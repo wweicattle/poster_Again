@@ -1,25 +1,24 @@
 <template>
   <div id="app">
-    <Poster />
     <router-view />
   </div>
 </template>
 <script>
-import Poster from "components/Poster/Poster";
+import Home from "views/home/index.vue";
 export default {
   name: "App",
   data: function () {
     return {};
   },
   components: {
-    Poster,
+    Home,
   },
 };
 </script>
 <style lang="scss">
 @import url(./assets/css/base.css);
 #app {
-  background: #3c5b8d;
+  background: #33496c;
   height: 800px;
 }
 </style>
