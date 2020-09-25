@@ -41,6 +41,13 @@
           <img src="./../../assets/avator.png" alt />
           <span class="fans-name">吴伟</span>
         </van-checkbox>
+        <template v-for="(val,index) in fanslist">
+           <van-checkbox :name="val.fansuserid" :key=index>
+          <img :src="val.avatar" alt/>
+          <span class="fans-name">{{val.fansname}}</span>
+        </van-checkbox>
+
+        </template>
       </van-checkbox-group>
     </van-dialog>
   </div>
@@ -60,12 +67,13 @@ export default {
     return {
       show: false,
       result: [],
+      fanslist:[]
     };
   },
   created() {},
   mounted() {
     requestFansList({ cid: 587 }).then((da) => {
-      console.log(da);
+    this.fanslist=da.data.data;
     });
   },
   methods: {

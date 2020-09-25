@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+import { eventBus } from "utils/eventbus";
+
 var img=require("./../../assets/avator.png");
 export default {
   name: "EditPhoto",
@@ -40,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    
+   
   },
   methods: {
     imgindex(index) {

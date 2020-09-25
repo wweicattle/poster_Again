@@ -236,6 +236,8 @@ export default {
       this.userInfo = await new Promise((res) => {
         requestUserInfo().then((da) => {
           if (da.data.errcode === 0) {
+            console.log(da.data);
+            window.localStorage.setItem("cid",da.data.data.cid)
             res(da.data.data);
           } else {
             this.$notify({
@@ -503,7 +505,6 @@ export default {
       this.isshowSavePoster = true;
       // let a = this.$refs.ss.scrollWidth;
       // let b = this.$refs.ss.scrollHeight;
-      console.log();
       let hs = document.querySelector(".title-header").clientHeight;
       let h = document.querySelector(".poster-content");
       let paddingTop = getComputedStyle(h).paddingTop.split("px")[0];

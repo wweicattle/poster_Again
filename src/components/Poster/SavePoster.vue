@@ -32,6 +32,7 @@
 <script>
 import TitleHeader from "components/common/Title";
 import SendMess from "components/Poster/SendMess";
+import { eventBus } from "utils/eventbus";
 
 
 export default {
@@ -72,6 +73,11 @@ export default {
       this.isshowSendMess=true;
     }
   },
+  mounted(){
+    eventBus.$on("init",(ons)=>{
+      console.log(ons);
+    })
+  }
 };
 </script>
 <style lang="scss" scoped>

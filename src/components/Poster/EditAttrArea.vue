@@ -25,14 +25,13 @@ export default {
     eventBus.$on("init", (obj) => {
       this.canvas = obj.canvas;
       this.event = obj.event;
-      console.log(this.canvas.getObjects().length, this.event);
+      // console.log(this.canvas.getObjects().length, this.event);
       this.canvas.getObjects().forEach((val, index) => {
         val.on("deselected", (options) => {
-          // console.log(22);
           this.$emit("closedEditText");
         });
       });
-      console.log(this.canvas.getObjects());
+      // console.log(this.canvas.getObjects());
 
       //     this.event.fontSize
       //   // f.fontSize = 0.5 + Number(f.fontSize)
