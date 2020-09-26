@@ -2,11 +2,11 @@
   <div class="editcolor-cotnains">
     <ul>
       <li
-        v-for="(val,index) in colors"
+        v-for="(val, index) in colors"
         :key="index"
-        :style="{backgroundColor:val}"
-        :class="{activecolor:indexactivecolor===index}"
-        @click="activeColorBtn(val,index)"
+        :style="{ backgroundColor: val }"
+        :class="{ activecolor: indexactivecolor === index }"
+        @click="activeColorBtn(val, index)"
       ></li>
     </ul>
     <div class="chose-color">
@@ -41,46 +41,46 @@ export default {
       changeColor: null,
       beforeColors: null,
       symbolclickcolor: false,
+      obj: [],
     };
   },
   created() {
     this.colors = colors;
   },
-  mounted() {
-    console.log(22222);
-    eventBus.$on("init", (obj) => {
-      console.log(22);
-      this.canvas = obj.canvas;
-      this.event = obj.event;
-      console.log(obj);
-    });
-     eventBus.$on("inits", (obj) => {
-     console.log(obj);
-    });
-  },
+  mounted() {},
   methods: {
     activeColorBtn(val, index) {
+      console.log("activeSOmecolor");
       this.indexactivecolor = index;
       this.changeColor = val;
       // 文本颜色进行修使用set方法
       this.event.set("fill", val);
-      // 进行刷新画布
+      // // 进行刷新画布
       this.canvas.renderAll();
     },
     // 确定颜色
     editcolorBtn() {
-      this.symbolclickcolor = true;
-      // this.canvas.discardActiveObject();
-      // 进行刷新画布
-      this.canvas.renderAll();
+      console.log("confirm");
+      // // // 文本颜色进行修使用set方法
+      // this.event.set("fill", this.obj.pop());
+      // this.symbolclickcolor = true;
+      // // // this.canvas.discardActiveObject();
+      // // // 进行刷新画布
+      // this.canvas.renderAll();
       this.$emit("closededitcolor");
+      window.localStorage.setItem("test", 1);
+      // this.event.set(
+      //   "fill",
+      //   window.localStorage.setItem("event", this.changeColor)
+      // );
+
       // // 确定之后颜色就已经确定
-      // this.beforeColors=this.changeColor;
     },
     // 取消颜色
     cancelchangebtn() {
+      console.log("cancel");
       // 文本颜色进行修使用set方法
-      this.event.set("fill", this.beforeColors);
+      this.event.set("fill", window.localStorage.getItem("event"));
       // this.canvas.discardActiveObject();
       // 进行刷新画布
       this.canvas.renderAll();
@@ -90,39 +90,50 @@ export default {
   watch: {
     activeObj: {
       handler(newVal, oldVal) {
-        console.log(3243);
+        window.localStorage.setItem("test", 0);
+        console.log("begin");
         this.canvas = newVal.canvas || [];
         this.event = newVal.event;
-        this.beforeColors = this.event.fill;
-        console.log(this.beforeColors);
+        console.log(this.event);
+        // this.beforeColors = this.event.fill;
+        // setTimeout(() => {
+        //   this.activeColorBtn(this.event)
+        // }, (600));
+        window.localStorage.setItem("test", 0);
+
+        window.localStorage.setItem("event", this.event.fill);
         this.canvas.getObjects().forEach((val, index) => {
+          window.localStorage.setItem("test", 0);
           val.on("deselected", (options) => {
+            if (window.localStorage.getItem("test") == 1) return;
+            this.event.set("fill", window.localStorage.getItem("event"));
+
+            // console.log(this.canvas);
             console.log("deselect");
             // 文本颜色进行修使用set方法
             // this.event.set("fill", this.beforeColors);
             // this.canvas.discardActiveObject();
             // 进行刷新画布
             // if (this.symbolclickcolor) {
-              this.event.set("fill", this.changeColor);
-              // this.symbolclickcolor=false;
-            // } else {
-              // this.event.set("fill", this.beforeColors);
-            // }
-            // this.canvas.discardActiveObject();
+            // if (this.symbolclickcolor)return this.event.set("fill", this.changeColor);
+            // this.event.set("fill", this.beforeColors);
+            // // this.symbolclickcolor=false;
+            // // } else {
+            // // this.event.set("fill", this.beforeColors);
+            // // }
+            // // this.canvas.discardActiveObject();
 
-            this.canvas.renderAll();
+            // this.canvas.renderAll();
             this.$emit("closededitcolor");
           });
         });
 
         // 在组件开始初始化的时候，watch里面可能接受不到响应数据，所以在nextTick中进行获取
         this.$nextTick(() => {
-          console.log(this.colors);
           let index = this.colors.findIndex((val) => {
-            console.log(val);
+            // console.log(val);
             return val == this.beforeColors;
           });
-          console.log(index);
           this.indexactivecolor = index;
         });
       },

@@ -114,13 +114,13 @@ export default {
   }
   .save-poster-contain {
     border-radius: 10px;
-    width: 80%;
+    width: 75%;
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
     margin-top: 80px;
-    height: 436px;
+    height: 416px;
     // line-height: 380px;
     background: #f5efef;
     text-align: center;
@@ -128,7 +128,7 @@ export default {
     .poster-img-contain {
       img {
         width: 80%;
-        height: 80%;
+        height: 70%;
         object-fit: fill;
       }
       .poster-remind-contain {

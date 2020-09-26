@@ -29,9 +29,9 @@
           <div class="print-btn-contains">
             <div class="poster-oprate">
               <div
-                @click="isshow=!isshow,isshowAttr=!isshowAttr"
+                @click="(isshow = !isshow), (isshowAttr = !isshowAttr)"
                 class="get-many-attr"
-                :class="{colorChange:isshow}"
+                :class="{ colorChange: isshow }"
               >
                 <van-icon name="apps-o" />
                 <span>素材</span>
@@ -52,7 +52,11 @@
                 </van-uploader>
               </div>
 
-              <div @click="isshowEditVisable=true" class="back-contain" v-if="isshowAttr">
+              <div
+                @click="isshowEditVisable = true"
+                class="back-contain"
+                v-if="isshowAttr"
+              >
                 <van-icon name="orders-o" />
                 <span>背景</span>
               </div>
@@ -76,13 +80,13 @@
     <!-- 添加文本组件 -->
     <add-text
       v-if="isshowAddTextVisable"
-      @closeVisable="isshowAddTextVisable=false"
+      @closeVisable="isshowAddTextVisable = false"
       @textInfo="addTextContentInfo"
     ></add-text>
     <!-- 修改背景组件 -->
     <edit-back-image
       v-if="isshowEditVisable"
-      @closeVisable="isshowEditVisable=false"
+      @closeVisable="isshowEditVisable = false"
       @sendPhotoUrl="sendPhotoUrlBtn"
       :imageLists="backImages"
     ></edit-back-image>
@@ -90,12 +94,12 @@
     <!-- 修改画布的组件 -->
     <edit-area
       v-if="isShowEditText"
-      @closedEditText="isShowEditText=false"
+      @closedEditText="isShowEditText = false"
       @showEditColor="cahngeshowEditColor"
     ></edit-area>
     <edit-color
       v-if="isshowEditColor"
-      @closededitcolor="isshowEditColor=false"
+      @closededitcolor="isshowEditColor = false"
       :activeObj="nowActiveObj"
     ></edit-color>
   </div>
@@ -232,7 +236,7 @@ export default {
         requestUserInfo().then((da) => {
           if (da.data.errcode === 0) {
             // 进行用户cid进行保存本地，方便调用
-            window.localStorage.setItem("cid",da.data.data.cid)
+            window.localStorage.setItem("cid", da.data.data.cid);
             res(da.data.data);
           } else {
             this.$notify({
@@ -243,12 +247,12 @@ export default {
             return;
           }
         });
-      }).catch((da)=>{
+      }).catch((da) => {
         this.$notify({
-              type: "warning",
-              message: da,
-              duration: 10000,
-            });
+          type: "warning",
+          message: da,
+          duration: 10000,
+        });
       }); // 登录信息可以
 
       // 获取二维码成功
@@ -266,16 +270,15 @@ export default {
         });
       });
 
-      let t = await Promise.all([a, b])
-        .then((da) => {
-          if (da.length == 2) {
-            this.usercode = da[0];
-            this.avator = da[1];
-            // 初始化画布
-            this.canvasDetail();
-          }
-        })
-        
+      let t = await Promise.all([a, b]).then((da) => {
+        if (da.length == 2) {
+          this.usercode = da[0];
+          this.avator = da[1];
+          // 初始化画布
+          this.canvasDetail();
+        }
+      });
+
       // requestSendGroupMess(this.userInfo.cid).then((da) => {
       //   this.repeatRequest(da);
       // });
@@ -478,13 +481,24 @@ export default {
         editingBorderColor: "blue",
       });
       that.canvas.add(that.text4);
+
+      this.canvas.getObjects().forEach((val, index) => {
+        window.localStorage.setItem("test", 0);
+        val.on("deselected", (options) => {
+          console.log(221323);
+        });
+      });
     },
 
     //初始化画布监听事件
     initFabricEvent(event) {
       this.isShowEditText = true;
       this.$nextTick(() => {
-        eventBus.$emit("init", { event, canvas: this.canvas,cid:this.userInfo });
+        eventBus.$emit("init", {
+          event,
+          canvas: this.canvas,
+          cid: this.userInfo,
+        });
       });
     },
 
@@ -534,10 +548,10 @@ export default {
     this.createCanvasInit();
   },
   watch: {},
-  beforeDestroy(){
+  beforeDestroy() {
     // 清除事件总线
     eventBus.$off("init");
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
