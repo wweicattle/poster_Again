@@ -192,11 +192,6 @@ export default {
     addPhotoBtn() {
       console.log(this.$refs.addPhotoBtn);
     },
-    loadone() {
-      //   requestUserInfo().then(da=>{
-      //   console.log(da);
-      // })
-    },
     // // 后台接口问题需要进行二次请求才可以
     // repeatRequest(obj, request) {
     //   var that = this;
@@ -236,7 +231,7 @@ export default {
       this.userInfo = await new Promise((res) => {
         requestUserInfo().then((da) => {
           if (da.data.errcode === 0) {
-            console.log(da.data);
+            // 进行用户cid进行保存本地，方便调用
             window.localStorage.setItem("cid",da.data.data.cid)
             res(da.data.data);
           } else {
@@ -489,7 +484,7 @@ export default {
     initFabricEvent(event) {
       this.isShowEditText = true;
       this.$nextTick(() => {
-        eventBus.$emit("init", { event, canvas: this.canvas });
+        eventBus.$emit("init", { event, canvas: this.canvas,cid:this.userInfo });
       });
     },
 
@@ -524,7 +519,7 @@ export default {
     changePosterState() {
       this.isshowSavePoster = false;
       // 刷新页面
-      window.location.href = "/";
+      window.location.href = "/editPoster";
     },
   },
   mounted() {
@@ -539,6 +534,10 @@ export default {
     this.createCanvasInit();
   },
   watch: {},
+  beforeDestroy(){
+    // 清除事件总线
+    eventBus.$off("init");
+  }
 };
 </script>
 <style lang="scss" scoped>

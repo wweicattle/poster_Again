@@ -22,6 +22,11 @@ export default {
     };
   },
   mounted() {
+    eventBus.$on("getUserCid", (cid) => {
+      console.log(2323);
+      console.log(cid);
+      this.cid = cid;
+    });
     eventBus.$on("init", (obj) => {
       this.canvas = obj.canvas;
       this.event = obj.event;
@@ -47,7 +52,9 @@ export default {
     },
     // 添加透明度
     addOpcity() {
-      this.event.opacity==1?this.event.opacity=0.5:this.event.opacity =1;
+      this.event.opacity == 1
+        ? (this.event.opacity = 0.5)
+        : (this.event.opacity = 1);
       // this.canvas.discardActiveObject();
       this.canvas.renderAll();
     },

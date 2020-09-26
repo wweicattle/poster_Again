@@ -9,8 +9,10 @@ import {
   Lazyload,
   Uploader,
   Notify ,
-  Checkbox, CheckboxGroup
+  Checkbox, CheckboxGroup,
+  Switch 
 } from 'vant';
+Vue.use(Switch);
 Vue.use(Button);
 Vue.use(Icon);
 Vue.use(Image);

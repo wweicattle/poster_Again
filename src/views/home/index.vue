@@ -2,8 +2,8 @@
   <div id="homes-contains">
     <div class="title-headers">
       <title-header>
-        <div slot="iconLeft" >
-          <van-icon name="arrow-left" @click="$emit('backeditposter')" />
+        <div slot="iconLeft">
+          <van-icon name="arrow-left" />
         </div>
         <div slot="header" class="title-header">
           <div class="title-name">超级导购</div>
@@ -12,38 +12,119 @@
     </div>
 
     <div class="sale-contains">
-      <div class="sale-number-contain"></div>
-      <div class="super-people">
-        <div>会员拉新</div>
-        <div>粉丝拉新</div>
+      <div class="sale-number-contain">
+        <div class="sale-number-content">
+          <span class="sale-num">销售金额(元)</span>
+          <div>
+            <span class="sale-detail-num">25,178.00</span>
+            <img src="~assets/img/home/icon_arrow_blackbg.png" alt />
+          </div>
+        </div>
+        <div class="today-select">
+          <span>
+            <van-switch v-model="checked" />
+          </span>
+          <span class="today-num">今日</span>
+          <select name id>s</select>
+        </div>
+      </div>
+      <div class="super-people-contain">
+        <div class="left">
+          <span class="super-pull-person">会员拉新(人)</span>
+          <div class="pull-line">
+            <img src="~assets/img/home/icon_fall.png" alt />
+            <span class="line-num">125</span>
+            <img class="iconTwo" src="~assets/img/home/icon_arrow_blackbg.png" alt />
+          </div>
+        </div>
+        <div class="right">
+          <span class="super-pull-person">粉丝拉新(人)</span>
+          <div class="pull-line">
+            <img src="~assets/img/home/icon_rise.png" alt />
+            <span class="line-num">125</span>
+            <img class="iconTwo" src="~assets/img/home/icon_arrow_blackbg.png" alt />
+          </div>
+        </div>
       </div>
     </div>
+    <div class="functions-contain">
+      <ul>
+        <li>
+          <div class="fun-icon-contain">
+            <div class="icon">
+              <img src="~assets/img/home/icon_kucun.png" alt />
+            </div>
+            <span class="only">查库存</span>
+          </div>
+        </li>
+        <li>
+          <div class="fun-icon-contain" @click="clicmebtn">
+            <div class="icon">
+              <img src="~assets/img/home/icon_vip.png" alt />
+            </div>
+            <span class="only">递会员</span>
+          </div>
+        </li>
+        <li>
+          <div class="fun-icon-contain">
+            <div class="icon">
+              <img src="~assets/img/home/icon_reward.png" alt />
+            </div>
+            <span class="only">琅琊榜</span>
+          </div>
+        </li>
+      </ul>
+    </div>
     <div class="home-functions-contain">
-      <div>
+      <div class="help-item">
+        <div class="item-totalname">代办任务</div>
         <ul>
-          <li>查库存</li>
-          <li>递会员</li>
-          <li>琅琊榜</li>
-        </ul>
-      </div>
-      <div>
-        <div>代办任务</div>
-        <ul>
-          <li>生日回访</li>
-          <li>售后回访</li>
-          <li>会员维系</li>
-          <li>卡券到期提醒</li>
+          <li>
+            <span class="birth-name">生日回访</span>
+            <div class="birth-back-content">
+              <span>123人待回访</span>
+              <van-button plain hairline type="primary" round>去回访</van-button>
+            </div>
+          </li>
+
+          <li>
+            <span class="birth-name">售后回访</span>
+            <div class="birth-back-content">
+              <span>123人待回访</span>
+              <van-button plain hairline type="primary" round>去回访</van-button>
+            </div>
+          </li>
+          <li>
+            <span class="birth-name">会员维系</span>
+            <div class="birth-back-content">
+              <span>123人待回访</span>
+              <van-button plain hairline type="primary" round>去回访</van-button>
+            </div>
+          </li>
+          <li>
+            <span class="birth-name">卡券到期提醒</span>
+            <div class="birth-back-content">
+              <span>123人待回访</span>
+              <van-button plain hairline type="primary" round>去回访</van-button>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
     <div class="home—footer-contain">
       <ul>
-        <li>首页</li>
-        <li>海报</li>
-        <li>会员</li>
+        <li>
+          <img src="~assets/img/home/tabbar_index_sele.png" />首页
+        </li>
+        <li>
+          <img class="add-icon" src="~assets/img/home/icon_add.png" />海报
+        </li>
+        <li>
+          <img src="~assets/img/home/tabbar_vip_default.png" />会员
+        </li>
       </ul>
     </div>
-    <button @click="clicmebtn">return poster</button>
+    <!-- <button @click="clicmebtn">return poster</button> -->
   </div>
 </template>
 <script>
@@ -66,11 +147,251 @@ export default {
 </script>
 <style lang="scss" scoped>
 #homes-contains {
+  background: #f7f7f7;
+  height: calc(100vh);
+  overflow: hidden;
   .title-headers {
     .title-header {
       // font-size: ;
       .title-name {
         color: #fff;
+      }
+    }
+  }
+  .sale-contains {
+    height: 198px;
+    background: #33496c;
+    padding: 20px 20px 0;
+    margin-top: 43px;
+    .sale-number-contain {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      .sale-number-content {
+        display: flex;
+        // align-items: flex-start;
+        flex-direction: column;
+        .sale-num {
+          padding-bottom: 5px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #ffffff;
+        }
+        div {
+          display: flex;
+          align-items: center;
+          .sale-detail-num {
+            font-size: 24px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+          }
+          img {
+            padding-left: 5px;
+          }
+        }
+      }
+      .today-select {
+        display: flex;
+        align-items: flex-start;
+        .van-switch {
+          font-size: 26px;
+        }
+        .today-num {
+          font-size: 14px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+          padding-left: 10px;
+          padding-top: 5px;
+        }
+        select {
+          padding-top: 5px;
+          background: #33496c;
+          border: none;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+    }
+    .super-people-contain {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 10px;
+      .left {
+        .super-pull-person {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #fff;
+          line-height: 17px;
+        }
+        .pull-line {
+          display: flex;
+          padding-top: 5px;
+          align-items: center;
+          .line-num {
+            padding: 0 5px;
+            font-size: 18px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+          }
+          .iconTwo {
+            width: 20px;
+            height: 15px;
+          }
+        }
+      }
+      .right {
+        .super-pull-person {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #fff;
+          line-height: 17px;
+        }
+        .pull-line {
+          align-items: center;
+          padding-top: 5px;
+          display: flex;
+          .line-num {
+            padding: 0 10px;
+            font-size: 18px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+          }
+          .iconTwo {
+            width: 20px;
+            height: 15px;
+          }
+        }
+      }
+    }
+  }
+  .functions-contain {
+    margin: -35px 15px 0;
+    height: 94px;
+    background: #ffffff;
+    // box-shadow: 0px 56px 42px 0px #eef0f3;
+    border-radius: 8px;
+    ul {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 15px 0;
+      box-sizing: border-box;
+      justify-content: space-around;
+      li {
+        height: 100%;
+        width: 44px;
+        text-align: center;
+        .fun-icon-contain {
+          .icon {
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            background: #e8f1ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+              width: 24px;
+            }
+          }
+          .only {
+            display: block;
+            font-size: 12px;
+            padding-top: 5px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #323232;
+            line-height: none;
+          }
+        }
+      }
+    }
+  }
+  .home-functions-contain {
+    // margin: -40px 15px 0;
+    margin: 20px 15px 0;
+    width: 343px;
+    height: 282px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px 15px 0;
+    .help-item {
+      .item-totalname {
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #323232;
+        line-height: 22px;
+      }
+      ul {
+        li {
+          padding: 15px 0;
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #464646;
+          .birth-name {
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #464646;
+          }
+          .birth-back-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span {
+              font-size: 12px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #888888;
+              padding-right: 6px;
+            }
+            .van-button {
+              height: 17px;
+              font-size: 12px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #5192fc;
+              line-height: 17px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .home—footer-contain {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 44px;
+    background: #fff;
+    ul {
+      display: flex;
+      justify-content: space-around;
+      li {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        .add-icon {
+          display: 100%;
+          height: 26px;
+          background: rgba(81, 146, 252, 1);
+          border-radius: 50%;
+          box-sizing: border-box;
+          padding: 5px;
+        }
       }
     }
   }
