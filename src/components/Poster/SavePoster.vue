@@ -20,20 +20,30 @@
       <div class="save-btn-contain">
         <div class="save-oprate">
           <van-button round @click="addCreateBtn">再创建一个</van-button>
-          <van-button type="primary" round style="color:#fff;background:#5192fc" @click="sharePosterBtn">分享</van-button>
+          <van-button
+            type="primary"
+            round
+            style="color:#fff;background:#5192fc"
+            @click="sharePosterBtn"
+           
+          >分享</van-button>
         </div>
       </div>
     </div>
 
     <!-- 信息群发 -->
-    <send-mess :isshow="isshowSendMess" v-if="isshowSendMess" @changeVisable="isshowSendMess=false"/>
+    <send-mess
+      :isshow="isshowSendMess"
+      v-if="isshowSendMess"
+      @changeVisable="isshowSendMess=false"
+       :shareSrc="src"
+    />
   </div>
 </template>
 <script>
 import TitleHeader from "components/common/Title";
 import SendMess from "components/Poster/SendMess";
 import { eventBus } from "utils/eventbus";
-
 
 export default {
   name: "SavePoster",
@@ -48,12 +58,12 @@ export default {
   },
   data: function () {
     return {
-      isshowSendMess:false
+      isshowSendMess: false,
     };
   },
   components: {
     TitleHeader,
-    SendMess
+    SendMess,
   },
   computed: {
     iconLeftStyle() {
@@ -62,92 +72,102 @@ export default {
   },
   methods: {
     addCreateBtn() {
-      window.location.href = "/";
+      // this.$router.push("/editPoster")
+      window.location.href = "/editPoster";
       // this.$router.push("/index")
       // console.log(t);
     },
     // sendMessageBtn(){
     //   this.
     // }
-    sharePosterBtn(){
-      this.isshowSendMess=true;
-    }
+    sharePosterBtn() {
+      this.isshowSendMess = true;
+  
+    },
   },
-  mounted(){
-    eventBus.$on("init",(ons)=>{
-      console.log(ons);
-    })
-  }
+  mounted() {},
+  watch: {
+    src: {
+      handler(ss) {
+        console.log(ss);
+      },
+      immediate: true,
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-.title-header {
-  background: #fff;
-  color: #000000;
-  // font-weight: 550;
-  .title-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 180px;
-    margin: auto;
-  }
-}
-.save-poster-contain {
-  border-radius: 10px;
-  width: 80%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-top: 80px;
-  height: 436px;
-  // line-height: 380px;
-  background: #f5efef;
-  text-align: center;
-  padding-top: 14px;
-  .poster-img-contain {
-    img {
-      width: 80%;
-      height: 80%;
-      object-fit: fill;
+#save-contains {
+  height: 100vh;
+  background:#33496c;
+  .title-header {
+    background: #fff;
+    color: #000000;
+    // font-weight: 550;
+    .title-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 180px;
+      margin: auto;
     }
-    .poster-remind-contain {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      .van-divider {
-        color:#c4bebe !important;
-        font-size: 12px;
-        // border: 1px solid red;
-        &::before {
-          border-top-color: #ccc !important;
-        }
-        &::after {
-          border-top-color: #ccc !important;
+  }
+  .save-poster-contain {
+    border-radius: 10px;
+    width: 80%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 80px;
+    height: 436px;
+    // line-height: 380px;
+    background: #f5efef;
+    text-align: center;
+    padding-top: 14px;
+    .poster-img-contain {
+      img {
+        width: 80%;
+        height: 80%;
+        object-fit: fill;
+      }
+      .poster-remind-contain {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        .van-divider {
+          color: #c4bebe !important;
+          font-size: 12px;
+          // border: 1px solid red;
+          &::before {
+            border-top-color: #ccc !important;
+          }
+          &::after {
+            border-top-color: #ccc !important;
+          }
         }
       }
     }
   }
-}
-.save-btn-contain {
-  background: #33496C;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -65px;
-  margin: auto;
-  width: 100%;
-  .save-oprate {
-    display: flex;
-    justify-content: space-between;
-    .van-button {
-      width: 120px;
-      height: 40px;
-      color: #5192fc;
+  .save-btn-contain {
+    background: #33496c;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -65px;
+    margin: auto;
+    width: 100%;
+    .save-oprate {
+      display: flex;
+      justify-content: space-between;
+      .van-button {
+        width: 120px;
+        height: 40px;
+        color: #5192fc;
+      }
     }
-  }
 
-  // bottom: 60px;
+    // bottom: 60px;
+  }
 }
 </style>

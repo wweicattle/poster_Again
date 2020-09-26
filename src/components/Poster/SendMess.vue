@@ -13,40 +13,11 @@
         <span @click="checkAll">全选</span>
       </div>
       <van-checkbox-group v-model="result" ref="checkboxGroup">
-        <van-checkbox name="a">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="b">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="c">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="d">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="sasad">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="sa">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
-        <van-checkbox name="sas">
-          <img src="./../../assets/avator.png" alt />
-          <span class="fans-name">吴伟</span>
-        </van-checkbox>
         <template v-for="(val,index) in fanslist">
-           <van-checkbox :name="val.fansuserid" :key=index>
-          <img :src="val.avatar" alt/>
-          <span class="fans-name">{{val.fansname}}</span>
-        </van-checkbox>
-
+          <van-checkbox :name="val.fansuserid" :key="index">
+            <img :src="val.avatar" alt />
+            <span class="fans-name">{{val.fansname}}</span>
+          </van-checkbox>
         </template>
       </van-checkbox-group>
     </van-dialog>
@@ -55,25 +26,40 @@
 <script scoped>
 import { eventBus } from "utils/eventbus";
 import { colors } from "utils/colors";
-import { requestFansList } from "network/home";
+import { requestFansList,requesUrl } from "network/home";
 export default {
   name: "SendMess",
   props: {
     isshow: {
       type: Boolean,
     },
+    shareSrc: {
+      type: String,
+    },
   },
   data: function () {
     return {
       show: false,
       result: [],
-      fanslist:[]
+      fanslist: [],
+      cid: null,
     };
   },
-  created() {},
+  created() {
+    eventBus.$on("getUserCid", (cid) => {
+      console.log(cid);
+      this.cid = cid;
+    });
+  },
+
   mounted() {
-    requestFansList({ cid: 587 }).then((da) => {
-    this.fanslist=da.data.data;
+    eventBus.$on("getUserCid", (cid) => {
+      console.log(cid);
+      this.cid = cid;
+    });
+    requestFansList({ cid: this.cid || 587 }).then((da) => {
+      this.fanslist = da.data.data;
+      console.log(da);
     });
   },
   methods: {
@@ -82,6 +68,9 @@ export default {
       console.log("22");
       this.$emit("changeVisable");
       console.log(this.result);
+      requesUrl(this.shareSrc).then(da=>{
+          console.log(da);
+      })
     },
     cancelBtn() {
       console.log(2332);
@@ -108,7 +97,7 @@ export default {
 .sendMess-cotnains {
   .selectAll-contain {
     padding: 0 10px;
-    background: #33496c;
+    background: #7b95bf;
     color: #fff;
     height: 36px;
     align-items: center;
@@ -140,6 +129,10 @@ export default {
     .van-dialog__confirm {
       color: rgb(81, 146, 252);
     }
+  }
+  .van-dialog__header {
+    padding-top: 10px;
+    height: 40px;
   }
 }
 </style>

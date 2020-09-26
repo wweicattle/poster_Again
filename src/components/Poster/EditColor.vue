@@ -47,11 +47,15 @@ export default {
     this.colors = colors;
   },
   mounted() {
+    console.log(22222);
     eventBus.$on("init", (obj) => {
-      console.log(obj);
+      console.log(22);
       this.canvas = obj.canvas;
       this.event = obj.event;
-      console.log(this.event.fill);
+      console.log(obj);
+    });
+     eventBus.$on("inits", (obj) => {
+     console.log(obj);
     });
   },
   methods: {

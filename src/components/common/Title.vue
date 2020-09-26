@@ -2,7 +2,7 @@
   <div class="title-contain" style="borderBottom: 1px solid #fff;">
     <div class="icon-left">
       <slot name="iconLeft">
-        <van-icon name="arrow-left" />
+        <van-icon name="arrow-left" @click="backBtn"/>
       </slot>
     </div>
     <div class="title-header">
@@ -16,6 +16,12 @@ export default {
   data: function () {
     return {};
   },
+  methods:{
+    backBtn(){
+      console.log(1111);
+      this.$router.back();
+    }
+  }
 };
 </script>
 <style lang="scss">

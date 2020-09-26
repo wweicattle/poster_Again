@@ -15,7 +15,7 @@ export function requestBacImage() {
     action: "fans",
     ctrl: "getbgpiclist",
     // pagesize:10,
-    servername:"svr-saletool133"
+    servername: "svr-saletool133"
 
     // pagesize:10,
   }
@@ -30,7 +30,7 @@ export function requestUserCode(obj) {
     action: "fans",
     ctrl: "getcontactme",
     cid: obj.cid,
-    servername:"svr-saletool133"
+    servername: "svr-saletool133"
 
   }
   let url = `/apis`
@@ -46,7 +46,7 @@ export function requestUserAvator(obj) {
     action: "fans",
     ctrl: "getavatar",
     cid: obj.cid,
-    servername:"svr-saletool133"
+    servername: "svr-saletool133"
 
   }
   let url = `/apis`
@@ -61,12 +61,28 @@ export function requestFansList(obj) {
     action: "fans",
     ctrl: "getfanslist",
     cid: obj.cid,
-    servername:"svr-saletool133"
-
-    
+    servername: "svr-saletool133"
   }
   return request.post(url, qs.stringify(params))
 }
+// 图片上传base64返回一个url.
+export function requesUrl(BaseUrl) {
+  let url = `/apis`;
+  let param = {
+    imgName: "poster.png",
+    base64Img: BaseUrl,
+    createid: "110",
+    createname: "weicattle"
+  }
+  let params = {
+    action: "tool",
+    servername: "svr-build",
+    ctrl: "saveSignatureImage",
+    data: JSON.stringify(param)
+  }
+  return request.post(url, qs.stringify(params))
+}
+
 export function requestSendGroupMess(obj) {
   let url = `/ss/?action=fans&ctrl=addmsgtemplate`
   let params = {
@@ -78,9 +94,7 @@ export function requestSendGroupMess(obj) {
     url: "",
     picurl: "",
     desc: "",
-    servername:"svr-saletool133"
+    servername: "svr-saletool133"
   }
-  console.log(qs.stringify(params));
-
   return request.post(url, qs.stringify(params))
 }
