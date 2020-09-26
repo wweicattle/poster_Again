@@ -377,20 +377,28 @@ export default {
     height: 44px;
     background: #fff;
     ul {
+      height: 44px;
       display: flex;
       justify-content: space-around;
+      height: 100%;
       li {
-        justify-content: center;
         display: flex;
         flex-direction: column;
-        font-size: 14px;
+        font-size: 12px;
+        justify-content: space-between;
+        height: 100%;
         .add-icon {
-          display: 100%;
+          // display: 100%;
+          width: 26px;
           height: 26px;
           background: rgba(81, 146, 252, 1);
           border-radius: 50%;
           box-sizing: border-box;
           padding: 5px;
+        }
+        img {
+          width: 26px;
+          height: 26px;
         }
       }
     }
