@@ -51,6 +51,7 @@ export default {
       console.log(obj);
       this.canvas = obj.canvas;
       this.event = obj.event;
+      console.log(this.event.fill);
     });
   },
   methods: {
@@ -85,25 +86,24 @@ export default {
   watch: {
     activeObj: {
       handler(newVal, oldVal) {
-        console.log(111111);
+        console.log(3243);
         this.canvas = newVal.canvas || [];
         this.event = newVal.event;
         this.beforeColors = this.event.fill;
         console.log(this.beforeColors);
         this.canvas.getObjects().forEach((val, index) => {
           val.on("deselected", (options) => {
-            console.log(23243);
+            console.log("deselect");
             // 文本颜色进行修使用set方法
             // this.event.set("fill", this.beforeColors);
             // this.canvas.discardActiveObject();
             // 进行刷新画布
-            if (this.symbolclickcolor) {
+            // if (this.symbolclickcolor) {
               this.event.set("fill", this.changeColor);
-              this.symbolclickcolor=false;
-              this.changeColor=this.beforeColors;
-            } else {
-              this.event.set("fill", this.beforeColors);
-            }
+              // this.symbolclickcolor=false;
+            // } else {
+              // this.event.set("fill", this.beforeColors);
+            // }
             // this.canvas.discardActiveObject();
 
             this.canvas.renderAll();
