@@ -10,13 +10,12 @@
         </div>
       </title-header>
     </div>
-
     <div class="sale-contains">
       <div class="sale-number-contain">
         <div class="sale-number-content">
           <span class="sale-num">销售金额(元)</span>
           <div>
-            <span class="sale-detail-num">25,178.00</span>
+            <span class="sale-detail-num">{{ salecount || "127.26.00" }}</span>
             <img src="~assets/img/home/icon_arrow_blackbg.png" alt />
           </div>
         </div>
@@ -24,25 +23,37 @@
           <span>
             <van-switch v-model="checked" />
           </span>
-          <span class="today-num">今日</span>
-          <select name id>s</select>
+          <select v-model="selected" class="select">
+            <option value="today">今日</option>
+            <option value="month">本月</option>
+          </select>
         </div>
       </div>
       <div class="super-people-contain">
-        <div class="left">
+        <div class="left" @click="clicktMemberBtn">
           <span class="super-pull-person">会员拉新(人)</span>
           <div class="pull-line">
-            <img src="~assets/img/home/icon_fall.png" alt />
+            <img v-if="isshowicon" src="~assets/img/home/icon_fall.png" alt />
             <span class="line-num">125</span>
-            <img class="iconTwo" src="~assets/img/home/icon_arrow_blackbg.png" alt />
+            <img
+              class="iconTwo"
+              src="~assets/img/home/icon_arrow_blackbg.png"
+              alt
+              v-if="isshowrighticon"
+            />
           </div>
         </div>
         <div class="right">
           <span class="super-pull-person">粉丝拉新(人)</span>
           <div class="pull-line">
-            <img src="~assets/img/home/icon_rise.png" alt />
+            <img src="static/img/logo.png" alt v-if="isshowicon" />
             <span class="line-num">125</span>
-            <img class="iconTwo" src="~assets/img/home/icon_arrow_blackbg.png" alt />
+            <img
+              class="iconTwo"
+              src="~assets/img/home/icon_arrow_blackbg.png"
+              alt
+              v-if="isshowrighticon"
+            />
           </div>
         </div>
       </div>
@@ -82,30 +93,38 @@
           <li>
             <span class="birth-name">生日回访</span>
             <div class="birth-back-content">
-              <span>123人待回访</span>
-              <van-button plain hairline type="primary" round>去回访</van-button>
+              <span>{{ birthdaycount }}人待回访</span>
+              <van-button plain hairline type="primary" round
+                >去回访</van-button
+              >
             </div>
           </li>
 
           <li>
             <span class="birth-name">售后回访</span>
             <div class="birth-back-content">
-              <span>123人待回访</span>
-              <van-button plain hairline type="primary" round>去回访</van-button>
+              <span>{{ salefeedbackcount }}人待回访</span>
+              <van-button plain hairline type="primary" round
+                >去回访</van-button
+              >
             </div>
           </li>
           <li>
             <span class="birth-name">会员维系</span>
             <div class="birth-back-content">
-              <span>123人待回访</span>
-              <van-button plain hairline type="primary" round>去回访</van-button>
+              <span>{{ vipcontactcount }}人待回访</span>
+              <van-button plain hairline type="primary" round
+                >去回访</van-button
+              >
             </div>
           </li>
           <li>
             <span class="birth-name">卡券到期提醒</span>
             <div class="birth-back-content">
-              <span>123人待回访</span>
-              <van-button plain hairline type="primary" round>去回访</van-button>
+              <span>{{ cardovertimecount }}人待回访</span>
+              <van-button plain hairline type="primary" round
+                >去回访</van-button
+              >
             </div>
           </li>
         </ul>
@@ -113,43 +132,93 @@
     </div>
     <div class="home—footer-contain">
       <ul>
-        <li>
-          <img src="~assets/img/home/tabbar_index_sele.png" />首页
-        </li>
+        <li><img src="~assets/img/home/tabbar_index_sele.png" />首页</li>
         <li>
           <img class="add-icon" src="~assets/img/home/icon_add.png" />海报
         </li>
-        <li>
-          <img src="~assets/img/home/tabbar_vip_default.png" />会员
-        </li>
+        <li><img src="~assets/img/home/tabbar_vip_default.png" />会员</li>
       </ul>
     </div>
-    <!-- <button @click="clicmebtn">return poster</button> -->
   </div>
 </template>
 <script>
 import TitleHeader from "components/common/Title";
-
+import { requestHomeInfo } from "network/home";
 export default {
   name: "Home",
   data: function () {
-    return {};
+    return {
+      selected: "today",
+      checked: true,
+      salecount: null,
+      salefeedbackcount: null,
+      vipcontactcount: null,
+      cardovertimecount: null,
+      birthdaycount: null,
+      isshowicon: true,
+      isshowrighticon: true,
+      searchtype: 0,
+    };
   },
   components: {
     TitleHeader,
   },
   methods: {
+    //会员拉新事件
+    clicktMemberBtn() {
+      this.$router.push("/memberpull");
+    },
+
+    // 递会员事件
     clicmebtn() {
-      this.$router.push("/editPoster");
+      this.$router.push("/editposter");
+    },
+
+    // 请求主页数据
+    requestHomeInfo(obj) {
+      requestHomeInfo(obj).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          this.salecount = da.data.data.salecount;
+          this.salefeedbackcount = da.data.data.salefeedbackcount;
+          this.vipcontactcount = da.data.data.vipcontactcount;
+          this.cardovertimecount = da.data.data.cardovertimecount;
+          this.birthdaycount = da.data.data.birthdaycount;
+          this.fanscount = da.data.data.fanscount;
+          this.vipscount = da.data.data.vipscount;
+        } else {
+          this.$notify({
+            type: "warning",
+            message: da.data.errmsg || "获取主页信息失败！",
+          });
+        }
+      });
+    },
+  },
+  mounted() {
+    // 请求主页信息数据
+    if (this.selected == "today") {
+      this.requestHomeInfo({ cid: 587, searchtype: 0 });
+    } else {
+      this.requestHomeInfo({ cid: 587, searchtype: 1, searchdate: "" });
+    }
+  },
+  computed: {
+    riseUrl() {
+      return "static/img/home/icon_fall.png";
+    },
+    downUrl() {
+      return "static/img/home/icon_fall.png";
     },
   },
 };
 </script>
 <style lang="scss" scoped>
 #homes-contains {
+  overflow-y:scroll;
   background: #f7f7f7;
-  height: calc(100vh);
-  overflow: hidden;
+  padding-bottom: 44px;
+  height: 100vh;
   .title-headers {
     .title-header {
       // font-size: ;
@@ -189,6 +258,8 @@ export default {
           }
           img {
             padding-left: 5px;
+            width: 20px;
+            height: 12px;
           }
         }
       }
@@ -206,11 +277,11 @@ export default {
           padding-left: 10px;
           padding-top: 5px;
         }
-        select {
+        .select {
           padding-top: 5px;
           background: #33496c;
           border: none;
-          font-size: 14px;
+          font-size: 13px;
           color: #fff;
         }
       }
@@ -233,7 +304,7 @@ export default {
           padding-top: 5px;
           align-items: center;
           .line-num {
-            padding: 0 5px;
+            padding: 0 3px;
             font-size: 18px;
             font-family: PingFangSC-Semibold, PingFang SC;
             font-weight: 600;
@@ -242,6 +313,10 @@ export default {
           .iconTwo {
             width: 20px;
             height: 15px;
+          }
+          img {
+            width: 20px;
+            height: 20px;
           }
         }
       }
@@ -258,15 +333,20 @@ export default {
           padding-top: 5px;
           display: flex;
           .line-num {
-            padding: 0 10px;
+            padding: 0 3px;
             font-size: 18px;
             font-family: PingFangSC-Semibold, PingFang SC;
             font-weight: 600;
             color: #ffffff;
+            line-height: 22px;
           }
           .iconTwo {
             width: 20px;
             height: 15px;
+          }
+          img {
+            width: 20px;
+            height: 20px;
           }
         }
       }
@@ -317,8 +397,7 @@ export default {
   }
   .home-functions-contain {
     // margin: -40px 15px 0;
-    margin: 20px 15px 0;
-    width: 343px;
+    margin: 25px 15px 0;
     height: 282px;
     background: #ffffff;
     border-radius: 8px;
@@ -329,10 +408,11 @@ export default {
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 600;
         color: #323232;
-        line-height: 22px;
+        line-height: 36px;
       }
       ul {
         li {
+          height: 50px;
           padding: 15px 0;
           display: flex;
           justify-content: space-between;
@@ -340,6 +420,7 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #464646;
+          border-bottom: 1px solid rgba(163, 119, 119, 0.1);
           .birth-name {
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
@@ -362,9 +443,16 @@ export default {
               font-size: 12px;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
-              color: #5192fc;
               line-height: 17px;
+              border: #5192fc;
+              // padding:0 3px ;
+              .van-button__text {
+                color: #5192fc;
+              }
             }
+          }
+          &:last-child {
+            border: none;
           }
         }
       }

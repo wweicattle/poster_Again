@@ -6,6 +6,7 @@
       show-cancel-button
       @confirm="confirmBtn"
       @cancel="cancelBtn"
+      :beforeClose="beforeClose"
     >
       <div class="selectAll-contain">
         <span type="info" @click="toggleAll">反选</span>
@@ -13,10 +14,10 @@
         <span @click="checkAll">全选</span>
       </div>
       <van-checkbox-group v-model="result" ref="checkboxGroup">
-        <template v-for="(val,index) in fanslist">
+        <template v-for="(val, index) in fanslist">
           <van-checkbox :name="val.fansuserid" :key="index">
             <img :src="val.avatar" alt />
-            <span class="fans-name">{{val.fansname}}</span>
+            <span class="fans-name">{{ val.fansname }}</span>
           </van-checkbox>
         </template>
       </van-checkbox-group>
@@ -26,7 +27,7 @@
 <script scoped>
 import { eventBus } from "utils/eventbus";
 import { colors } from "utils/colors";
-import { requestFansList,requesUrl } from "network/home";
+import { requestFansList, requesUrl, requestSendGroupMess } from "network/home";
 export default {
   name: "SendMess",
   props: {
@@ -63,17 +64,65 @@ export default {
     });
   },
   methods: {
+    beforeClose(a, b) {
+      if (a === "confirm") return b(false);
+    },
+    requestSendGroupMess(obj) {
+      requestSendGroupMess(obj)
+        .then((da) => {
+          if (da.data.errcode == 0) {
+            this.$toast.clear();
+            this.$toast.success("分享海报成功！");
+            this.$emit("changeVisable");
+          } else {
+            this.$notify({
+              type: "warning",
+              message: "分享海报失败！" + da.errmsg,
+            });
+          }
+        })
+        .catch((da) => {
+          this.$notify({ type: "warning", message: da });
+        });
+    },
     //   点击确定按钮
     confirmBtn() {
-      console.log("22");
-      this.$emit("changeVisable");
-      console.log(this.result);
-      requesUrl(this.shareSrc).then(da=>{
-          console.log(da);
-      })
+      if (this.result.length == 0) {
+        this.$notify({ type: "warning", message: "请选择粉丝！" });
+        this.show = true;
+        return;
+      }
+
+      let params = {
+        fansuserids: this.result.join(),
+        cid: window.localStorage.getItem("cid"),
+      };
+      requesUrl(this.shareSrc)
+        .then((da) => {
+          let toast = this.$toast.loading({
+            message: "分享中..",
+            forbidClick: true,
+          });
+          if (da.data.errcode == 0) {
+            params.url = da.data.data.signimgurl;
+            params.picurl = da.data.data.signimgurl;
+            // 进行群发
+            this.requestSendGroupMess(params);
+          } else {
+            this.$notify({
+              type: "warning",
+              message: "海报图片中转失败，请检查网络",
+            });
+          }
+        })
+        .catch((da) => {
+          this.$notify({
+            type: "danger",
+            message: da + "!",
+          });
+        });
     },
     cancelBtn() {
-      console.log(2332);
       this.$emit("changeVisable");
     },
     checkAll() {

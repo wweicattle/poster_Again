@@ -58,7 +58,7 @@
                 v-if="isshowAttr"
               >
                 <van-icon name="orders-o" />
-                <span>背景</span>
+                <span class="back-name">背景</span>
               </div>
             </div>
             <div class="print—cicle-btn">
@@ -115,7 +115,6 @@ import EditColor from "components/Poster/EditColor";
 
 import axios from "axios";
 import { fabric } from "fabric";
-var img = require("./../../assets/timg.jpg");
 import {
   requestUserCode,
   requestUserInfo,
@@ -643,6 +642,9 @@ export default {
         .colorChange {
           color: #5192fc;
         }
+        .back-name{
+            // padding-top: 8px;
+          }
         & > div {
           margin: 0 10px;
           width: 35px;
@@ -665,6 +667,7 @@ export default {
             padding-top: 0;
             font-size: 20px;
           }
+          
         }
       }
     }

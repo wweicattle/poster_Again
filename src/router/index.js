@@ -1,18 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Home',
-    component:() => import(/* webpackChunkName: "about" */ 'views/home/index.vue')
+    component: () => import( /* webpackChunkName: "about" */ 'views/home/index.vue')
   },
   {
-    path: '/editPoster',
+    path: '/editposter',
     name: 'Poster',
-    component:() => import(/* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
+  },
+  {
+    path: '/memberpull',
+    name: 'Member',
+    component: () => import( /* webpackChunkName: "about" */ '../components/MemberPull')
   },
   // {
   //   path: '/about',
@@ -29,5 +34,13 @@ const router = new VueRouter({
   // base: process.env.BASE_URL,
   routes
 })
+// 进行显示进度条
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  next()
+})
 
+router.afterEach(() => {
+  NProgress.done()
+})
 export default router

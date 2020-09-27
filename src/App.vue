@@ -18,7 +18,7 @@ export default {
 <style lang="scss">
 @import url(./assets/css/base.css);
 #app {
-  background: #33496c;
+  // background: #33496c;
   // height: 800px;
 }
 </style>

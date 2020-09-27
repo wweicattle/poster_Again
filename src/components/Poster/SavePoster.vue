@@ -98,7 +98,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #save-contains {
-  height: 100vh;
+  height: 667px;
   background:#33496c;
   .title-header {
     background: #fff;

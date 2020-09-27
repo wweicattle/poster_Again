@@ -53,7 +53,7 @@ export function requestUserAvator(obj) {
   return request.post(url, qs.stringify(params))
 }
 
-// 
+// 获取粉丝列表
 export function requestFansList(obj) {
   // obj为{sadffsdfsdgsg，gdsgdsgsgs}这样
   let url = `/apis`
@@ -65,7 +65,8 @@ export function requestFansList(obj) {
   }
   return request.post(url, qs.stringify(params))
 }
-// 图片上传base64返回一个url.
+
+// 图片上传base64返回一个url中转.
 export function requesUrl(BaseUrl) {
   let url = `/apis`;
   let param = {
@@ -83,18 +84,29 @@ export function requesUrl(BaseUrl) {
   return request.post(url, qs.stringify(params))
 }
 
+// 进行群发信息
 export function requestSendGroupMess(obj) {
-  let url = `/ss/?action=fans&ctrl=addmsgtemplate`
+  let url = `/apis`
   let params = {
-    cid: obj.cid,
-    fansuserids: "",
-    text: "",
-    imageurl: "",
-    title: "",
+    action:"fans",
+    ctrl:"addmsgtemplate",
+    text: "文本",
     url: "",
     picurl: "",
-    desc: "",
-    servername: "svr-saletool133"
+    servername: "svr-saletool133",
+    ...obj
+  }
+  return request.post(url, qs.stringify(params))
+}
+
+// 获取主页统计信息
+export function requestHomeInfo(obj){
+  let url = `/apis`
+  let params = {
+    action:"fans",
+    ctrl:"getindexdata",
+    servername: "svr-saletool133",
+    ...obj
   }
   return request.post(url, qs.stringify(params))
 }
