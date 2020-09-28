@@ -10,7 +10,8 @@ import {
   Uploader,
   Notify ,
   Checkbox, CheckboxGroup,
-  Switch 
+  Switch ,
+  Calendar 
 } from 'vant';
 Vue.use(Switch);
 Vue.use(Button);
@@ -23,6 +24,7 @@ Vue.use(Uploader);
 Vue.use(Notify);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
+Vue.use(Calendar);
 
 
 
