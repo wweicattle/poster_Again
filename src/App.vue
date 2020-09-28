@@ -1,6 +1,37 @@
 <template>
   <div id="app">
     <router-view />
+    <div class="home—footer-contain" v-show="!($route.path=='/saveposter/memberpull')">
+      <ul>
+        <li class="home-icon" @click="homebtn">
+          <img src="~assets/img/home/home.png" v-if="!activecolorI" />
+          <img src="~assets/img/home/home3.png" v-else /><span
+            :style="activecolorI ? colorFont : ''"
+            >首页</span
+          >
+        </li>
+        <li @click="posterBtn">
+          <img src="~assets/img/home/jiahao1.png" v-if="!activecolorII" />
+          <img src="~assets/img/home/jiahao2.png" v-else /><span
+            :style="activecolorII ? colorFont : ''"
+            >海报</span
+          >
+        </li>
+        <li
+          @click="
+            (activecolorI = false),
+              (activecolorII = false),
+              (activecolorIII = true)
+          "
+        >
+          <img src="~assets/img/home/huiyuan1.png" v-if="!activecolorIII" />
+          <img src="~assets/img/home/huiyuan2.png" v-else /><span
+            :style="activecolorIII ? colorFont : ''"
+            >会员</span
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -8,16 +39,96 @@ import Home from "views/home/index.vue";
 export default {
   name: "App",
   data: function () {
-    return {};
+    return {
+      activecolorI: true,
+      activecolorIII: false,
+      activecolorII: false,
+      colorFont: {
+        color: "#33496c",
+      },
+      footerState: null,
+      isshowFooter:true
+    };
   },
   components: {
     Home,
   },
+  methods: {
+    homebtn() {
+      this.$router.push("/"), (this.activecolorI = true);
+      this.activecolorII = false;
+      this.activecolorIII = false;
+      window.localStorage.setItem("footerState", 0);
+    },
+    posterBtn() {
+      this.$router.push("/editposter"), (this.activecolorI = false);
+      this.activecolorII = true;
+      this.activecolorIII = false;
+      window.localStorage.setItem("footerState", 1);
+    },
+  },
+  mounted() {
+    if (window.localStorage.getItem("footerState") == 1) {
+      this.activecolorII = true;
+      this.activecolorIII = false;
+      this.activecolorI = false;
+    }
+    console.log(this.$route);
+    if(this.$route.path=="/saveposter/memberpull"){
+      this.isshowFooter=false;
+    // console.log(window.localStorage.setItem("footerState"));
+  }
+  }
 };
 </script>
 <style lang="scss">
 @import url(./assets/css/base.css);
 #app {
+  .home—footer-contain {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 46px;
+    background: #fff;
+    ul {
+      height: 44px;
+      display: flex;
+      justify-content: space-around;
+      height: 100%;
+      li {
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+
+        // .add-icon {
+        //   // display: 100%;
+        //   width: 26px;
+        //   height: 26px;
+        //   background: #ccc;
+        //   border-radius: 50%;
+        //   box-sizing: border-box;
+        //   padding: 5px;
+        // }
+        img {
+          margin-top: 6px;
+          width: 22px;
+          height: 22px;
+        }
+        .active {
+          color: #33496c;
+        }
+      }
+      // .active{
+      //   img{
+      //     background: rgba(81, 146, 252, 1);
+
+      //   }
+      // }
+    }
+  }
   // background: #33496c;
   // height: 800px;
 }

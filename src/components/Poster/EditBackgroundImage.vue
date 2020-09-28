@@ -10,7 +10,7 @@
       <div class="img-contain">
         <img
           v-for="(img,index) in imageLists"
-          v-lazy="img.urladdress"
+          v-lazy="img"
           :key="index"
           class="imgContent"
           @click="imgindex(index)"
@@ -22,7 +22,6 @@
 <script>
 import { eventBus } from "utils/eventbus";
 
-var img=require("./../../assets/avator.png");
 export default {
   name: "EditPhoto",
   props: {
@@ -32,11 +31,13 @@ export default {
     },
     imageLists:{
       type:Array,
+      default(){
+        return [];
+      }
     }
   },
   data: function () {
     return {
-      img,
       show: true,
       textContent: "",
     };
@@ -47,9 +48,8 @@ export default {
   methods: {
     imgindex(index) {
       // 后台所给接口一开始是不允许跨域，所以后台给中转了一下
-      let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
-      console.log(url);
-      this.selectImgUrl =url;
+      // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
+      this.selectImgUrl =this.imageLists[index];
     },
     cancelBtn() {
       this.$emit("closeVisable");
@@ -62,7 +62,7 @@ export default {
       this.$emit("sendPhotoUrl", this.selectImgUrl);
     },
   },
-  watch(){
+  watch:{
     
   }
 };

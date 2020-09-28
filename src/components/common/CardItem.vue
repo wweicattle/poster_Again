@@ -23,6 +23,189 @@
             </div>
           </div>
         </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+      </template>
+
+      <template v-for="(val, index) in fanlist">
+        <div class="card-content" :key="index">
+          <div class="user-avatat-content">
+            <img :src="val.avatar" alt="" />
+          </div>
+          <div class="user-details">
+            <span class="username">
+              {{ val.fansname || "admin" }}
+              <img src="static/memberPull/icon_man.png" alt="" />
+            </span>
+            <div class="user-join">
+              <span> 加入日期：</span>
+              <span>
+                {{ val.Joindate || "2010-25-25" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
       </template>
       <!-- <template v-for="(val,index) in fanlist">
         <div class="card-content" :key="index">

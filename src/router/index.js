@@ -15,7 +15,12 @@ const routes = [{
     component: () => import( /* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
   },
   {
-    path: '/memberpull',
+    path: '/saveposter',
+    name: 'savePoster',
+    component: () => import( /* webpackChunkName: "about" */ '../components/Poster/SavePoster.vue')
+  },
+  {
+    path: '/saveposter/memberpull',
     name: 'Member',
     component: () => import( /* webpackChunkName: "about" */ '../components/MemberPull')
   },

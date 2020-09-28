@@ -152,6 +152,7 @@ export default {
   bottom: 0;
   height: 190px;
   background: #234172;
+  z-index: 1000;
   ul {
     height: 86%;
     overflow-y: scroll;

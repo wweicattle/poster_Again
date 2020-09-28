@@ -1,13 +1,13 @@
 <template>
   <div id="save-contains">
-    <title-header>
+    <!-- <title-header>
       <div slot="iconLeft" :style="iconLeftStyle">
         <van-icon name="arrow-left" @click="$emit('backeditposter')" />
       </div>
       <div slot="header" class="title-header">
         <div class="title-name">保存海报</div>
       </div>
-    </title-header>
+    </title-header> -->
     <div class="save-poster-contain">
       <div class="poster-img-contain">
         <img :src="src" alt />
@@ -72,10 +72,12 @@ export default {
   },
   methods: {
     addCreateBtn() {
+      // eventBus.
       // this.$router.push("/editPoster")
       window.location.href = "/editPoster";
       // this.$router.push("/index")
       // console.log(t);
+      window.localStorage.setItem("footerState", 1);
     },
     // sendMessageBtn(){
     //   this.
@@ -98,7 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #save-contains {
-  height: 667px;
+  height: 621px;
   background:#33496c;
   .title-header {
     background: #fff;
@@ -119,7 +121,7 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
-    margin-top: 80px;
+    margin-top: 40px;
     height: 416px;
     // line-height: 380px;
     background: #f5efef;

@@ -78,7 +78,7 @@ export default {
   font-size: 12px;
   color: #fff;
   position: fixed;
-  bottom: 10px;
+  bottom: 56px;
   ul {
     height: 100%;
     display: flex;

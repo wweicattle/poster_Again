@@ -1,6 +1,6 @@
 <template>
   <div id="homes-contains">
-    <div class="title-headers">
+    <!-- <div class="title-headers">
       <title-header>
         <div slot="iconLeft">
           <van-icon name="arrow-left" />
@@ -9,7 +9,7 @@
           <div class="title-name">超级导购</div>
         </div>
       </title-header>
-    </div>
+    </div> -->
     <div class="sale-contains">
       <div class="sale-number-contain">
         <div class="sale-number-content">
@@ -73,7 +73,7 @@
             <div class="icon">
               <img src="~assets/img/home/icon_vip.png" alt />
             </div>
-            <span class="only">递会员</span>
+            <span class="only">邀会员</span>
           </div>
         </li>
         <li>
@@ -130,15 +130,15 @@
         </ul>
       </div>
     </div>
-    <div class="home—footer-contain">
+    <!-- <div class="home—footer-contain">
       <ul>
-        <li><img src="~assets/img/home/tabbar_index_sele.png" />首页</li>
-        <li>
+        <li class="home-icon" :class="{active:activecolorI}" @click="activecolorI=true,activecolorII=false,activecolorIII=false"><img src="" />首页</li>
+        <li @click="$router.push('/editposter'),activecolorI=false,activecolorII=true,activecolorIII=false" :class="{active:activecolorII}"> 
           <img class="add-icon" src="~assets/img/home/icon_add.png" />海报
         </li>
-        <li><img src="~assets/img/home/tabbar_vip_default.png" />会员</li>
+        <li @click="activecolorI=false,activecolorII=false,activecolorIII=true" :class="{active:activecolorIII}"><img src="~assets/img/home/tabbar_vip_default.png" />会员</li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -158,6 +158,7 @@ export default {
       isshowicon: true,
       isshowrighticon: true,
       searchtype: 0,
+    
     };
   },
   components: {
@@ -166,7 +167,8 @@ export default {
   methods: {
     //会员拉新事件
     clicktMemberBtn() {
-      this.$router.push("/memberpull");
+      this.$router.push("/saveposter/memberpull");
+      // window.location.href="/saveposter/memberpull";
     },
 
     // 递会员事件
@@ -196,6 +198,8 @@ export default {
     },
   },
   mounted() {
+    // 设置标题
+    document.title = "超级导购";
     // 请求主页信息数据
     if (this.selected == "today") {
       this.requestHomeInfo({ cid: 587, searchtype: 0 });
@@ -215,9 +219,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 #homes-contains {
-  overflow-y:scroll;
+  overflow-y: scroll;
   background: #f7f7f7;
-  padding-bottom: 44px;
+  margin-bottom: 44px;
   height: 100vh;
   .title-headers {
     .title-header {
@@ -231,7 +235,7 @@ export default {
     height: 198px;
     background: #33496c;
     padding: 20px 20px 0;
-    margin-top: 43px;
+    // margin-top: 43px;
     .sale-number-contain {
       display: flex;
       justify-content: space-between;
@@ -469,17 +473,29 @@ export default {
       display: flex;
       justify-content: space-around;
       height: 100%;
+      .home-icon{
+        i{
+          font-size: 23px;
+        }
+      }
       li {
         display: flex;
         flex-direction: column;
         font-size: 12px;
+        align-items: center;
         justify-content: space-between;
         height: 100%;
+        &:first-child{
+          img{
+            width: 30px;
+            height: 30px;
+          }
+        }
         .add-icon {
           // display: 100%;
           width: 26px;
           height: 26px;
-          background: rgba(81, 146, 252, 1);
+          background: #ccc;
           border-radius: 50%;
           box-sizing: border-box;
           padding: 5px;
@@ -487,6 +503,12 @@ export default {
         img {
           width: 26px;
           height: 26px;
+        }
+      }
+      .active{
+        img{
+          background: rgba(81, 146, 252, 1);
+
         }
       }
     }

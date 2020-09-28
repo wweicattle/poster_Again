@@ -2,9 +2,9 @@
   <div>
     <div class="poster-contains" v-if="!isshowSavePoster">
       <!-- 这是标题 -->
-      <title-header>
+      <!-- <title-header>
         <div slot="header" class="title-header">生成海报</div>
-      </title-header>
+      </title-header> -->
       <!--  -->
       <div class="line-content"></div>
       <!-- 这是海报设计内容 -->
@@ -133,7 +133,7 @@ export default {
       isshowEditColor: false,
       avator: null,
       usercode: null,
-      backImages: null,
+      backImages: [],
       userInfo: {},
       ss: "",
       fileList: null,
@@ -228,7 +228,11 @@ export default {
       // 背景图获取
       this.backImages = await new Promise((res) => {
         requestBacImage().then((da) => {
-          res(da.data.data);
+      // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
+          let data=da.data.data.map(val=>{
+              return `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${val.urladdress}`
+          })
+          res(data);
         });
       });
       this.userInfo = await new Promise((res) => {
@@ -513,10 +517,10 @@ export default {
       this.isshowSavePoster = true;
       // let a = this.$refs.ss.scrollWidth;
       // let b = this.$refs.ss.scrollHeight;
-      let hs = document.querySelector(".title-header").clientHeight;
+      // let hs = document.querySelector(".title-header").clientHeight;
       let h = document.querySelector(".poster-content");
       let paddingTop = getComputedStyle(h).paddingTop.split("px")[0];
-      let totalTop = hs + Number(paddingTop) + 1;
+      let totalTop =Number(paddingTop) + 1;
       html2canvas(document.querySelector(".yes"), {
         allowTaint: true,
         taintTest: false,
@@ -536,6 +540,8 @@ export default {
     },
   },
   mounted() {
+      // 设置标题
+    document.title = "海报制作";
     // 进行计算画布的大小
     this.$refs.zz.width = this.$refs.posterPhoto.clientWidth;
     this.$refs.zz.height = this.$refs.posterPhoto.clientHeight;
@@ -546,7 +552,7 @@ export default {
     // 初始化一个canvas实例,必须放在设置画布宽高时的下面执行
     this.createCanvasInit();
   },
-  watch: {},
+  
   beforeDestroy() {
     // 清除事件总线
     eventBus.$off("init");
@@ -590,9 +596,9 @@ export default {
 .line-content {
 }
 .poster-content {
-  margin-top: 43px;
+  // margin-top: 43px;
   background: #33496c;
-  height: 622px;
+  height: 621px;
   position: relative;
   padding-top: 35px;
   .poster-content-top {
@@ -621,10 +627,11 @@ export default {
   .poster-content-bottom {
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 46px;
     height: 76px;
     background: #fff;
     padding-top: 7px;
+    border-bottom:1PX solid #ccc;
     .print-btn-contains {
       display: flex;
       justify-content: space-between;
