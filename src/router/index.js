@@ -6,6 +6,11 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
+    redirect: '/home',
+    name: 'index'
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: () => import( /* webpackChunkName: "about" */ 'views/home/index.vue')
   },
@@ -24,14 +29,17 @@ const routes = [{
     name: 'Member',
     component: () => import( /* webpackChunkName: "about" */ '../components/MemberPull')
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  {
+    path: '/saveposter/fanspull',
+    name: 'fans',
+    component: () => import( /* webpackChunkName: "about" */ '../components/FansList')
+  },
+  {
+    path: '/birthBack',
+    name: 'fans',
+    component: () => import( /* webpackChunkName: "about" */ '../components/BirthdayVisit')
+  },
+
 ]
 
 const router = new VueRouter({
@@ -48,4 +56,8 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done()
 })
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error)
+}
 export default router

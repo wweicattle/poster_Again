@@ -1,90 +1,10 @@
 <template>
   <div class="card-contain">
     <div class="card-list-name" :class="{ fixPostion: fixPostion }">
-      会员列表
+      <slot name="titleName">列表</slot>
     </div>
     <div class="item-content">
       <div class="remind-fanslist" v-if="without">无新增会员！</div>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
 
       <template v-for="(val, index) in fanlist">
         <div class="card-content" :key="index">
@@ -94,119 +14,26 @@
           <div class="user-details">
             <span class="username">
               {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
+              <img
+                src="/static/img/memberPull/icon_woman.png"
+                alt=""
+                v-if="val.gender == 2"
+              />
+              <img src="/static/img/memberPull/icon_man.png" alt="" v-else />
             </span>
             <div class="user-join">
               <span> 加入日期：</span>
               <span>
-                {{ val.Joindate || "2010-25-25" }}
+                {{
+                  new Date(val.jdrq).toLocaleDateString().replace(/\//g, "-") ||
+                  "2010-25-25"
+                }}
               </span>
             </div>
           </div>
         </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
       </template>
 
-      <template v-for="(val, index) in fanlist">
-        <div class="card-content" :key="index">
-          <div class="user-avatat-content">
-            <img :src="val.avatar" alt="" />
-          </div>
-          <div class="user-details">
-            <span class="username">
-              {{ val.fansname || "admin" }}
-              <img src="static/memberPull/icon_man.png" alt="" />
-            </span>
-            <div class="user-join">
-              <span> 加入日期：</span>
-              <span>
-                {{ val.Joindate || "2010-25-25" }}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </template>
       <!-- <template v-for="(val,index) in fanlist">
         <div class="card-content" :key="index">
           <div class="user-avatat-content">
@@ -475,7 +302,7 @@ export default {
   watch: {
     fanlist: {
       handler(newVal) {
-        newVal.length==0? (this.without = true) : (this.without = false);
+        newVal.length == 0 ? (this.without = true) : (this.without = false);
       },
     },
   },
@@ -544,14 +371,21 @@ export default {
     border-bottom: 1px solid #f2e1e1;
     // border: 1px solid red;
     //   justify-content: ;
-    img {
-      height: 46px;
-      width: 46px;
-      border-radius: 50%;
+    .user-avatat-content {
+      img {
+        height: 46px;
+        width: 46px;
+        border-radius: 50%;
+      }
     }
+
     .user-details {
+      margin-top: 10px;
       height: 46px;
       padding-left: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       .username {
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -563,11 +397,12 @@ export default {
         }
       }
       .user-join {
+        margin-top: 4px;
         font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: #888888;
-        line-height: 17px;
+        // line-height: 17px;
       }
     }
   }

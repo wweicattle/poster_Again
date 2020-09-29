@@ -25,7 +25,6 @@
             round
             style="color:#fff;background:#5192fc"
             @click="sharePosterBtn"
-           
           >分享</van-button>
         </div>
       </div>
@@ -75,6 +74,7 @@ export default {
       // eventBus.
       // this.$router.push("/editPoster")
       window.location.href = "/editPoster";
+      // this
       // this.$router.push("/index")
       // console.log(t);
       window.localStorage.setItem("footerState", 1);

@@ -14,14 +14,22 @@
       <div class="sale-number-contain">
         <div class="sale-number-content">
           <span class="sale-num">销售金额(元)</span>
-          <div>
-            <span class="sale-detail-num">{{ salecount || "127.26.00" }}</span>
+          <div class="sale-money">
+            <span class="sale-detail-num">{{ salecount + ".00" }}</span>
             <img src="~assets/img/home/icon_arrow_blackbg.png" alt />
           </div>
         </div>
         <div class="today-select">
-          <span>
-            <van-switch v-model="checked" />
+          <span
+            class="switch-contain"
+            @click="switchBtn"
+            :class="{ active: !switchNum }"
+          >
+            <!-- <van-switch v-model="checked" /> -->
+            <span class="circle"></span
+            ><span class="switch-person">{{
+              switchNum ? "个人" : "本店"
+            }}</span>
           </span>
           <select v-model="selected" class="select">
             <option value="today">今日</option>
@@ -33,8 +41,17 @@
         <div class="left" @click="clicktMemberBtn">
           <span class="super-pull-person">会员拉新(人)</span>
           <div class="pull-line">
-            <img v-if="isshowicon" src="~assets/img/home/icon_fall.png" alt />
-            <span class="line-num">125</span>
+            <img
+              src="static/img/home/icon_fall.png"
+              alt
+              v-if="vipscount.state == -1"
+            />
+            <img
+              src="static/img/home/icon_rise.png"
+              alt
+              v-if="vipscount.state == 1"
+            />
+            <span class="line-num">{{ vipscount.newvipscount || 0 }}</span>
             <img
               class="iconTwo"
               src="~assets/img/home/icon_arrow_blackbg.png"
@@ -43,11 +60,21 @@
             />
           </div>
         </div>
-        <div class="right">
+        <div class="right" @click="clicktFanBtn">
           <span class="super-pull-person">粉丝拉新(人)</span>
           <div class="pull-line">
-            <img src="static/img/logo.png" alt v-if="isshowicon" />
-            <span class="line-num">125</span>
+            <img
+              src="static/img/home/icon_fall.png"
+              alt
+              v-if="fanscount.state == -1"
+            />
+            <img
+              src="static/img/home/icon_rise.png"
+              alt
+              v-if="fanscount.state == 1"
+            />
+
+            <span class="line-num">{{ fanscount.newfanscount || 0 }}</span>
             <img
               class="iconTwo"
               src="~assets/img/home/icon_arrow_blackbg.png"
@@ -60,7 +87,7 @@
     </div>
     <div class="functions-contain">
       <ul>
-        <li>
+        <li @click="findInventoryBtn">
           <div class="fun-icon-contain">
             <div class="icon">
               <img src="~assets/img/home/icon_kucun.png" alt />
@@ -68,7 +95,7 @@
             <span class="only">查库存</span>
           </div>
         </li>
-        <li>
+        <li @click="nirvanaBtn">
           <div class="fun-icon-contain" @click="clicmebtn">
             <div class="icon">
               <img src="~assets/img/home/icon_vip.png" alt />
@@ -76,7 +103,7 @@
             <span class="only">邀会员</span>
           </div>
         </li>
-        <li>
+        <li @click="inviteProsonBtn">
           <div class="fun-icon-contain">
             <div class="icon">
               <img src="~assets/img/home/icon_reward.png" alt />
@@ -90,11 +117,11 @@
       <div class="help-item">
         <div class="item-totalname">代办任务</div>
         <ul>
-          <li>
+          <li >
             <span class="birth-name">生日回访</span>
             <div class="birth-back-content">
-              <span>{{ birthdaycount }}人待回访</span>
-              <van-button plain hairline type="primary" round
+              <span >{{ birthdaycount }}人待回访</span>
+              <van-button plain hairline type="primary" round  @click.native="birthBackBtn"
                 >去回访</van-button
               >
             </div>
@@ -144,33 +171,58 @@
 <script>
 import TitleHeader from "components/common/Title";
 import { requestHomeInfo } from "network/home";
+import { requestUserInfo } from "network/home";
 export default {
   name: "Home",
   data: function () {
     return {
       selected: "today",
       checked: true,
-      salecount: null,
+      salecount: 0.0,
       salefeedbackcount: null,
       vipcontactcount: null,
       cardovertimecount: null,
       birthdaycount: null,
       isshowicon: true,
       isshowrighticon: true,
-      searchtype: 0,
-    
+      // searchtype: 0,
+      switchNum: true,
+      fanscount: {},
+      vipscount: {},
     };
   },
   components: {
     TitleHeader,
   },
   methods: {
+    birthBackBtn(){
+      this.$router.push("/birthBack");
+    },
+
+    // 查库存，邀会员，琅琊榜额链接
+    findInventoryBtn() {
+      window.location.href =
+        "http://tm.lilanz.com/oa/project/storesaler/goodsListV7.aspx";
+    },
+    nirvanaBtn() {
+      window.location.href =
+        "http://tm.lilanz.com/oa/project/storesaler/ShopRankV2.aspx";
+    },
+    inviteProsonBtn() {
+      window.location.href =
+        "http://tm.lilanz.com/oa/project/StoreSaler/addFansQRCode.aspx";
+    },
+    switchBtn() {
+      this.switchNum = !this.switchNum;
+    },
     //会员拉新事件
     clicktMemberBtn() {
       this.$router.push("/saveposter/memberpull");
       // window.location.href="/saveposter/memberpull";
     },
-
+    clicktFanBtn() {
+      this.$router.push("/saveposter/fanspull");
+    },
     // 递会员事件
     clicmebtn() {
       this.$router.push("/editposter");
@@ -179,8 +231,9 @@ export default {
     // 请求主页数据
     requestHomeInfo(obj) {
       requestHomeInfo(obj).then((da) => {
-        console.log(da);
         if (da.data.errcode == 0) {
+          console.log(da);
+          // this.$toast.success("查询数据成功！");
           this.salecount = da.data.data.salecount;
           this.salefeedbackcount = da.data.data.salefeedbackcount;
           this.vipcontactcount = da.data.data.vipcontactcount;
@@ -188,6 +241,10 @@ export default {
           this.birthdaycount = da.data.data.birthdaycount;
           this.fanscount = da.data.data.fanscount;
           this.vipscount = da.data.data.vipscount;
+          this.$nextTick(() => {
+            // 清除加载提示框
+            this.$toast.clear();
+          });
         } else {
           this.$notify({
             type: "warning",
@@ -198,14 +255,49 @@ export default {
     },
   },
   mounted() {
+    new Promise((res) => {
+      requestUserInfo().then((da) => {
+        if (da.data.errcode === 0) {
+          // 进行用户cid进行保存本地，方便调用
+          console.log(this.identify);
+          this.requestHomeInfo({
+            cid: window.localStorage.getItem("cid"),
+            ...this.identify,
+          });
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "获取用户信息错误！请检查网络",
+            duration: 10000,
+          });
+          return;
+        }
+      });
+    }).catch((da) => {
+      this.$notify({
+        type: "warning",
+        message: da,
+        duration: 10000,
+      });
+    });
     // 设置标题
-    document.title = "超级导购";
+    document.title = "销售神器II";
+    //门店或者导购信息识别存本地
+    window.localStorage.setItem("indentifyState", 1);
+
     // 请求主页信息数据
-    if (this.selected == "today") {
-      this.requestHomeInfo({ cid: 587, searchtype: 0 });
-    } else {
-      this.requestHomeInfo({ cid: 587, searchtype: 1, searchdate: "" });
-    }
+    // if (this.selected == "today" && this.switchNum) {
+    //   this.requestHomeInfo({
+    //     cid: window.localStorage.getItem("cid"),
+    //     searchtype: 0,
+    //   });
+    // } else {
+    //   this.requestHomeInfo({
+    //     cid: window.localStorage.getItem("cid"),
+    //     searchtype: 1,
+    //     datetype: 0,
+    //   });
+    // }
   },
   computed: {
     riseUrl() {
@@ -213,6 +305,53 @@ export default {
     },
     downUrl() {
       return "static/img/home/icon_fall.png";
+    },
+    identify() {
+      let obj = {};
+      if (this.switchNum) {
+        obj.searchtype = 1;
+      } else {
+        obj.searchtype = 0;
+      }
+      if (this.selected === "month") {
+        obj.datetype = 1;
+      } else {
+        obj.datetype = 0;
+      }
+      return obj;
+    },
+  },
+  watch: {
+    identify(newVal) {
+      if (newVal == "month") {
+        this.requestHomeInfo({
+          cid: window.localStorage.getItem("cid"),
+          ...this.identify,
+        });
+      }
+    },
+    switchNum(state) {
+      this.$toast.loading({
+        message: "查询数据中..",
+        forbidClick: true,
+        duration:0
+      });
+      this.requestHomeInfo({
+        cid: window.localStorage.getItem("cid"),
+        ...this.identify,
+      });
+      window.localStorage.setItem("indentifyState", state ? 1 : 0);
+    },
+    selected() {
+      this.$toast.loading({
+        message: "查询中..",
+        forbidClick: true,
+        duration:0
+      });
+      this.requestHomeInfo({
+        cid: window.localStorage.getItem("cid"),
+        ...this.identify,
+      });
     },
   },
 };
@@ -251,9 +390,10 @@ export default {
           font-weight: 400;
           color: #ffffff;
         }
-        div {
-          display: flex;
-          align-items: center;
+        .sale-money {
+          text-align: center;
+          // display: flex;
+          // align-items: center;
           .sale-detail-num {
             font-size: 24px;
             font-family: PingFangSC-Semibold, PingFang SC;
@@ -270,8 +410,43 @@ export default {
       .today-select {
         display: flex;
         align-items: flex-start;
-        .van-switch {
-          font-size: 26px;
+        .active {
+          background: #38537c !important;
+          .circle {
+            background: #30918e !important;
+          }
+        }
+        .switch-contain {
+          width: 52px;
+          height: 20px;
+          background: #52698d;
+          border-radius: 12px;
+          border: 1px solid #7e91b0;
+          display: flex;
+          align-items: center;
+          margin-right: 3px;
+          // line-height: 20px;
+          &:hover {
+            background: #3c5275;
+          }
+          .circle {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #2dcac5;
+            box-shadow: 0px 0px 8px 0px #1b6c69;
+            border-radius: 50%;
+          }
+          .switch-person {
+            // padding-left: 1px;
+            width: 24px;
+            height: 16px;
+            font-size: 12px;
+            font-family: PingFangSC-Medium, PingFang SC;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 16px;
+          }
         }
         .today-num {
           font-size: 14px;
@@ -282,7 +457,7 @@ export default {
           padding-top: 5px;
         }
         .select {
-          padding-top: 5px;
+          // padding-top: 5px;
           background: #33496c;
           border: none;
           font-size: 13px;
@@ -473,8 +648,8 @@ export default {
       display: flex;
       justify-content: space-around;
       height: 100%;
-      .home-icon{
-        i{
+      .home-icon {
+        i {
           font-size: 23px;
         }
       }
@@ -485,8 +660,8 @@ export default {
         align-items: center;
         justify-content: space-between;
         height: 100%;
-        &:first-child{
-          img{
+        &:first-child {
+          img {
             width: 30px;
             height: 30px;
           }
@@ -505,10 +680,9 @@ export default {
           height: 26px;
         }
       }
-      .active{
-        img{
+      .active {
+        img {
           background: rgba(81, 146, 252, 1);
-
         }
       }
     }

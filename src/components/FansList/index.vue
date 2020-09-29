@@ -1,10 +1,10 @@
 <template>
-  <div id="members-contain" ref="memberRef">
+  <div id="fans-contain" ref="memberRef">
     <div class="member-infos">
       <div class="member-left">
-        <span class="title"> 会员拉新(人) </span>
+        <span class="title"> 粉丝拉新(人) </span>
         <span class="pull-num">
-          {{ datas[3] ? datas[3].newvipscount : "" }}
+          {{ datas[3] ? datas[3].newfanscount : "0" }}
         </span>
       </div>
       <div class="member-better">
@@ -30,12 +30,8 @@
       :legend-visible="false"
     ></ve-line>
     <!-- 会员列表 -->
-    <card-item
-      :fanlist="fanslist"
-      class="card-item-contain"
-      ref="memberref"
-    >
-      <div slot="titleName">会员列表</div>
+    <card-item :fanlist="fanslist" class="card-item-contain" ref="memberref">
+      <div slot="titleName">粉丝列表</div>
     </card-item>
 
     <!-- 日历组件 -->
@@ -54,9 +50,9 @@
 // import { requestHomeInfo } from "network/home";
 import CardItem from "components/common/CardItem";
 import { eventBus } from "utils/eventbus";
-import { getVipList, getVipListDetail } from "network/member";
+import { getFanList, getFanListDetail } from "network/getFanslist";
 export default {
-  name: "MemberPull",
+  name: "FansPull",
   data() {
     console.log(this);
     this.chartSettings = {
@@ -106,15 +102,16 @@ export default {
   },
   methods: {
     //   获取会员粉丝数据
-    getVipList(obj) {
-      obj.searchtype=window.localStorage.getItem("indentifyState");
-      getVipList(obj).then((da) => {
-        console.log(da);
+    getFanList(obj) {
+      obj.searchtype = window.localStorage.getItem("indentifyState");
+
+      getFanList(obj).then((da) => {
         this.datas = da.data.data;
+        console.log(da);
         this.rows = this.datas.map((val, index) => {
           let obj = {};
           obj["日期"] = val["countdate"];
-          obj["拉新人数"] = val["newvipscount"];
+          obj["拉新人数"] = val["newfanscount"];
           return obj;
         });
         this.$set(this.chartData, "rows", this.rows);
@@ -122,10 +119,10 @@ export default {
         //   this.$forceUpdate();
       });
     },
-    getVipListDetail(obj) {
-      obj.searchtype=window.localStorage.getItem("indentifyState");
+    getFanListDetail(obj) {
+      obj.searchtype = window.localStorage.getItem("indentifyState");
 
-      getVipListDetail(obj).then((da) => {
+      getFanListDetail(obj).then((da) => {
         this.fanslist = da.data.data;
       });
     },
@@ -172,18 +169,18 @@ export default {
         eventBus.$emit("cancelItem");
       }
     });
-    this.getVipList({ cid: this.cid, searchdate: this.selectdate });
-    this.getVipListDetail({ cid: this.cid, searchdate: this.selectdate });
+    this.getFanList({ cid: this.cid, searchdate: this.selectdate });
+    this.getFanListDetail({ cid: this.cid, searchdate: this.selectdate });
   },
   computed: {
     computedBetter() {
       console.log(this.datas);
       if (this.datas.length > 0) {
-        if (this.datas[3].newvipscount == 0) {
-          let e = this.datas[2].newvipscount / 1;
+        if (this.datas[3].newfanscount == 0) {
+          let e = this.datas[2].newfanscount / 1;
           return e.toFixed(2) + "%";
         } else {
-          let e = this.datas[2].newvipscount / this.datas[3].newvipscount;
+          let e = this.datas[2].newfanscount / this.datas[3].newfanscount;
           return e.toFixed(2) + "%";
         }
       } else {
@@ -197,15 +194,14 @@ export default {
     selectdate(newVal, oldVal) {
       console.log(this.cid);
       console.log(this.selectdate);
-
-      this.getVipList({ cid: this.cid, searchdate: newVal });
-      this.getVipListDetail({ cid: this.cid, searchdate: newVal });
+      this.getFanList({ cid: this.cid, searchdate: newVal });
+      this.getFanListDetail({ cid: this.cid, searchdate: newVal });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-#members-contain {
+#fans-contain {
   height: 667px;
   overflow-y: scroll;
   .member-infos {

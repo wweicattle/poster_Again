@@ -99,7 +99,7 @@ export default {
       };
       requesUrl(this.shareSrc)
         .then((da) => {
-          let toast = this.$toast.loading({
+           this.$toast.loading({
             message: "分享中..",
             forbidClick: true,
           });

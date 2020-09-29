@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <div class="home—footer-contain" v-show="!($route.path=='/saveposter/memberpull')">
+    <div class="home—footer-contain" v-show="!($route.path=='/saveposter/memberpull'||$route.path=='/saveposter/fanspull'||$route.path=='/birthBack')">
       <ul>
         <li class="home-icon" @click="homebtn">
           <img src="~assets/img/home/home.png" v-if="!activecolorI" />
@@ -74,10 +74,10 @@ export default {
       this.activecolorI = false;
     }
     console.log(this.$route);
-    if(this.$route.path=="/saveposter/memberpull"){
-      this.isshowFooter=false;
-    // console.log(window.localStorage.setItem("footerState"));
-  }
+  //   if(this.$route.path=="/saveposter/memberpull"){
+  //     this.isshowFooter=false;
+  //   // console.log(window.localStorage.setItem("footerState"));
+  // }
   }
 };
 </script>

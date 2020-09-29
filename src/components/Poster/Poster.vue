@@ -228,10 +228,10 @@ export default {
       // 背景图获取
       this.backImages = await new Promise((res) => {
         requestBacImage().then((da) => {
-      // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
-          let data=da.data.data.map(val=>{
-              return `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${val.urladdress}`
-          })
+          // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
+          let data = da.data.data.map((val) => {
+            return `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${val.urladdress}`;
+          });
           res(data);
         });
       });
@@ -491,6 +491,9 @@ export default {
           console.log(221323);
         });
       });
+      // 
+      this.$toast.clear();
+      // this.$toast.success("查询用户数据成功！");
     },
 
     //初始化画布监听事件
@@ -520,7 +523,7 @@ export default {
       // let hs = document.querySelector(".title-header").clientHeight;
       let h = document.querySelector(".poster-content");
       let paddingTop = getComputedStyle(h).paddingTop.split("px")[0];
-      let totalTop =Number(paddingTop) + 1;
+      let totalTop = Number(paddingTop) + 1;
       html2canvas(document.querySelector(".yes"), {
         allowTaint: true,
         taintTest: false,
@@ -540,19 +543,24 @@ export default {
     },
   },
   mounted() {
-      // 设置标题
+    // 设置标题
     document.title = "海报制作";
     // 进行计算画布的大小
     this.$refs.zz.width = this.$refs.posterPhoto.clientWidth;
     this.$refs.zz.height = this.$refs.posterPhoto.clientHeight;
     this.symbolHeight = Math.ceil((this.$refs.zz.height / 4) * 3);
     this.symbolWidth = Math.ceil(this.$refs.zz.width / 10);
+    this.$toast.loading({
+      message: "查询数据中..",
+      forbidClick: true,
+      duration: 0,
+    });
     // 组件加载获取导购数据
     this.initGetData();
     // 初始化一个canvas实例,必须放在设置画布宽高时的下面执行
     this.createCanvasInit();
   },
-  
+
   beforeDestroy() {
     // 清除事件总线
     eventBus.$off("init");
@@ -631,7 +639,7 @@ export default {
     height: 76px;
     background: #fff;
     padding-top: 7px;
-    border-bottom:1PX solid #ccc;
+    border-bottom: 1px solid #ccc;
     .print-btn-contains {
       display: flex;
       justify-content: space-between;
@@ -649,9 +657,9 @@ export default {
         .colorChange {
           color: #5192fc;
         }
-        .back-name{
-            // padding-top: 8px;
-          }
+        .back-name {
+          // padding-top: 8px;
+        }
         & > div {
           margin: 0 10px;
           width: 35px;
@@ -674,7 +682,6 @@ export default {
             padding-top: 0;
             font-size: 20px;
           }
-          
         }
       }
     }
