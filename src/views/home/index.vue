@@ -117,11 +117,16 @@
       <div class="help-item">
         <div class="item-totalname">代办任务</div>
         <ul>
-          <li >
+          <li>
             <span class="birth-name">生日回访</span>
             <div class="birth-back-content">
-              <span >{{ birthdaycount }}人待回访</span>
-              <van-button plain hairline type="primary" round  @click.native="birthBackBtn"
+              <span>{{ birthdaycount }}人待回访</span>
+              <van-button
+                plain
+                hairline
+                type="primary"
+                round
+                @click.native="birthBackBtn"
                 >去回访</van-button
               >
             </div>
@@ -149,7 +154,7 @@
             <span class="birth-name">卡券到期提醒</span>
             <div class="birth-back-content">
               <span>{{ cardovertimecount }}人待回访</span>
-              <van-button plain hairline type="primary" round
+              <van-button plain hairline type="primary" round @click="$router.push('/cardvouchar')"
                 >去回访</van-button
               >
             </div>
@@ -195,7 +200,7 @@ export default {
     TitleHeader,
   },
   methods: {
-    birthBackBtn(){
+    birthBackBtn() {
       this.$router.push("/birthBack");
     },
 
@@ -334,7 +339,7 @@ export default {
       this.$toast.loading({
         message: "查询数据中..",
         forbidClick: true,
-        duration:0
+        duration: 0,
       });
       this.requestHomeInfo({
         cid: window.localStorage.getItem("cid"),
@@ -346,7 +351,7 @@ export default {
       this.$toast.loading({
         message: "查询中..",
         forbidClick: true,
-        duration:0
+        duration: 0,
       });
       this.requestHomeInfo({
         cid: window.localStorage.getItem("cid"),
@@ -601,6 +606,7 @@ export default {
           color: #464646;
           border-bottom: 1px solid rgba(163, 119, 119, 0.1);
           .birth-name {
+            line-height: 19px;
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
@@ -615,18 +621,20 @@ export default {
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
               color: #888888;
-              padding-right: 6px;
             }
             .van-button {
-              height: 17px;
+              margin-left: 5px;
+              height: 20px;
               font-size: 12px;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
-              line-height: 17px;
+              line-height: 20px;
               border: #5192fc;
-              // padding:0 3px ;
+              padding: 0 10px;
               .van-button__text {
                 color: #5192fc;
+              text-align: center;
+
               }
             }
           }

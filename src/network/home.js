@@ -66,33 +66,44 @@ export function requestFansList(obj) {
   return request.post(url, qs.stringify(params))
 }
 
-// 图片上传base64返回一个url中转.
-export function requesUrl(BaseUrl) {
-  let url = `/apis`;
-  let param = {
-    imgName: "poster.png",
-    base64Img: BaseUrl,
-    createid: "110",
-    createname: "weicattle"
-  }
-  let params = {
-    action: "tool",
-    servername: "svr-build",
-    ctrl: "saveSignatureImage",
-    data: JSON.stringify(param)
-  }
-  return request.post(url, qs.stringify(params))
-}
+// // 图片上传base64返回一个url中转.
+// export function requesUrl(BaseUrl) {
+//   let url = `/apis`;
+//   let param = {
+//     imgName: "poster.png",
+//     base64Img: BaseUrl,
+//     createid: "110",
+//     createname: "weicattle"
+//   }
+//   let params = {
+//     action: "tool",
+//     servername: "svr-build",
+//     ctrl: "saveSignatureImage",
+//     data: JSON.stringify(param)
+//   }
+//   return request.post(url, qs.stringify(params))
+// }
 
+// // 进行群发信息
+// export function requestSendGroupMess(obj) {
+//   let url = `/apis`
+//   let params = {
+//     action:"fans",
+//     ctrl:"addmsgtemplate",
+//     text: "文本",
+//     url: "",
+//     picurl: "",
+//     servername: "svr-saletool133",
+//     ...obj
+//   }
+//   return request.post(url, qs.stringify(params))
+// }
 // 进行群发信息
-export function requestSendGroupMess(obj) {
+export function requestsendmsgtemplate(obj) {
   let url = `/apis`
   let params = {
     action:"fans",
-    ctrl:"addmsgtemplate",
-    text: "文本",
-    url: "",
-    picurl: "",
+    ctrl:"sendmsgtemplate",
     servername: "svr-saletool133",
     ...obj
   }

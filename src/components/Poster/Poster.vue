@@ -329,7 +329,6 @@ export default {
     sendPhotoUrlBtn(url) {
       this.backPhotoUrl = url;
       this.editBackPhoto(url);
-      console.log(this.canvas.getObjects());
     },
     addTextContentInfo(text) {
       console.log(text);
@@ -355,12 +354,14 @@ export default {
       fabric.Image.fromURL(
         url,
         (img) => {
+          console.log(this.canvas.width);
+          console.log(this.canvas.height);
           img.set({
             // // 通过scale来设置图片大小，这里设置和画布一样大
             scaleX: this.canvas.width / img.width,
             scaleY: this.canvas.height / img.height,
-            // width: that.canvasWidth,
-            // height: canvas.getHeight(),
+            // width: this.canvas.width,
+            // height: this.canvas.height,
             // originX: "left",
             // originY: "top",
           });
@@ -491,7 +492,7 @@ export default {
           console.log(221323);
         });
       });
-      // 
+      //
       this.$toast.clear();
       // this.$toast.success("查询用户数据成功！");
     },
@@ -522,14 +523,15 @@ export default {
       // let b = this.$refs.ss.scrollHeight;
       // let hs = document.querySelector(".title-header").clientHeight;
       let h = document.querySelector(".poster-content");
+      let w = document.querySelector(".poster-content-top");
       let paddingTop = getComputedStyle(h).paddingTop.split("px")[0];
-      let totalTop = Number(paddingTop) + 1;
+      let left = getComputedStyle(w).marginLeft.split("px")[0];
+      let totalTop = Number(paddingTop);
       html2canvas(document.querySelector(".yes"), {
         allowTaint: true,
         taintTest: false,
-        // width: 1000,X
-        // height: 1000,
         y: totalTop,
+        x: left,
       }).then((canvas) => {
         // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
         this.imgsrc = canvas.toDataURL("image/png");
@@ -604,12 +606,13 @@ export default {
 .line-content {
 }
 .poster-content {
-  // margin-top: 43px;
   background: #33496c;
   height: 621px;
   position: relative;
   padding-top: 35px;
   .poster-content-top {
+    font-size: 0;
+    // background: ;
     width: 265px;
     height: 407px;
     margin: auto;
@@ -624,6 +627,7 @@ export default {
       // background: fuchsia;
     }
     .poster-contenr-footer {
+      font-size: 0;
       // background: url(~assets/timg.jpg);
       background-repeat: no-repeat;
       background-size: 100% 100%;

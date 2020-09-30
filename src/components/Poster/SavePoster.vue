@@ -14,7 +14,8 @@
         <div class="poster-remind-contain">
           <van-divider
             :style="{ color: '#999', borderColor: '#999', padding: '0 8px' }"
-          >点击图片 长按进行保存图片</van-divider>
+            >点击图片 长按进行保存图片</van-divider
+          >
         </div>
       </div>
       <div class="save-btn-contain">
@@ -23,9 +24,10 @@
           <van-button
             type="primary"
             round
-            style="color:#fff;background:#5192fc"
+            style="color: #fff; background: #5192fc"
             @click="sharePosterBtn"
-          >分享</van-button>
+            >分享</van-button
+          >
         </div>
       </div>
     </div>
@@ -34,8 +36,8 @@
     <send-mess
       :isshow="isshowSendMess"
       v-if="isshowSendMess"
-      @changeVisable="isshowSendMess=false"
-       :shareSrc="src"
+      @changeVisable="isshowSendMess = false"
+      :shareSrc="src"
     />
   </div>
 </template>
@@ -84,7 +86,6 @@ export default {
     // }
     sharePosterBtn() {
       this.isshowSendMess = true;
-  
     },
   },
   mounted() {},
@@ -101,7 +102,7 @@ export default {
 <style lang="scss" scoped>
 #save-contains {
   height: 621px;
-  background:#33496c;
+  background: #33496c;
   .title-header {
     background: #fff;
     color: #000000;
@@ -128,7 +129,10 @@ export default {
     text-align: center;
     padding-top: 14px;
     .poster-img-contain {
+      font-size: 0;
+      line-height:0;
       img {
+        font-size: 0;
         width: 80%;
         height: 70%;
         object-fit: fill;

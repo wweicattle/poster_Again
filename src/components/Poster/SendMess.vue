@@ -27,7 +27,12 @@
 <script scoped>
 import { eventBus } from "utils/eventbus";
 import { colors } from "utils/colors";
-import { requestFansList, requesUrl, requestSendGroupMess } from "network/home";
+import {
+  requestFansList,
+  requesUrl,
+  requestSendGroupMess,
+  requestsendmsgtemplate,
+} from "network/home";
 export default {
   name: "SendMess",
   props: {
@@ -43,22 +48,12 @@ export default {
       show: false,
       result: [],
       fanslist: [],
-      cid: null,
     };
   },
-  created() {
-    eventBus.$on("getUserCid", (cid) => {
-      console.log(cid);
-      this.cid = cid;
-    });
-  },
+  created() {},
 
   mounted() {
-    eventBus.$on("getUserCid", (cid) => {
-      console.log(cid);
-      this.cid = cid;
-    });
-    requestFansList({ cid: this.cid || 587 }).then((da) => {
+    requestFansList({ cid: window.localStorage.getItem("cid") }).then((da) => {
       this.fanslist = da.data.data;
       console.log(da);
     });
@@ -67,8 +62,43 @@ export default {
     beforeClose(a, b) {
       if (a === "confirm") return b(false);
     },
-    requestSendGroupMess(obj) {
-      requestSendGroupMess(obj)
+    // requestSendGroupMess(obj) {
+    //   requestSendGroupMess(obj)
+    //     .then((da) => {
+    //       if (da.data.errcode == 0) {
+    //         this.$toast.clear();
+    //         this.$toast.success("分享海报成功！");
+    //         this.$emit("changeVisable");
+    //       } else {
+    //         this.$notify({
+    //           type: "warning",
+    //           message: "分享海报失败！" + da.errmsg,
+    //         });
+    //       }
+    //     })
+    //     .catch((da) => {
+    //       this.$notify({ type: "warning", message: da });
+    //     });
+    // },
+    //   点击确定按钮
+    confirmBtn() {
+      this.$toast.loading({
+        message: "分享中..",
+        forbidClick: true,
+      });
+      if (this.result.length == 0) {
+        this.$notify({ type: "warning", message: "请选择粉丝！" });
+        this.show = true;
+        return;
+      }
+
+      let ecodeUrl = window.encodeURIComponent(this.shareSrc.split(",")[1]);
+      let params = {
+        fansuserids: this.result.join(),
+        cid: window.localStorage.getItem("cid"),
+        imagebase64: ecodeUrl,
+      };
+      requestsendmsgtemplate(params)
         .then((da) => {
           if (da.data.errcode == 0) {
             this.$toast.clear();
@@ -84,43 +114,30 @@ export default {
         .catch((da) => {
           this.$notify({ type: "warning", message: da });
         });
-    },
-    //   点击确定按钮
-    confirmBtn() {
-      if (this.result.length == 0) {
-        this.$notify({ type: "warning", message: "请选择粉丝！" });
-        this.show = true;
-        return;
-      }
-
-      let params = {
-        fansuserids: this.result.join(),
-        cid: window.localStorage.getItem("cid"),
-      };
-      requesUrl(this.shareSrc)
-        .then((da) => {
-           this.$toast.loading({
-            message: "分享中..",
-            forbidClick: true,
-          });
-          if (da.data.errcode == 0) {
-            params.url = da.data.data.signimgurl;
-            params.picurl = da.data.data.signimgurl;
-            // 进行群发
-            this.requestSendGroupMess(params);
-          } else {
-            this.$notify({
-              type: "warning",
-              message: "海报图片中转失败，请检查网络",
-            });
-          }
-        })
-        .catch((da) => {
-          this.$notify({
-            type: "danger",
-            message: da + "!",
-          });
-        });
+      // requesUrl(this.shareSrc)
+      //   .then((da) => {
+      //      this.$toast.loading({
+      //       message: "分享中..",
+      //       forbidClick: true,
+      //     });
+      //     if (da.data.errcode == 0) {
+      //       params.url = da.data.data.signimgurl;
+      //       params.picurl = da.data.data.signimgurl;
+      //       // 进行群发
+      //       this.requestSendGroupMess(params);
+      //     } else {
+      //       this.$notify({
+      //         type: "warning",
+      //         message: "海报图片中转失败，请检查网络",
+      //       });
+      //     }
+      //   })
+      //   .catch((da) => {
+      //     this.$notify({
+      //       type: "danger",
+      //       message: da + "!",
+      //     });
+      //   });
     },
     cancelBtn() {
       this.$emit("changeVisable");

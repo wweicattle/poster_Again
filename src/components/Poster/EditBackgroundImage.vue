@@ -92,13 +92,17 @@ export default {
   .img-contain {
     margin: 10px 5px 0;
     height: 300px;
-    display: flex;
-    justify-content: space-around;
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: flex-start;
+    flex-wrap:wrap;
     overflow-y: scroll;
     .imgContent {
-      width: 32%;
+      width: 33.33%;
+      padding: 3px;
       height: 36%;
       object-fit:cover;
+      padding-bottom: 5px;
       &:hover {
         border: 1px solid #ccc;
         opacity: 0.7;

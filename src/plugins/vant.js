@@ -11,7 +11,8 @@ import {
   Notify ,
   Checkbox, CheckboxGroup,
   Switch ,
-  Calendar 
+  Calendar ,
+  Swipe, SwipeItem 
 } from 'vant';
 Vue.use(Switch);
 Vue.use(Button);
@@ -25,6 +26,8 @@ Vue.use(Notify);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Calendar);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 
 
 

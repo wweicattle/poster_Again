@@ -4,7 +4,7 @@ import qs from 'qs';
 
 
 
-// 获取背景图列表
+// 获取会员列表
 export function getFanList(obj) {
   let params = {
     action: "fans",
@@ -18,7 +18,7 @@ export function getFanList(obj) {
   return request.post(url, qs.stringify(params))
 }
 
-// 获取背景图列表
+// 获取会员列表
 export function getFanListDetail(obj) {
     let params = {
       action: "fans",
