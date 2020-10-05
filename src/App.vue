@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <router-view />
-    <div class="home—footer-contain" v-show="!($route.path=='/saveposter/memberpull'||$route.path=='/saveposter/fanspull'||$route.path=='/birthBack')">
+    <keep-alive include="Home">
+      <router-view />
+    </keep-alive>
+    
+    <div class="home—footer-contain" v-show="isshowFooter">
       <ul>
         <li class="home-icon" @click="homebtn">
           <img src="~assets/img/home/home.png" v-if="!activecolorI" />
@@ -47,7 +50,7 @@ export default {
         color: "#33496c",
       },
       footerState: null,
-      isshowFooter:true
+      isshowFooter: true,
     };
   },
   components: {
@@ -73,12 +76,39 @@ export default {
       this.activecolorIII = false;
       this.activecolorI = false;
     }
-    console.log(this.$route);
-  //   if(this.$route.path=="/saveposter/memberpull"){
-  //     this.isshowFooter=false;
-  //   // console.log(window.localStorage.setItem("footerState"));
-  // }
-  }
+  },
+  watch: {
+    $route(newVal) {
+      let arr = [
+        "/saveposter/memberpull",
+        "/saveposter/fanspull",
+        "/birthBack",
+      ];
+      console.log(arr.indexOf(newVal.path));
+      if (arr.indexOf(newVal.path) != -1) {
+        this.isshowFooter = false;
+      } else {
+        this.isshowFooter = true;
+      }
+      // arr.map((val) => {
+      //   // val == newVal.path?
+      //   if (val == newVal.path) {
+      //     console.log(111)
+      //     return this.isshowFooter = false;
+      //   } else {
+      //     console.log(222)
+      //     this.isshowFooter = true;
+      //   }
+      // });
+      // if (
+      //   newVal.path ==
+      //   ("/saveposter/memberpull" || "/saveposter/fanspull" || "/birthBack")
+      // ) {
+      //   this.isshowFooter = false;
+      // }
+      // console.log(newVal);
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -98,24 +128,14 @@ export default {
       li {
         display: flex;
         flex-direction: column;
-        font-size: 12px;
+        font-size: 10px;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         height: 100%;
-
-        // .add-icon {
-        //   // display: 100%;
-        //   width: 26px;
-        //   height: 26px;
-        //   background: #ccc;
-        //   border-radius: 50%;
-        //   box-sizing: border-box;
-        //   padding: 5px;
-        // }
         img {
-          margin-top: 6px;
-          width: 22px;
-          height: 22px;
+          width: 20px;
+          height: 20px;
+          margin-bottom: 5px;
         }
         .active {
           color: #33496c;

@@ -37,10 +37,11 @@
                 <span>素材</span>
               </div>
               <div @click="isshowAddTextVisable = true" v-if="isshowAttr">
-                <span class="iconname">T</span>
+                <!-- <div class="iconname">T</div> -->
+                <img src="~assets/img/home/fontIcon.png" alt="">
                 <span>文字</span>
               </div>
-              <div @click="addPhotoBtn" v-if="isshowAttr">
+              <div @click="addPhotoBtn" v-if="isshowAttr" class="font-icon">
                 <van-uploader
                   ref="fileUploadRef"
                   :after-read="afterRead"
@@ -237,6 +238,7 @@ export default {
       });
       this.userInfo = await new Promise((res) => {
         requestUserInfo().then((da) => {
+          console.log(da);
           if (da.data.errcode === 0) {
             // 进行用户cid进行保存本地，方便调用
             window.localStorage.setItem("cid", da.data.data.cid);
@@ -649,9 +651,10 @@ export default {
       justify-content: space-between;
       font-size: 14px;
       align-items: flex-start;
+      
       .poster-oprate {
+        // height:60px;
         padding-top: 10px;
-        // border: 1px solid red;
         display: flex;
         align-items: flex-end;
         .get-many-attr {
@@ -664,29 +667,35 @@ export default {
         .back-name {
           // padding-top: 8px;
         }
+        .font-icon{
+          padding-left: 6px;
+        }
         & > div {
           margin: 0 10px;
           width: 35px;
-          justify-content: center;
+          // justify-content: center;
           display: flex;
           flex-direction: column;
           text-align: center;
+          
           span {
-            padding-top: 6px;
+            padding-top: 4px;
             display: block;
           }
           i {
             font-weight: 600;
             height: 25px;
             font-size: 20px;
-            line-height: 25px;
+            // line-height: 28px;
           }
-          .iconname {
-            font-weight: 600;
-            padding-top: 0;
-            font-size: 20px;
+          img{
+            width: 16px;
+            padding-bottom: 5px;
+            margin: auto;
           }
+         
         }
+        
       }
     }
     .print—cicle-btn {

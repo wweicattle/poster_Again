@@ -105,9 +105,9 @@ export default {
         this.canvas.getObjects().forEach((val, index) => {
           window.localStorage.setItem("test", 0);
           val.on("deselected", (options) => {
-            if (window.localStorage.getItem("test") == 1) return;
-            this.event.set("fill", window.localStorage.getItem("event"));
-
+            // if (window.localStorage.getItem("test") == 1) return;
+            // this.event.set("fill", window.localStorage.getItem("event"));
+            console.log(val==this.event)
             // console.log(this.canvas);
             console.log("deselect");
             // 文本颜色进行修使用set方法

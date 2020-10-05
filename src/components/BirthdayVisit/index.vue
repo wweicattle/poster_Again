@@ -17,7 +17,6 @@
           <van-swipe-item>话术1</van-swipe-item>
           <van-swipe-item>话术二</van-swipe-item>
           <van-swipe-item>话术3</van-swipe-item>
-         
         </van-swipe>
       </div>
     </div>

@@ -129,6 +129,15 @@
         </div>
       </div>
     </div>
+    <van-popup
+      v-model="isshow"
+      position="bottom"
+      closeable
+      round
+      :style="{ height: '50%' }"
+    >
+      <div style="borderbottom: 1px solid #ccc">tiltle</div>
+    </van-popup>
   </div>
 </template>
 
@@ -144,14 +153,17 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      isshow: false,
+    };
   },
   created() {},
   mounted() {},
   methods: {
-    saveUserInfoBtn(){
-      console.log(222);
-    }
+    saveUserInfoBtn() {
+      // console.log(222);
+      this.isshow = true;
+    },
   },
 };
 </script>
@@ -170,16 +182,13 @@ export default {
       color: #323232;
       line-height: 20px;
     }
-    select{
+    select {
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #999;
       line-height: 17px;
-          background: #fff;
-
-      options{
-      }
+      background: #fff;
     }
   }
   .user-details {
@@ -194,21 +203,17 @@ export default {
     align-items: flex-start;
     margin-bottom: 15px;
     .user-avator {
+      overflow: hidden;
       img {
-        width: 36px;
-        height: 36px;
+        margin-top: 6px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
       }
     }
     .user-right-content {
+      flex: 1;
       padding-left: 10px;
-      height: 100%;
-      line-height: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      margin-top: -1px;
-      width: 100%;
       .user-sex {
         .u-name {
           font-size: 14px;
@@ -220,13 +225,13 @@ export default {
         }
         img {
           overflow: hidden;
-          // padding-top: 1px;
-          width: 14px;
+          width: 16px;
         }
       }
       .recent-day {
         display: flex;
         justify-content: space-between;
+        padding-bottom: 3px;
         .rec-detail {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;

@@ -154,7 +154,12 @@
             <span class="birth-name">卡券到期提醒</span>
             <div class="birth-back-content">
               <span>{{ cardovertimecount }}人待回访</span>
-              <van-button plain hairline type="primary" round @click="$router.push('/cardvouchar')"
+              <van-button
+                plain
+                hairline
+                type="primary"
+                round
+                @click="$router.push('/cardvouchar')"
                 >去回访</van-button
               >
             </div>
@@ -238,7 +243,6 @@ export default {
       requestHomeInfo(obj).then((da) => {
         if (da.data.errcode == 0) {
           console.log(da);
-          // this.$toast.success("查询数据成功！");
           this.salecount = da.data.data.salecount;
           this.salefeedbackcount = da.data.data.salefeedbackcount;
           this.vipcontactcount = da.data.data.vipcontactcount;
@@ -249,6 +253,7 @@ export default {
           this.$nextTick(() => {
             // 清除加载提示框
             this.$toast.clear();
+            this.$toast.success("查询数据成功！");
           });
         } else {
           this.$notify({
@@ -260,31 +265,41 @@ export default {
     },
   },
   mounted() {
-    new Promise((res) => {
-      requestUserInfo().then((da) => {
-        if (da.data.errcode === 0) {
-          // 进行用户cid进行保存本地，方便调用
-          console.log(this.identify);
-          this.requestHomeInfo({
-            cid: window.localStorage.getItem("cid"),
-            ...this.identify,
-          });
-        } else {
-          this.$notify({
-            type: "warning",
-            message: "获取用户信息错误！请检查网络",
-            duration: 10000,
-          });
-          return;
-        }
+    // 如果有用户已经登陆，本地可查询不需要
+    // if (!window.localStorage.getItem("cid")) {
+      new Promise((res) => {
+        this.$toast.loading({
+          message: "查询数据中..",
+          forbidClick: true,
+          duration: 0,
+        });
+        requestUserInfo().then((da) => {
+          if (da.data.errcode === 0) {
+            // 进行用户cid进行保存本地，方便调用
+            window.localStorage.setItem("cid", da.data.data.cid);
+            // 进行请求主页信息数据
+            this.requestHomeInfo({
+              cid: window.localStorage.getItem("cid"),
+              ...this.identify,
+            });
+          } else {
+            this.$notify({
+              type: "warning",
+              message: "获取用户信息错误！请检查网络",
+              duration: 10000,
+            });
+            return;
+          }
+        });
+      }).catch((da) => {
+        this.$notify({
+          type: "warning",
+          message: da,
+          duration: 10000,
+        });
       });
-    }).catch((da) => {
-      this.$notify({
-        type: "warning",
-        message: da,
-        duration: 10000,
-      });
-    });
+    // }
+
     // 设置标题
     document.title = "销售神器II";
     //门店或者导购信息识别存本地
@@ -381,6 +396,7 @@ export default {
     padding: 20px 20px 0;
     // margin-top: 43px;
     .sale-number-contain {
+      height:50px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -471,10 +487,11 @@ export default {
       }
     }
     .super-people-contain {
+      height:50px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between;   
       align-items: flex-start;
-      padding-top: 10px;
+      margin-top: 10px;
       .left {
         .super-pull-person {
           font-size: 14px;
@@ -633,8 +650,7 @@ export default {
               padding: 0 10px;
               .van-button__text {
                 color: #5192fc;
-              text-align: center;
-
+                text-align: center;
               }
             }
           }
