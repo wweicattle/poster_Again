@@ -24,7 +24,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .title-contain {
   top: 0;
   width: 100%;

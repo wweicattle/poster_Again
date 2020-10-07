@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id="apps">
     <keep-alive include="Home">
-      <router-view />
+    <router-view />
     </keep-alive>
-    
+
     <div class="home—footer-contain" v-show="isshowFooter">
       <ul>
         <li class="home-icon" @click="homebtn">
@@ -61,13 +61,13 @@ export default {
       this.$router.push("/"), (this.activecolorI = true);
       this.activecolorII = false;
       this.activecolorIII = false;
-      window.localStorage.setItem("footerState", 0);
+      // window.localStorage.setItem("footerState", 0);
     },
     posterBtn() {
       this.$router.push("/editposter"), (this.activecolorI = false);
       this.activecolorII = true;
       this.activecolorIII = false;
-      window.localStorage.setItem("footerState", 1);
+      // window.localStorage.setItem("footerState", 1);
     },
   },
   mounted() {
@@ -75,10 +75,11 @@ export default {
       this.activecolorII = true;
       this.activecolorIII = false;
       this.activecolorI = false;
-    }
+    } 
   },
   watch: {
     $route(newVal) {
+      console.log(1111);
       let arr = [
         "/saveposter/memberpull",
         "/saveposter/fanspull",
@@ -89,6 +90,18 @@ export default {
         this.isshowFooter = false;
       } else {
         this.isshowFooter = true;
+      }
+      console.log(newVal);
+      if (newVal.path == "/home") {
+        this.activecolorII = false;
+        this.activecolorIII = false;
+        this.activecolorI = true;
+        // window.localStorage.setItem("footerState", 0);
+      } else if (newVal.path == "/editposter") {
+        // window.localStorage.setItem("footerState", 1);
+        this.activecolorII = true;
+        this.activecolorIII = false;
+        this.activecolorI = false;
       }
       // arr.map((val) => {
       //   // val == newVal.path?
@@ -113,7 +126,7 @@ export default {
 </script>
 <style lang="scss">
 @import url(./assets/css/base.css);
-#app {
+#apps {
   .home—footer-contain {
     width: 100%;
     position: fixed;

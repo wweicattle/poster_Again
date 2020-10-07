@@ -74,7 +74,7 @@ export default {
   methods: {
     addCreateBtn() {
       // eventBus.
-      // this.$router.push("/editPoster")
+      this.$router.push("/editPoster")
       window.location.href = "/editPoster";
       // this
       // this.$router.push("/index")

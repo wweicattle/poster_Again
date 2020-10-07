@@ -533,7 +533,7 @@ export default {
         allowTaint: true,
         taintTest: false,
         y: totalTop,
-        x: left,
+        // x: left+1
       }).then((canvas) => {
         // 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
         this.imgsrc = canvas.toDataURL("image/png");

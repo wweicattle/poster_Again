@@ -129,7 +129,10 @@
         </div>
       </div>
     </div>
-    <van-popup
+
+    <user-popup :isshowVis="isshowViss" :userInfo="userInfo" @closePop="isshowViss = false">
+    </user-popup>
+    <!-- <van-popup
       v-model="isshow"
       position="bottom"
       closeable
@@ -137,11 +140,12 @@
       :style="{ height: '50%' }"
     >
       <div style="borderbottom: 1px solid #ccc">tiltle</div>
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 
 <script>
+import UserPopup from "./UserPopup";
 export default {
   props: {
     userInfo: {
@@ -155,16 +159,20 @@ export default {
   data() {
     return {
       isshow: false,
+      isshowViss:false,
+      // userInfo:{
+      //   name:"Wuwei"
+      // }
     };
   },
   created() {},
   mounted() {},
   methods: {
     saveUserInfoBtn() {
-      // console.log(222);
-      this.isshow = true;
+      this.isshowViss = true;
     },
   },
+  components: { UserPopup },
 };
 </script>
 
@@ -205,9 +213,9 @@ export default {
     .user-avator {
       overflow: hidden;
       img {
-        margin-top: 6px;
-        width: 40px;
-        height: 40px;
+        // margin-top: 6px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
       }
     }
@@ -215,6 +223,8 @@ export default {
       flex: 1;
       padding-left: 10px;
       .user-sex {
+        line-height: 0;
+        padding-bottom: 7px;
         .u-name {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
@@ -231,7 +241,7 @@ export default {
       .recent-day {
         display: flex;
         justify-content: space-between;
-        padding-bottom: 3px;
+        padding-bottom: 8px;
         .rec-detail {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;

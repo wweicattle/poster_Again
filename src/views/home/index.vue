@@ -265,6 +265,7 @@ export default {
     },
   },
   mounted() {
+    console.log(212121212);
     // 如果有用户已经登陆，本地可查询不需要
     // if (!window.localStorage.getItem("cid")) {
       new Promise((res) => {

@@ -12,8 +12,6 @@ console.log(VeLine);
 Vue.component(VeLine.name, VeLine)
 
 
-
-
 new Vue({
   router,
   store,
