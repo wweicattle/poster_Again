@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import UserInfo from "components/common/UserInfo";
+import UserInfo from "components/common/UserInfo/UserInfo";
 export default {
   name: "birthVisit",
   data() {

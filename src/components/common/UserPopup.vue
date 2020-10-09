@@ -9,7 +9,19 @@
     >
       <div class="title-contain">回访反馈</div>
       <div class="user-avatar-content">
-        <img src="~assets/avator.png" alt="" />
+        <div class="avatar-details">
+          <img src="~assets/avator.png" alt="" />
+          <img
+          class="genderselect"
+            src="static/img/memberPull/icon_man.png"
+            alt=""
+          />
+           <img
+          class="genderselect"
+            src="static/img/memberPull/icon_woman.png"
+            alt=""
+          />
+        </div>
         <span class="user-name">吴晓伟</span>
       </div>
       <div class="label-content">
@@ -91,8 +103,7 @@ export default {
     },
     closePop() {
       this.$emit("closePop");
-      this.arr={};
-      
+      this.arr = {};
     },
   },
   watch: {
@@ -125,11 +136,24 @@ export default {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    img {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
+
+    .avatar-details {
+      position: relative;
+      img {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+      }
+      .genderselect{
+        position: absolute;
+        bottom: 8px;
+        right: 0;
+        width: 14px;
+        height: 14px;
+      }
+
     }
+
     .user-name {
       padding-top: 5px;
       font-size: 14px;

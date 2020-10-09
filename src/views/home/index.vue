@@ -31,16 +31,20 @@
               switchNum ? "个人" : "本店"
             }}</span>
           </span>
-          <select v-model="selected" class="select">
+
+          <!-- 日期選擇組件 -->
+          <select-item @slectbtn="slectbtn"  :listArr='["今日", "本月"]'   :listVal='["today","month"]'></select-item>
+
+          <!-- <select v-model="selected" class="select">
             <option value="today">今日</option>
             <option value="month">本月</option>
-          </select>
+          </select> -->
         </div>
       </div>
       <div class="super-people-contain">
-        <div class="left" @click="clicktMemberBtn">
+        <div class="left" >
           <span class="super-pull-person">会员拉新(人)</span>
-          <div class="pull-line">
+          <div class="pull-line" @click="clicktMemberBtn">
             <img
               src="static/img/home/icon_fall.png"
               alt
@@ -60,9 +64,9 @@
             />
           </div>
         </div>
-        <div class="right" @click="clicktFanBtn">
+        <div class="right" >
           <span class="super-pull-person">粉丝拉新(人)</span>
-          <div class="pull-line">
+          <div class="pull-line" @click="clicktFanBtn">
             <img
               src="static/img/home/icon_fall.png"
               alt
@@ -180,8 +184,8 @@
 </template>
 <script>
 import TitleHeader from "components/common/Title";
-import { requestHomeInfo } from "network/home";
-import { requestUserInfo } from "network/home";
+import SelectItem from "components/common/SelectItem";
+import { requestHomeInfo, requestUserInfo} from "network/home";
 export default {
   name: "Home",
   data: function () {
@@ -203,8 +207,14 @@ export default {
   },
   components: {
     TitleHeader,
+    SelectItem,
   },
   methods: {
+    // 挑選今日，本月事件
+    slectbtn(selectVal){
+      this.selected=selectVal;
+    },
+    // 生日回訪事件
     birthBackBtn() {
       this.$router.push("/birthBack");
     },
@@ -265,40 +275,39 @@ export default {
     },
   },
   mounted() {
-    console.log(212121212);
     // 如果有用户已经登陆，本地可查询不需要
     // if (!window.localStorage.getItem("cid")) {
-      new Promise((res) => {
-        this.$toast.loading({
-          message: "查询数据中..",
-          forbidClick: true,
-          duration: 0,
-        });
-        requestUserInfo().then((da) => {
-          if (da.data.errcode === 0) {
-            // 进行用户cid进行保存本地，方便调用
-            window.localStorage.setItem("cid", da.data.data.cid);
-            // 进行请求主页信息数据
-            this.requestHomeInfo({
-              cid: window.localStorage.getItem("cid"),
-              ...this.identify,
-            });
-          } else {
-            this.$notify({
-              type: "warning",
-              message: "获取用户信息错误！请检查网络",
-              duration: 10000,
-            });
-            return;
-          }
-        });
-      }).catch((da) => {
-        this.$notify({
-          type: "warning",
-          message: da,
-          duration: 10000,
-        });
+    new Promise((res) => {
+      this.$toast.loading({
+        message: "查询数据中..",
+        forbidClick: true,
+        duration: 0,
       });
+      requestUserInfo().then((da) => {
+        if (da.data.errcode === 0) {
+          // 进行用户cid进行保存本地，方便调用
+          window.localStorage.setItem("cid", da.data.data.cid);
+          // 进行请求主页信息数据
+          this.requestHomeInfo({
+            cid: window.localStorage.getItem("cid"),
+            ...this.identify,
+          });
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "获取用户信息错误！请检查网络",
+            duration: 10000,
+          });
+          return;
+        }
+      });
+    }).catch((da) => {
+      this.$notify({
+        type: "warning",
+        message: da,
+        duration: 10000,
+      });
+    });
     // }
 
     // 设置标题
@@ -397,7 +406,7 @@ export default {
     padding: 20px 20px 0;
     // margin-top: 43px;
     .sale-number-contain {
-      height:50px;
+      height: 50px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -431,7 +440,7 @@ export default {
       }
       .today-select {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         .active {
           background: #38537c !important;
           .circle {
@@ -446,8 +455,7 @@ export default {
           border: 1px solid #7e91b0;
           display: flex;
           align-items: center;
-          margin-right: 3px;
-          // line-height: 20px;
+          // margin-right: 3px;
           &:hover {
             background: #3c5275;
           }
@@ -488,9 +496,9 @@ export default {
       }
     }
     .super-people-contain {
-      height:50px;
+      height: 50px;
       display: flex;
-      justify-content: space-between;   
+      justify-content: space-between;
       align-items: flex-start;
       margin-top: 10px;
       .left {
