@@ -175,7 +175,7 @@ export default {
 <style lang="scss" scoped>
 #salevisit-contain {
   background: #f7f7f7;
-  height: 667px;
+  // height: 667px;
   padding: 20px;
   .birth-back {
     .member-back {

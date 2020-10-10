@@ -161,9 +161,9 @@ export default {
 <style lang="scss" scoped>
 #birth-contain {
   background: #f7f7f7;
-  height: 667px;
+  // height: 667px;
   padding: 20px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   .birth-back {
     .member-back {
       position: relative;

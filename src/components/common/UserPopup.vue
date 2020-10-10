@@ -113,6 +113,7 @@ export default {
     },
     submitBtn() {
       this.arrs = [];
+      // 进行对标签的回访纪录的拼接
       for (var i in this.arr) {
         if (this.arr[i]) {
           this.arrs.push(this.quickComment[i]);
@@ -127,12 +128,6 @@ export default {
         vipid: this.userInfo.vipid,
         fansuserid: this.userInfo.fansuserid,
       });
-      // this.addFeedBack({
-      //   cid: this.cid,
-      //   feedback: str,
-      //   vipid: this.userInfo.vipid,
-      //   fansuserid: this.userInfo.fansuserid,
-      // });
     },
     labelbtn(index) {
       this.$set(this.arr, index, !this.arr[index]);
