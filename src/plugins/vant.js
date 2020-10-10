@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import {
   Button,
   Icon,
@@ -13,8 +14,9 @@ import {
   Switch ,
   Calendar ,
   Swipe, SwipeItem ,
-  Popup 
+  Popup ,
 } from 'vant';
+import { Empty } from 'vant';
 Vue.use(Switch);
 Vue.use(Button);
 Vue.use(Icon);
@@ -30,7 +32,7 @@ Vue.use(Calendar);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Popup);
-
+Vue.use(Empty)
 
 
 // 注册时可以配置额外的选项

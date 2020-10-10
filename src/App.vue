@@ -1,8 +1,8 @@
 <template>
   <div id="apps">
-    <keep-alive include="Home">
+    <!-- <keep-alive include="Home"> -->
     <router-view />
-    </keep-alive>
+    <!-- </keep-alive> -->
 
     <div class="home—footer-contain" v-show="isshowFooter">
       <ul>
@@ -61,13 +61,11 @@ export default {
       this.$router.push("/"), (this.activecolorI = true);
       this.activecolorII = false;
       this.activecolorIII = false;
-      // window.localStorage.setItem("footerState", 0);
     },
     posterBtn() {
       this.$router.push("/editposter"), (this.activecolorI = false);
       this.activecolorII = true;
       this.activecolorIII = false;
-      // window.localStorage.setItem("footerState", 1);
     },
   },
   mounted() {
@@ -84,6 +82,7 @@ export default {
         "/saveposter/memberpull",
         "/saveposter/fanspull",
         "/birthBack",
+        "/salevisit"
       ];
       console.log(arr.indexOf(newVal.path));
       if (arr.indexOf(newVal.path) != -1) {

@@ -10,19 +10,23 @@
       <div class="title-contain">回访反馈</div>
       <div class="user-avatar-content">
         <div class="avatar-details">
-          <img src="~assets/avator.png" alt="" />
+          <img :src="userInfo.avatar" alt="" />
           <img
-          class="genderselect"
+            class="genderselect"
             src="static/img/memberPull/icon_man.png"
             alt=""
+            v-if="userInfo.gender == 1"
           />
-           <img
-          class="genderselect"
+          <img
+            class="genderselect"
             src="static/img/memberPull/icon_woman.png"
             alt=""
+            v-else
           />
         </div>
-        <span class="user-name">吴晓伟</span>
+        <span class="user-name">{{
+          userInfo.xm ? userInfo.xm : userInfo.fansname
+        }}</span>
       </div>
       <div class="label-content">
         <ul>
@@ -35,15 +39,6 @@
               {{ val }}
             </li>
           </template>
-          <!-- <li class="active">回访成功！</li>
-          <li>电话未接听</li>
-          <li>用户评论中肯</li>
-          <li>忠实顾客</li>
-          <li>意见不错</li>
-          <li>用户评论中肯</li>
-          <li>忠实顾客</li>
-          <li>意见不错</li>
-          <li>用户评论中肯</li> -->
         </ul>
       </div>
       <div class="comment-context">
@@ -52,7 +47,8 @@
           id=""
           cols="30"
           rows="10"
-          placeholder="可快速点击快捷标签，方便纪录回访"
+          placeholder="还有什么想说的嘛！"
+          ref="textarea"
         >
         </textarea>
       </div>
@@ -63,18 +59,27 @@
   </div>
 </template>
 <script>
+import { addFeedBack } from "network/birthback";
+import { eventBus } from "utils/eventbus";
 export default {
-  name: "App",
+  name: "userPop",
   props: {
     isshowVis: {
       type: Boolean,
     },
+    userInfo: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   data() {
     return {
+      cid: window.localStorage.getItem("cid"),
+      textValue: "",
       isshowPop: false,
       arr: {},
-      ss: "sdfs",
       quickComment: [
         "回访成功！",
         "电话未接听",
@@ -89,6 +94,23 @@ export default {
     };
   },
   methods: {
+    // 添加回访记录
+    addFeedBack(obj) {
+      addFeedBack(obj).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          this.$toast.success("添加回访记录成功！");
+          this.isshowPop = false;
+          // 进行刷新生日回访的用户列表
+          eventBus.$emit("freshGetBirth");
+        } else {
+          this.$notify({
+            type: "warning",
+            message: da.data.errmsg || "添加回访记录失败！",
+          });
+        }
+      });
+    },
     submitBtn() {
       this.arrs = [];
       for (var i in this.arr) {
@@ -96,7 +118,21 @@ export default {
           this.arrs.push(this.quickComment[i]);
         }
       }
-      console.log(this.arrs);
+      let str = this.arrs.join() + this.$refs.textarea.value;
+
+      // 进行添加生日回访记录请求
+      eventBus.$emit("addRecord", {
+        cid: this.cid,
+        feedback: str,
+        vipid: this.userInfo.vipid,
+        fansuserid: this.userInfo.fansuserid,
+      });
+      // this.addFeedBack({
+      //   cid: this.cid,
+      //   feedback: str,
+      //   vipid: this.userInfo.vipid,
+      //   fansuserid: this.userInfo.fansuserid,
+      // });
     },
     labelbtn(index) {
       this.$set(this.arr, index, !this.arr[index]);
@@ -110,6 +146,12 @@ export default {
     isshowVis(newVal) {
       this.isshowPop = newVal;
     },
+  },
+  mounted() {
+    eventBus.$on("closePopup", () => {
+      this.isshowPop = false;
+      this.$refs.textarea.value="";
+    });
   },
 };
 </script>
@@ -144,14 +186,13 @@ export default {
         height: 54px;
         border-radius: 50%;
       }
-      .genderselect{
+      .genderselect {
         position: absolute;
         bottom: 8px;
         right: 0;
         width: 14px;
         height: 14px;
       }
-
     }
 
     .user-name {
@@ -212,6 +253,9 @@ export default {
   }
   .btn-contain {
     padding: 30px 20px 0;
+    .van-button {
+      background: #33496c;
+    }
   }
 }
 </style>

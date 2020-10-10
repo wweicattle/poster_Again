@@ -1,287 +1,318 @@
 <template>
   <div class="user-contains">
     <div class="user-title">
-      <span class="wait-birthuser">待回访(100)</span>
+      <span class="wait-birthuser">待回访({{ userInfo.length}})</span>
 
       <div>
         <slot name="selectSlot"></slot>
       </div>
-      <!-- <select name="" id="">
-        <option value="1">本月</option>
-        <option value="2">本周</option>
-        <option value="3">下周</option>
-        <option value="4">下月</option>
-      </select> -->
     </div>
-
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+    <template v-for="(val, index) in userInfo">
+      <div class="user-details" :key="index">
+        <div class="user-avator"><img :src="val.avatar" /></div>
+        <div class="user-right-content">
+          <div class="user-sex">
+            <span class="u-name">{{ val.xm ? val.xm : val.fansname }}</span>
+            <img
+              src="~assets/common/icon_man.png"
+              alt=""
+              v-if="val.gender == 1"
+            />
+            <img src="~assets/common/icon_woman.png" alt="" v-else />
+          </div>
+          <div class="recent-day">
+            <span class="rec-detail"
+              >生日:{{
+                val.csrq
+                  ? new Date(val.csrq).toLocaleDateString().split("/").join("-")
+                  : "无生日记录"
+              }}</span
+            >
+            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+          </div>
+          <div class="user-photo">
+            <img src="~assets/common/icon_phone.png" alt="" />
+            <span class="phonecss">
+              <a :href="'tel:' + val.mainmobile">{{ val.mainmobile }}</a>
+            </span>
+            <span @click="saveUserInfoBtn(val)" class="savecss">保存</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-    <div class="user-details">
-      <div class="user-avator"><img src="~assets/avator.png" /></div>
-      <div class="user-right-content">
-        <div class="user-sex">
-          <span class="u-name">李小伟</span>
-          <img src="~assets/common/icon_man.png" alt="" />
-        </div>
-        <div class="recent-day">
-          <span class="rec-detail">生日：1992-07-32</span>
-          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-        </div>
-        <div class="user-photo">
-          <img src="~assets/common/icon_phone.png" alt="" />
-          <span class="phonecss">
-            <a href="tel:136268908307">13626908307</a>
-          </span>
-          <span @click="saveUserInfoBtn" class="savecss">保存</span>
-        </div>
-      </div>
-    </div>
-
+    </template>
     
+    <van-empty
+      image="search"
+      description="无回访记录！"
+      v-if="userInfo.length == 0"
+    />
+    <!-- <div class="symbol-without" >无待生日回访的用户！</div> -->
+    <!-- <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-details">
+      <div class="user-avator"><img src="~assets/avator.png" /></div>
+      <div class="user-right-content">
+        <div class="user-sex">
+          <span class="u-name">李小伟</span>
+          <img src="~assets/common/icon_man.png" alt="" />
+        </div>
+        <div class="recent-day">
+          <span class="rec-detail">生日：1992-07-32</span>
+          <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
+        </div>
+        <div class="user-photo">
+          <img src="~assets/common/icon_phone.png" alt="" />
+          <span class="phonecss">
+            <a href="tel:136268908307">13626908307</a>
+          </span>
+          <span @click="saveUserInfoBtn" class="savecss">保存</span>
+        </div>
+      </div>
+    </div> -->
 
     <user-popup
       :isshowVis="isshowViss"
-      :userInfo="userInfo"
+      :userInfo="userInfoDetail"
       @closePop="isshowViss = false"
     >
     </user-popup>
@@ -302,17 +333,18 @@ import UserPopup from "../UserPopup";
 export default {
   props: {
     userInfo: {
-      type: Object,
+      type: Array,
       default() {
-        return {};
+        return [];
       },
     },
   },
 
   data() {
     return {
-      isshow: false,
+      // isshow: false,
       isshowViss: false,
+      userInfoDetail: {},
       // userInfo:{
       //   name:"Wuwei"
       // }
@@ -321,7 +353,10 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    saveUserInfoBtn() {
+    saveUserInfoBtn(val) {
+      // 将用户详细数据进行保存
+      this.userInfoDetail = val;
+      // 显示popup底框
       this.isshowViss = true;
     },
   },
@@ -332,6 +367,16 @@ export default {
 <style scoped lang="scss">
 .user-contains {
   line-height: none;
+  .symbol-without {
+    background: #fff;
+    height: 300px;
+    font-size: 16px;
+    width: 300px;
+    text-align: center;
+    margin: auto;
+    padding-top: 150px;
+    // margin-top: 60px;
+  }
   .user-title {
     position: sticky;
     position: -webkit-sticky;
@@ -436,6 +481,9 @@ export default {
         // }
       }
     }
+  }
+  .van-empty {
+    padding-bottom: 130px;
   }
 }
 </style>

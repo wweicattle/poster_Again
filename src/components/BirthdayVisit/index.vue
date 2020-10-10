@@ -14,34 +14,33 @@
         repellat optio, molestiae iusto maiores explicabo illum nihil deleniti
         eligendi assumenda. -->
         <van-swipe class="my-swipe" :autoplay="3000">
-          <van-swipe-item>
+          <template v-for="(val, index) in talkskills">
+            <van-swipe-item :key="index">
+              <div class="componey-provide" :key="index">{{ val.mc }}</div>
+              <div class="swiper-title">话术</div>
+              <div class="swiper-content">
+                {{ val.data }}
+              </div>
+            </van-swipe-item>
+          </template>
+          
+          <van-swipe-item v-if="talkskills.length == 0">
+            <div class="componey-provide">默认</div>
             <div class="swiper-title">话术</div>
-            <div class="swiper-content">
-              尊敬的VIP顾客，我是你在利郎的专属导购，在你的生日时来临之时，为你送上我最诚挚的祝福，为你送上我最诚挚的祝福，祝你生日快乐,祝你生日快乐
-            </div>
+            <div class="swiper-content">默认话术</div>
           </van-swipe-item>
-          <van-swipe-item>
-            <div class="swiper-title">话术</div>
-            <div class="swiper-content">
-              尊敬的VIP顾客，我是你在利郎的专属导购，在你的生日时来临之时，为你送上我最诚挚的祝福，祝你生日快乐
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
-            <div class="swiper-title">话术</div>
-            <div class="swiper-content">
-              尊敬的VIP顾客，我是你在利郎的专属导购，在你的生日时来临之时，为你送上我最诚挚的祝福，祝你生日快乐
-            </div>
-          </van-swipe-item>
+
+  
         </van-swipe>
       </div>
     </div>
 
     <div class="wait-back-content">
-      <user-info>
+      <user-info :userInfo="birthbackusers">
         <div slot="selectSlot">
           <select-item
-            @slectbtn="slectbtn"
-            :listArr="['本周', '本月', '下周', '下月']"
+            @slectbtn="slectIndexBtn"
+            :listArr="['本周', '下周', '本月', '下月']"
             :listVal="[1, 2, 3, 4]"
             :colorSelect="'black'"
           ></select-item>
@@ -53,26 +52,105 @@
 <script>
 import UserInfo from "components/common/UserInfo/UserInfo";
 import SelectItem from "components/common/SelectItem";
+import { getBirthVaipList, addFeedBack, getTalkSkill } from "network/birthback";
+import { eventBus } from "utils/eventbus";
 
 export default {
   name: "birthVisit",
   data() {
-    return {};
+    return {
+      cid: window.localStorage.getItem("cid"),
+      birthbackusers: [],
+      selectindex: 1,
+      talkskills: [],
+    };
   },
   components: {
     UserInfo,
     SelectItem,
   },
   methods: {
-    slectbtn(e) {
-      console.log(e);
+    // 保存回访记录
+    addFeedBack(obj) {
+      addFeedBack(obj).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          this.$toast.success("添加回访记录成功！");
+          // 关闭底框组件
+          eventBus.$emit("closePopup");
+
+          // // 刷新主页数据
+          // eventBus.$emit("freshGetBirth");
+          // 刷新生日回访数据
+          this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
+        } else {
+          this.$notify({
+            type: "warning",
+            message: da.data.errmsg || "添加回访记录失败！",
+          });
+        }
+      });
+    },
+
+    slectIndexBtn(index) {
+      if (this.selectindex == index) return;
+      this.selectindex = index;
+      // 切换type进行重新请求
+      this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
+    },
+    getTalkSkill(obj) {
+      getTalkSkill(obj).then((da) => {
+        console.log(da);
+        this.talkskills = da.data.data;
+      });
+    },
+    // 请求生日回访列表用户
+    getBirthVaipList(obj) {
+      this.$toast.loading({
+        message: "查询数据中..",
+        forbidClick: true,
+        duration: 0,
+      });
+      getBirthVaipList(obj)
+        .then((da) => {
+          console.log(da);
+          if (da.data.errcode == 0) {
+            this.$toast.clear();
+            this.$toast.success("查询数据成功！");
+            this.birthbackusers = da.data.data;
+          } else {
+            this.$notify({
+              type: "warning",
+              message: da.data.errmsg || "获取生日回访列表失败！请稍后重试",
+            });
+          }
+        })
+        .catch((da) => {
+          // this.
+          this.$notify({
+            type: "warning",
+            message: da.data.errmsg || "获取生日回访列表失败！请稍后重试",
+          });
+        });
     },
   },
   mounted() {
-    //   进行会员列表滚动固定
+    // 组件初始化请求一次
+    this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
+
+    // 获取生日回访话术
+    this.getTalkSkill({ cid: this.cid });
+
+    // 监听刷新生日回访数据
+    eventBus.$on("addRecord", (obj) => {
+      this.addFeedBack(obj);
+    });
   },
   computed: {},
   watch: {},
+  beforeDestroy() {
+    eventBus.$off();
+  },
 };
 </script>
 <style lang="scss">
@@ -83,8 +161,9 @@ export default {
 <style lang="scss" scoped>
 #birth-contain {
   background: #f7f7f7;
-  // height: 667px;
+  height: 667px;
   padding: 20px;
+  overflow-y: scroll;
   .birth-back {
     .member-back {
       position: relative;
@@ -144,7 +223,21 @@ export default {
       box-shadow: 0px 10px 14px 0px #f8f9fb;
       .my-swipe {
         height: 100%;
-        
+        position: relative;
+        .componey-provide {
+          padding: 0 8px;
+          font-size: 12px;
+          position: absolute;
+          right: 0;
+          top: 6px;
+          // width: 46px;
+          height: 20px;
+          line-height: 20px;
+          background: #5192fc;
+          color: #fff;
+          z-index: 1000;
+          border-radius: 10px 0px 0px 10px;
+        }
         // box-sizing: border-box;
         .van-swipe-item {
           padding: 0 10px;

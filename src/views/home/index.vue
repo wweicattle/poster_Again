@@ -33,7 +33,11 @@
           </span>
 
           <!-- 日期選擇組件 -->
-          <select-item @slectbtn="slectbtn"  :listArr='["今日", "本月"]'   :listVal='["today","month"]'></select-item>
+          <select-item
+            @slectbtn="slectbtn"
+            :listArr="['今日', '本月']"
+            :listVal="['today', 'month']"
+          ></select-item>
 
           <!-- <select v-model="selected" class="select">
             <option value="today">今日</option>
@@ -42,7 +46,7 @@
         </div>
       </div>
       <div class="super-people-contain">
-        <div class="left" >
+        <div class="left">
           <span class="super-pull-person">会员拉新(人)</span>
           <div class="pull-line" @click="clicktMemberBtn">
             <img
@@ -64,7 +68,7 @@
             />
           </div>
         </div>
-        <div class="right" >
+        <div class="right">
           <span class="super-pull-person">粉丝拉新(人)</span>
           <div class="pull-line" @click="clicktFanBtn">
             <img
@@ -140,7 +144,7 @@
             <span class="birth-name">售后回访</span>
             <div class="birth-back-content">
               <span>{{ salefeedbackcount }}人待回访</span>
-              <van-button plain hairline type="primary" round
+              <van-button plain hairline type="primary" round @click="$router.push('/salevisit')"
                 >去回访</van-button
               >
             </div>
@@ -185,7 +189,8 @@
 <script>
 import TitleHeader from "components/common/Title";
 import SelectItem from "components/common/SelectItem";
-import { requestHomeInfo, requestUserInfo} from "network/home";
+import { requestHomeInfo, requestUserInfo } from "network/home";
+import { eventBus } from "utils/eventbus";
 export default {
   name: "Home",
   data: function () {
@@ -211,8 +216,8 @@ export default {
   },
   methods: {
     // 挑選今日，本月事件
-    slectbtn(selectVal){
-      this.selected=selectVal;
+    slectbtn(selectVal) {
+      this.selected = selectVal;
     },
     // 生日回訪事件
     birthBackBtn() {
@@ -252,7 +257,6 @@ export default {
     requestHomeInfo(obj) {
       requestHomeInfo(obj).then((da) => {
         if (da.data.errcode == 0) {
-          console.log(da);
           this.salecount = da.data.data.salecount;
           this.salefeedbackcount = da.data.data.salefeedbackcount;
           this.vipcontactcount = da.data.data.vipcontactcount;
@@ -315,19 +319,14 @@ export default {
     //门店或者导购信息识别存本地
     window.localStorage.setItem("indentifyState", 1);
 
-    // 请求主页信息数据
-    // if (this.selected == "today" && this.switchNum) {
-    //   this.requestHomeInfo({
-    //     cid: window.localStorage.getItem("cid"),
-    //     searchtype: 0,
-    //   });
-    // } else {
-    //   this.requestHomeInfo({
-    //     cid: window.localStorage.getItem("cid"),
-    //     searchtype: 1,
-    //     datetype: 0,
-    //   });
-    // }
+    // 由子组件进行改变生日回访人数，主页必须刷新重新获取主页数据
+    eventBus.$on("freshGetBirth", () => {
+      // 进行请求主页信息数据
+      this.requestHomeInfo({
+        cid: window.localStorage.getItem("cid"),
+        ...this.identify,
+      });
+    });
   },
   computed: {
     riseUrl() {

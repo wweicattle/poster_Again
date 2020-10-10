@@ -70,7 +70,6 @@ export default {
   created() {},
   mounted() {
     document.addEventListener("touchstart", (e) => {
-      console.log(e.target.classList.contains("isselectDom"));
       if (e.target.classList.contains("isselectDom")) {
         return;
       } else {
