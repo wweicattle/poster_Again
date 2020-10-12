@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .contain {
+            top: 100px;
+            position: relative;
+            transition: all 2s;
+            left: 300px;
+            /* left: 200px; */
+            width: 50px;
+            height: 50px;
+            background: red;
+            animation: myfirst 2s linear 2s infinite alternate;
+        }
+
+        @keyframes myfirst {
+            0% {
+                background: red;
+            }
+
+            50% {
+                background: red;
+                /* padding: -100px 100px 100px -100px; */
+                /* width: 100px;
+                height: 100px; */
+            }
+
+            100% {
+                background: red;
+
+                /* padding: -200px 200px 200px -200px; */
+
+                /* width: 200px;
+                height: 200px; */
+                transform: scale(6, 6);
+            }
+        }
+
+        #content {
+            transition: all 2s;
+            width: 300px;
+            /* height: 300px; */
+            top: 400px;
+            position: relative;
+            border: 1px solid red;
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contain"></div>
+    <div id="content">
+
+        <div style="background: green;" id="test"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+            sequi?</div>
+    </div>
+
+    <!-- <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, earum? Nihil accusantium hic dignissimos modi molestiae. Fugiat, sequi fugit architecto, illum aut rem perspiciatis ullam enim corrupti, iure ipsa maiores deleniti! Eligendi odit dolorum quod nam sunt corrupti, nemo repellendus aliquid harum quibusdam quisquam, laboriosam doloremque ea, nulla suscipit molestias ratione vel iusto! Assumenda autem doloremque aut cum quisquam odit omnis sit fuga impedit ex non aperiam numquam eius, vitae ipsa suscipit doloribus velit nam esse dolor. Quibusdam vero voluptatibus vel atque exercitationem qui incidunt magnam recusandae, natus autem deleniti. Quo sunt quis tenetur veniam quidem nemo eveniet omnis quas!</div> -->
+    <script>
+
+        function reduce() {
+            console.log(222);
+            let a = getComputedStyle(content);
+            console.log(a.width);
+            console.log(a.height);
+            let as = 150;
+            let s = a.height.split("p")[0];
+            if (s > as) {
+                console.log(s - as);
+                console.log(2222);
+                content.style.top = (s - as) + "px";
+            }
+            var f = document.querySelector(".contain");
+            var c = f.cloneNode(true);
+            console.log(c);
+            c.style.width = "50px"
+            c.style.height = "50px"
+            c.style.top = "0";
+            c.style.left = "0";
+            c.style.animationPlayState = "running";
+            // 完成一轮，开始新的一个盒子进行下落。
+            setTimeout(() => {
+                document.body.insertBefore(c, content);
+            }, 2000)
+        }
+        document.documentElement.onclick = function () {
+            console.log(22222222222);
+            document.querySelector(".contain").style.animationPlayState = "paused";
+            var f = getComputedStyle(document.querySelector(".contain"));
+            console.log(f);
+            document.querySelector(".contain").style.width = f.width;
+            document.querySelector(".contain").style.height = f.height;
+            console.log();
+            let w = document.querySelector(".contain").getBoundingClientRect().width;
+            let h = document.querySelector(".contain").getBoundingClientRect().height;
+
+            console.log(document.querySelector(".contain").getBoundingClientRect().height);
+
+            console.log(f.width);
+            console.log(f.height);
+            document.querySelector(".contain").style.top = "600px"
+            var fss = document.querySelector(".contain");
+            console.log(fss.style.width);
+            console.log(content.firstElementChild.style.width);
+
+            // if (Number(fss.style.width) > Number(content.firstElementChild.style.width)) {
+            //     console.log(2222);
+            //     console.log("你失败了！");      
+            //     return;
+            // }
+            setTimeout(() => {
+                var f = document.querySelector(".contain");
+                f.style.top = 0;
+                f.style.left = 0;
+
+                f.style.width = w + "px"
+                f.style.height = h + "px";
+                f.style.margin = "auto"
+                content.insertBefore(f, content.firstElementChild);
+                console.log(content.firstElementChild);
+                // 进行大容器下落
+                reduce();
+            }, 1000)
+
+        }
+    </script>
+</body>
+
+</html>
