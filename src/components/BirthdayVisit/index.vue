@@ -23,14 +23,12 @@
               </div>
             </van-swipe-item>
           </template>
-          
+
           <van-swipe-item v-if="talkskills.length == 0">
             <div class="componey-provide">默认</div>
             <div class="swiper-title">话术</div>
             <div class="swiper-content">默认话术</div>
           </van-swipe-item>
-
-  
         </van-swipe>
       </div>
     </div>
@@ -61,7 +59,7 @@ export default {
     return {
       cid: window.localStorage.getItem("cid"),
       birthbackusers: [],
-      selectindex: 1,
+      selectindex: window.localStorage.getItem("backPersonNum") || 1,
       talkskills: [],
     };
   },
@@ -71,7 +69,7 @@ export default {
   },
   methods: {
     // 保存回访记录
-    addFeedBack(obj) {
+    addFeedBacks(obj) {
       addFeedBack(obj).then((da) => {
         console.log(da);
         if (da.data.errcode == 0) {
@@ -79,8 +77,8 @@ export default {
           // 关闭底框组件
           eventBus.$emit("closePopup");
 
-          // // 刷新主页数据
-          // eventBus.$emit("freshGetBirth");
+          // 刷新主页数据
+          eventBus.$emit("freshGetBirth");
           // 刷新生日回访数据
           this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
         } else {
@@ -94,7 +92,13 @@ export default {
 
     slectIndexBtn(index) {
       if (this.selectindex == index) return;
+      this.$toast.loading({
+        message: "查询数据中..",
+        forbidClick: true,
+        duration: 0,
+      });
       this.selectindex = index;
+
       // 切换type进行重新请求
       this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
     },
@@ -106,18 +110,18 @@ export default {
     },
     // 请求生日回访列表用户
     getBirthVaipList(obj) {
-      this.$toast.loading({
-        message: "查询数据中..",
-        forbidClick: true,
-        duration: 0,
-      });
       getBirthVaipList(obj)
         .then((da) => {
           console.log(da);
           if (da.data.errcode == 0) {
+            // 清除提示框
             this.$toast.clear();
-            this.$toast.success("查询数据成功！");
             this.birthbackusers = da.data.data;
+            // 将回访人数存储本地
+            // window.localStorage.setItem("backPersonNum", da.data.data.length);
+            // 进行更新首页的回访人数
+             eventBus.$emit("freshGetBirth",{type:0,num:da.data.data.length})
+            // eventBus.$emit("freshGetBirth",0);
           } else {
             this.$notify({
               type: "warning",
@@ -142,14 +146,17 @@ export default {
     this.getTalkSkill({ cid: this.cid });
 
     // 监听刷新生日回访数据
-    eventBus.$on("addRecord", (obj) => {
-      this.addFeedBack(obj);
+    eventBus.$on(`addRecord`, (obj) => {
+      // 因为公用的组件，所有子组件监听同一个事件总线，
+      if ((this.$route.path =="/birthBack")) {
+        this.addFeedBacks(obj);
+      }
     });
   },
   computed: {},
   watch: {},
   beforeDestroy() {
-    eventBus.$off();
+    eventBus.$off("addRecord");
   },
 };
 </script>

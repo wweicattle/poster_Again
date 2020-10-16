@@ -58,7 +58,9 @@
 </head>
 
 <body>
-    <div class="contain"></div>
+    <div class="contain">
+        <img src="./dist//img/home.f16d89b6.png" alt="" style="width: 100%;">
+    </div>
     <div id="content">
 
         <div style="background: green;" id="test"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
@@ -67,9 +69,8 @@
 
     <!-- <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, earum? Nihil accusantium hic dignissimos modi molestiae. Fugiat, sequi fugit architecto, illum aut rem perspiciatis ullam enim corrupti, iure ipsa maiores deleniti! Eligendi odit dolorum quod nam sunt corrupti, nemo repellendus aliquid harum quibusdam quisquam, laboriosam doloremque ea, nulla suscipit molestias ratione vel iusto! Assumenda autem doloremque aut cum quisquam odit omnis sit fuga impedit ex non aperiam numquam eius, vitae ipsa suscipit doloribus velit nam esse dolor. Quibusdam vero voluptatibus vel atque exercitationem qui incidunt magnam recusandae, natus autem deleniti. Quo sunt quis tenetur veniam quidem nemo eveniet omnis quas!</div> -->
     <script>
-
         function reduce() {
-            console.log(222);
+            // console.log(222);
             let a = getComputedStyle(content);
             console.log(a.width);
             console.log(a.height);
@@ -98,28 +99,36 @@
             document.querySelector(".contain").style.animationPlayState = "paused";
             var f = getComputedStyle(document.querySelector(".contain"));
             console.log(f);
-            document.querySelector(".contain").style.width = f.width;
-            document.querySelector(".contain").style.height = f.height;
+            // document.querySelector(".contain").style.width = f.width;
+
+
+
+
+            // 
+
+
+
+            // document.querySelector(".contain").style.height = f.height;
             console.log();
             let w = document.querySelector(".contain").getBoundingClientRect().width;
             let h = document.querySelector(".contain").getBoundingClientRect().height;
 
-            console.log(document.querySelector(".contain").getBoundingClientRect().height);
+            // console.log(f.width);
+            // console.log(f.height);
 
-            console.log(f.width);
-            console.log(f.height);
+            // 进行计算需要下滑的高度。
+            
+
+
             document.querySelector(".contain").style.top = "600px"
-            var fss = document.querySelector(".contain");
-            console.log(fss.style.width);
-            console.log(content.firstElementChild.style.width);
-
+            // var fss = document.querySelector(".contain");
             // if (Number(fss.style.width) > Number(content.firstElementChild.style.width)) {
             //     console.log(2222);
             //     console.log("你失败了！");      
             //     return;
             // }
             setTimeout(() => {
-                var f = document.querySelector(".contain");
+                f = document.querySelector(".contain");
                 f.style.top = 0;
                 f.style.left = 0;
 

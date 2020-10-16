@@ -645,7 +645,7 @@ export default {
     height: 76px;
     background: #fff;
     padding-top: 7px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.5px solid #ccc;
     .print-btn-contains {
       display: flex;
       justify-content: space-between;

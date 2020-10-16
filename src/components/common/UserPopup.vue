@@ -121,8 +121,8 @@ export default {
       }
       let str = this.arrs.join() + this.$refs.textarea.value;
 
-      // 进行添加生日回访记录请求
-      eventBus.$emit("addRecord", {
+      // 进行添加生日回访记录请求      
+      eventBus.$emit(`addRecord`, {
         cid: this.cid,
         feedback: str,
         vipid: this.userInfo.vipid,
@@ -145,7 +145,7 @@ export default {
   mounted() {
     eventBus.$on("closePopup", () => {
       this.isshowPop = false;
-      this.$refs.textarea.value="";
+      this.$refs.textarea.value = "";
     });
   },
 };

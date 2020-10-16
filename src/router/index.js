@@ -45,6 +45,11 @@ const routes = [{
   component: () => import( /* webpackChunkName: "about" */ '../components/SalesVisit')
 },
 {
+  path: '/memberretention',
+  name: 'memberretention',
+  component: () => import( /* webpackChunkName: "about" */ '../components/MemberRetention')
+},
+{
   path: '/cardvouchar',
   name: 'vouchar',
   component: () => import( /* webpackChunkName: "about" */ '../components/CardVoucher')

@@ -144,7 +144,12 @@
             <span class="birth-name">售后回访</span>
             <div class="birth-back-content">
               <span>{{ salefeedbackcount }}人待回访</span>
-              <van-button plain hairline type="primary" round @click="$router.push('/salevisit')"
+              <van-button
+                plain
+                hairline
+                type="primary"
+                round
+                @click="$router.push('/salevisit')"
                 >去回访</van-button
               >
             </div>
@@ -153,7 +158,12 @@
             <span class="birth-name">会员维系</span>
             <div class="birth-back-content">
               <span>{{ vipcontactcount }}人待回访</span>
-              <van-button plain hairline type="primary" round
+              <van-button
+                plain
+                hairline
+                type="primary"
+                round
+                @click="$router.push('/memberretention')"
                 >去回访</van-button
               >
             </div>
@@ -208,6 +218,7 @@ export default {
       switchNum: true,
       fanscount: {},
       vipscount: {},
+      tt: window.localStorage.getItem("birthSelectIndex"),
     };
   },
   components: {
@@ -319,13 +330,12 @@ export default {
     //门店或者导购信息识别存本地
     window.localStorage.setItem("indentifyState", 1);
 
-    // 由子组件进行改变生日回访人数，主页必须刷新重新获取主页数据
-    eventBus.$on("freshGetBirth", () => {
-      // 进行请求主页信息数据
-      this.requestHomeInfo({
-        cid: window.localStorage.getItem("cid"),
-        ...this.identify,
-      });
+    // // 由子组件进行改变生日回访人数，主页必须刷新重新获取主页数据
+    eventBus.$on("freshGetBirth", (obj) => {
+      switch (obj.type) {
+        case 0:
+          this.birthdaycount = obj.num;
+      }
     });
   },
   computed: {
@@ -381,6 +391,9 @@ export default {
         cid: window.localStorage.getItem("cid"),
         ...this.identify,
       });
+    },
+    tt(newVal) {
+      console.log(newVal);
     },
   },
 };

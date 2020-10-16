@@ -71,12 +71,12 @@ import {
 import { eventBus } from "utils/eventbus";
 
 export default {
-  name: "birthVisit",
+  name: "SaleVisit",
   data() {
     return {
       cid: window.localStorage.getItem("cid"),
       birthbackusers: [],
-      selectindex: 3,
+      selectindex: window.localStorage.getItem("backPersonNumTwo") || 3,
       talkskills: [],
     };
   },
@@ -85,7 +85,7 @@ export default {
     SelectItem,
   },
   methods: {
-     // 保存回访记录
+    // 保存回访记录
     addFeedBack(obj) {
       addFeedBack(obj).then((da) => {
         console.log(da);
@@ -129,8 +129,14 @@ export default {
         .then((da) => {
           if (da.data.errcode == 0) {
             this.$toast.clear();
-            this.$toast.success("查询数据成功！");
             this.birthbackusers = da.data.data;
+            // 将回访人数存储本地
+            window.localStorage.setItem(
+              "backPersonNumTwo",
+              da.data.data.length
+            );
+            // 进行更新首页的回访人数
+            eventBus.$emit("freshGetBirth", 1);
           } else {
             this.$notify({
               type: "warning",
@@ -151,20 +157,21 @@ export default {
     // 组件初始化请求一次
     this.getSaleFeedbacklist({ cid: this.cid, type: this.selectindex });
 
-   
     // 获取售后话术
     this.getTalkSkill({ cid: this.cid });
 
     // 监听刷新生日回访数据
     eventBus.$on("addRecord", (obj) => {
-      this.addFeedBack(obj);
+      if (this.$route.path == "/salevisit") {
+        this.addFeedBack(obj);
+      }
     });
   },
   computed: {},
   watch: {},
-  beforeDestroy(){
-    eventBus.$off();
-  }
+  // beforeDestroy() {
+  //   eventBus.$off();
+  // },
 };
 </script>
 <style lang="scss">

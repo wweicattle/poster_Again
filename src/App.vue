@@ -1,8 +1,8 @@
 <template>
   <div id="apps">
-    <!-- <keep-alive include="Home"> -->
+    <keep-alive include='Home,birthVisit,SaleVisit,MemberRetention,CardVouchar'>
     <router-view />
-    <!-- </keep-alive> -->
+    </keep-alive>
 
     <div class="home—footer-contain" v-show="isshowFooter">
       <ul>
@@ -82,7 +82,9 @@ export default {
         "/saveposter/memberpull",
         "/saveposter/fanspull",
         "/birthBack",
-        "/salevisit"
+        "/salevisit",
+        '/memberretention',
+        '/cardvouchar'
       ];
       console.log(arr.indexOf(newVal.path));
       if (arr.indexOf(newVal.path) != -1) {
