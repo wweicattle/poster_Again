@@ -66,6 +66,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   NProgress.start()
   console.log(to);
+
+  
+
+
   // if (to.path == "/home") {
   //   window.localStorage.setItem("footerState", 0)
   // } else if (to.path == "/editposter") {

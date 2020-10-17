@@ -112,6 +112,9 @@ export default {
             this.$toast.clear();
             this.$toast.success("查询数据成功！");
             this.birthbackusers = da.data.data;
+
+              // 进行更新首页的回访人数
+             eventBus.$emit("freshGetBirth",{type:3,num:da.data.data.length})
           } else {
             this.$notify({
               type: "warning",

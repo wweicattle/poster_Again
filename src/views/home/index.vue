@@ -302,6 +302,10 @@ export default {
         if (da.data.errcode === 0) {
           // 进行用户cid进行保存本地，方便调用
           window.localStorage.setItem("cid", da.data.data.cid);
+             // 进行用户cid进行保存本地，方便调用
+          window.localStorage.setItem("cname", da.data.data.cname);
+             // 进行用户cid进行保存本地，方便调用
+          window.localStorage.setItem("systemkey", da.data.data.systemkey);
           // 进行请求主页信息数据
           this.requestHomeInfo({
             cid: window.localStorage.getItem("cid"),
@@ -335,6 +339,16 @@ export default {
       switch (obj.type) {
         case 0:
           this.birthdaycount = obj.num;
+          break;
+        case 1:
+          this.salefeedbackcount = obj.num;
+          break;
+        case 2:
+          this.vipcontactcount = obj.num;
+          break;
+        case 3:
+          this.cardovertimecount = obj.num;
+          break;
       }
     });
   },

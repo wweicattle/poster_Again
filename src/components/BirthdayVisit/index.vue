@@ -77,8 +77,7 @@ export default {
           // 关闭底框组件
           eventBus.$emit("closePopup");
 
-          // 刷新主页数据
-          eventBus.$emit("freshGetBirth");
+       
           // 刷新生日回访数据
           this.getBirthVaipList({ cid: this.cid, type: this.selectindex });
         } else {
@@ -121,7 +120,6 @@ export default {
             // window.localStorage.setItem("backPersonNum", da.data.data.length);
             // 进行更新首页的回访人数
              eventBus.$emit("freshGetBirth",{type:0,num:da.data.data.length})
-            // eventBus.$emit("freshGetBirth",0);
           } else {
             this.$notify({
               type: "warning",

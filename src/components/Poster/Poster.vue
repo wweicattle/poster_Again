@@ -196,33 +196,6 @@ export default {
     addPhotoBtn() {
       console.log(this.$refs.addPhotoBtn);
     },
-    // // 后台接口问题需要进行二次请求才可以
-    // repeatRequest(obj, request) {
-    //   var that = this;
-    //   if (obj.data.errcode !== 0) {
-    //     request(this.userInfo).then((da) => {
-    //       this.repeatRequest(da, request);
-    //     });
-    //   } else {
-    //     console.log(request === requestUserAvator);
-    //     console.log(obj.data);
-    //     switch (request) {
-    //       case requestUserAvator:
-    //         that.avator = obj.data;
-    //         break;
-    //       case requestUserCode:
-    //         that.usercode = obj.data;
-    //         break;
-    //       case requestBacImage:
-    //         that.backImages = obj.data;
-    //         break;
-    //     }
-    //     if (this.avator && this.usercode && this.backImages) {
-    //       // 初始化画布
-    //       this.canvasDetail(this.avator.avatar);
-    //     }
-    //   }
-    // },
 
     // 获取导购信息，头像
     async initGetData() {
@@ -236,34 +209,13 @@ export default {
           res(data);
         });
       });
-      this.userInfo = await new Promise((res) => {
-        requestUserInfo().then((da) => {
-          console.log(da);
-          if (da.data.errcode === 0) {
-            // 进行用户cid进行保存本地，方便调用
-            window.localStorage.setItem("cid", da.data.data.cid);
-            res(da.data.data);
-          } else {
-            this.$notify({
-              type: "warning",
-              message: "获取用户信息错误！请检查网络",
-              duration: 10000,
-            });
-            return;
-          }
-        });
-      }).catch((da) => {
-        this.$notify({
-          type: "warning",
-          message: da,
-          duration: 10000,
-        });
-      }); // 登录信息可以
+
+      this.userInfo={cid:window.localStorage.getItem("cid"),cname:window.localStorage.getItem("cname")
+      }
 
       // 获取二维码成功
       let a = await new Promise((res) => {
         requestUserCode(this.userInfo).then((da) => {
-          console.log(da);
           res(da.data.data);
         });
       });
@@ -276,6 +228,7 @@ export default {
       });
 
       let t = await Promise.all([a, b]).then((da) => {
+        console.log(da)
         if (da.length == 2) {
           this.usercode = da[0];
           this.avator = da[1];
@@ -284,33 +237,9 @@ export default {
         }
       });
 
-      // requestSendGroupMess(this.userInfo.cid).then((da) => {
-      //   this.repeatRequest(da);
-      // });
-
-      // axios.get("http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx?action=logininfo&ctrl=&systemid=1").then(da=>{
-      //   this.repeatRequest(da);
-      // })
-
-      // console.log(requestUserInfo);
-
-      // requestUserAvator().then(da=>{
-      //   console.log(da);
-      // }),
     },
     // 进行海报截图
     takePosterPhoto() {
-      // var canvas = document.getElementById("canvas"), //获取canvas
-      //   ctx = this.$refs.zz.getContext("2d"), //对应的CanvasRenderingContext2D对象(画笔)
-      //   img = new Image(), //创建新的图片对象
-      //   base64 = ""; //base64
-      // img.setAttribute("crossOrigin", "anonymous");
-      // img.src = "http://www.xxxx.png";
-      // img.onload = function () {
-      //   //图片加载完，再draw 和 toDataURL
-      //   ctx.drawImage(img, 0, 0);
-      //   base64 = canvas.toDataURL("image/png");
-      // };
       const dataURL = this.canvas.toDataURL({
         format: "jpeg", // jpeg或png
         quality: 0.8, // 图片质量，仅jpeg时可用,
@@ -321,11 +250,9 @@ export default {
         // height: 200
       });
 
-      // // console.log(dataURL);
       this.takePhotoUrl = dataURL;
       console.log(this.takePhotoUrl);
 
-      // }
     },
     // 背景图片
     sendPhotoUrlBtn(url) {
@@ -346,7 +273,6 @@ export default {
         fill: "rgb(1,1,1)",
         fontSize: 20,
         textDecoration: "underline",
-        // editingBorderColor: "blue",
       });
       this.canvas.add(a);
     },
@@ -496,7 +422,6 @@ export default {
       });
       //
       this.$toast.clear();
-      // this.$toast.success("查询用户数据成功！");
     },
 
     //初始化画布监听事件
@@ -506,24 +431,13 @@ export default {
         eventBus.$emit("init", {
           event,
           canvas: this.canvas,
-          cid: this.userInfo,
         });
       });
     },
 
     // 进行导出截图
     async screenShot() {
-      // this.takePosterPhoto();
-      // const toast = await this.$toast.loading({
-      //   message: "正在生成中....",
-      //   forbidClick: true,
-      //   overlay: true,
-      //   loadingType: "spinner",
-      // });
       this.isshowSavePoster = true;
-      // let a = this.$refs.ss.scrollWidth;
-      // let b = this.$refs.ss.scrollHeight;
-      // let hs = document.querySelector(".title-header").clientHeight;
       let h = document.querySelector(".poster-content");
       let w = document.querySelector(".poster-content-top");
       let paddingTop = getComputedStyle(h).paddingTop.split("px")[0];

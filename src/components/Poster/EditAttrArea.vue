@@ -30,20 +30,13 @@ export default {
     eventBus.$on("init", (obj) => {
       this.canvas = obj.canvas;
       this.event = obj.event;
-      // console.log(this.canvas.getObjects().length, this.event);
+      
       this.canvas.getObjects().forEach((val, index) => {
         val.on("deselected", (options) => {
           this.$emit("closedEditText");
         });
       });
-      // console.log(this.canvas.getObjects());
-
-      //     this.event.fontSize
-      //   // f.fontSize = 0.5 + Number(f.fontSize)
-      //   // f.fill = "#f40"
-      //   // f.opacity = 0.5
-      // // 删除画布的对象
-      // // this.canvas.re
+   
     });
   },
   methods: {

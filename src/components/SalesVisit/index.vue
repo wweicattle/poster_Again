@@ -130,13 +130,9 @@ export default {
           if (da.data.errcode == 0) {
             this.$toast.clear();
             this.birthbackusers = da.data.data;
-            // 将回访人数存储本地
-            window.localStorage.setItem(
-              "backPersonNumTwo",
-              da.data.data.length
-            );
+           
             // 进行更新首页的回访人数
-            eventBus.$emit("freshGetBirth", 1);
+             eventBus.$emit("freshGetBirth",{type:1,num:da.data.data.length})
           } else {
             this.$notify({
               type: "warning",
