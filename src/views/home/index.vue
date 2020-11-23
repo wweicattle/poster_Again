@@ -293,18 +293,14 @@ export default {
     // 如果有用户已经登陆，本地可查询不需要
     // if (!window.localStorage.getItem("cid")) {
     new Promise((res) => {
-      this.$toast.loading({
-        message: "查询数据中..",
-        forbidClick: true,
-        duration: 0,
-      });
+     
       requestUserInfo().then((da) => {
         if (da.data.errcode === 0) {
           // 进行用户cid进行保存本地，方便调用
           window.localStorage.setItem("cid", da.data.data.cid);
-             // 进行用户cid进行保存本地，方便调用
+          // 进行用户cid进行保存本地，方便调用
           window.localStorage.setItem("cname", da.data.data.cname);
-             // 进行用户cid进行保存本地，方便调用
+          // 进行用户cid进行保存本地，方便调用
           window.localStorage.setItem("systemkey", da.data.data.systemkey);
           // 进行请求主页信息数据
           this.requestHomeInfo({
@@ -448,10 +444,9 @@ export default {
           color: #ffffff;
         }
         .sale-money {
-          text-align: center;
-          // display: flex;
-          // align-items: center;
+          text-align: left;
           .sale-detail-num {
+            vertical-align: -3px;
             font-size: 24px;
             font-family: PingFangSC-Semibold, PingFang SC;
             font-weight: 600;
@@ -540,6 +535,7 @@ export default {
           padding-top: 5px;
           align-items: center;
           .line-num {
+            display: inline-block;
             padding: 0 3px;
             font-size: 18px;
             font-family: PingFangSC-Semibold, PingFang SC;

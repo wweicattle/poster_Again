@@ -74,12 +74,12 @@ export default {
   methods: {
     addCreateBtn() {
       // eventBus.
-      this.$router.push("/editPoster")
-      window.location.href = "/editPoster";
-      // this
-      // this.$router.push("/index")
-      // console.log(t);
-      window.localStorage.setItem("footerState", 1);
+      // this.$router.push("/editPoster")
+      window.location.reload();
+      // // this
+      // // this.$router.push("/index")
+      // // console.log(t);
+      // window.localStorage.setItem("footerState", 1);
     },
     // sendMessageBtn(){
     //   this.

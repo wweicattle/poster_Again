@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name:"SelectItem",
+  name: "SelectItem",
   props: {},
   data() {
     return {
@@ -107,7 +107,8 @@ export default {
   font-size: 13px;
   width: 70px;
   text-align: center;
-  .colorBlack{
+  top: 1px;
+  .colorBlack {
     color: #000;
   }
   img {

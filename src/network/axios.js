@@ -20,10 +20,6 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   config.headers.Authorization = token
-    // }
     // Do something before request is sent
     return config;
   },

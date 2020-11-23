@@ -54,29 +54,35 @@ const routes = [{
   name: 'vouchar',
   component: () => import( /* webpackChunkName: "about" */ '../components/CardVoucher')
 },
+{
+  path: '/memberPer',
+  name: 'memberPer',
+  component: () => import( /* webpackChunkName: "about" */ 'views/MemberPer/index.vue')
+
+},
 
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   // base: process.env.BASE_URL,
   routes
 })
 // 进行显示进度条
-router.beforeEach((to, from, next) => {
-  NProgress.start()
-  console.log(to);
+// router.beforeEach((to, from, next) => {
+//   NProgress.start()
+//   console.log(to);
 
   
 
 
-  // if (to.path == "/home") {
-  //   window.localStorage.setItem("footerState", 0)
-  // } else if (to.path == "/editposter") {
-  //   window.localStorage.setItem("footerState", 1)
-  // }
-  next()
-})
+//   // if (to.path == "/home") {
+//   //   window.localStorage.setItem("footerState", 0)
+//   // } else if (to.path == "/editposter") {
+//   //   window.localStorage.setItem("footerState", 1)
+//   // }
+//   next()
+// })
 
 router.afterEach(() => {
   NProgress.done()

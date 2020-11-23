@@ -1,12 +1,12 @@
 <template>
   <div id="apps">
-    <keep-alive include='Home,birthVisit,SaleVisit,MemberRetention,CardVouchar'>
-    <router-view />
+    <keep-alive include="Home,birthVisit,SaleVisit,MemberRetention,CardVouchar">
+      <router-view />
     </keep-alive>
 
     <div class="home—footer-contain" v-show="isshowFooter">
       <ul>
-        <li class="home-icon" @click="homebtn">
+        <li @click="homebtn">
           <img src="~assets/img/home/home.png" v-if="!activecolorI" />
           <img src="~assets/img/home/home3.png" v-else /><span
             :style="activecolorI ? colorFont : ''"
@@ -20,13 +20,7 @@
             >海报</span
           >
         </li>
-        <li
-          @click="
-            (activecolorI = false),
-              (activecolorII = false),
-              (activecolorIII = true)
-          "
-        >
+        <li @click="memberBtn">
           <img src="~assets/img/home/huiyuan1.png" v-if="!activecolorIII" />
           <img src="~assets/img/home/huiyuan2.png" v-else /><span
             :style="activecolorIII ? colorFont : ''"
@@ -43,13 +37,12 @@ export default {
   name: "App",
   data: function () {
     return {
-      activecolorI: true,
+      activecolorI: false,
       activecolorIII: false,
       activecolorII: false,
       colorFont: {
         color: "#33496c",
       },
-      footerState: null,
       isshowFooter: true,
     };
   },
@@ -58,69 +51,60 @@ export default {
   },
   methods: {
     homebtn() {
-      this.$router.push("/"), (this.activecolorI = true);
+      this.$router.push("/");
+      this.activecolorI = true;
       this.activecolorII = false;
       this.activecolorIII = false;
+      window.localStorage.setItem("footerState", 1);
     },
     posterBtn() {
-      this.$router.push("/editposter"), (this.activecolorI = false);
+      this.$router.push("/editposter");
+      this.activecolorI = false;
       this.activecolorII = true;
       this.activecolorIII = false;
+      window.localStorage.setItem("footerState", 2);
+    },
+    memberBtn() {
+      this.$router.push("/memberPer");
+      this.activecolorI = false;
+      this.activecolorII = false;
+      this.activecolorIII = true;
+      window.localStorage.setItem("footerState", 3);
     },
   },
   mounted() {
-    if (window.localStorage.getItem("footerState") == 1) {
-      this.activecolorII = true;
-      this.activecolorIII = false;
-      this.activecolorI = false;
-    } 
+    switch (Number(window.localStorage.getItem("footerState"))) {
+      case 1:
+        this.activecolorI = true;
+        break;
+      case 2:
+        this.activecolorII = true;
+        break;
+      case 3:
+        this.activecolorIII = true;
+        break;
+      default:
+        console.log(Number(window.localStorage.getItem("footerState")));
+        this.activecolorI = true;
+        break;
+    }
+   
   },
   watch: {
     $route(newVal) {
-      console.log(1111);
       let arr = [
         "/saveposter/memberpull",
         "/saveposter/fanspull",
         "/birthBack",
         "/salevisit",
-        '/memberretention',
-        '/cardvouchar'
+        "/memberretention",
+        "/cardvouchar",
       ];
-      console.log(arr.indexOf(newVal.path));
       if (arr.indexOf(newVal.path) != -1) {
         this.isshowFooter = false;
       } else {
         this.isshowFooter = true;
       }
-      console.log(newVal);
-      if (newVal.path == "/home") {
-        this.activecolorII = false;
-        this.activecolorIII = false;
-        this.activecolorI = true;
-        // window.localStorage.setItem("footerState", 0);
-      } else if (newVal.path == "/editposter") {
-        // window.localStorage.setItem("footerState", 1);
-        this.activecolorII = true;
-        this.activecolorIII = false;
-        this.activecolorI = false;
-      }
-      // arr.map((val) => {
-      //   // val == newVal.path?
-      //   if (val == newVal.path) {
-      //     console.log(111)
-      //     return this.isshowFooter = false;
-      //   } else {
-      //     console.log(222)
-      //     this.isshowFooter = true;
-      //   }
-      // });
-      // if (
-      //   newVal.path ==
-      //   ("/saveposter/memberpull" || "/saveposter/fanspull" || "/birthBack")
-      // ) {
-      //   this.isshowFooter = false;
-      // }
-      // console.log(newVal);
     },
   },
 };

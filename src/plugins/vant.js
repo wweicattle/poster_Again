@@ -9,14 +9,21 @@ import {
   Dialog,
   Lazyload,
   Uploader,
-  Notify ,
-  Checkbox, CheckboxGroup,
-  Switch ,
-  Calendar ,
-  Swipe, SwipeItem ,
-  Popup ,
+  Notify,
+  Checkbox,
+  CheckboxGroup,
+  Switch,
+  Calendar,
+  Swipe,
+  SwipeItem,
+  Popup,
+  Tab,
+  Tabs
 } from 'vant';
-import { Empty } from 'vant';
+
+import {
+  Empty
+} from 'vant';
 Vue.use(Switch);
 Vue.use(Button);
 Vue.use(Icon);
@@ -33,7 +40,8 @@ Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Popup);
 Vue.use(Empty)
-
+Vue.use(Tab);
+Vue.use(Tabs);
 
 // 注册时可以配置额外的选项
 Vue.use(Lazyload, {

@@ -1,47 +1,47 @@
 module.exports = {
-    publicPath: './',
-    lintOnSave: false,
-    css: {
-      loaderOptions: {
-        css: {},
-        postcss: {
-          plugins: [
-            require('postcss-px2rem')({
-              remUnit: 37.5
-            })
-          ]
-        }
+  publicPath: './',
+  lintOnSave: false,
+  css: {
+    loaderOptions: {
+      css: {},
+      postcss: {
+        plugins: [
+          require('postcss-px2rem')({
+            remUnit: 37.5
+          })
+        ]
       }
-    },
-    devServer: {
-      proxy: {
-        '/api': {
-          target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
-          changeOrigin: true,
-          pathRewrite: {
-            '^/api': ''
-          }
-        },
-        '/apis': {
-          target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
-          changeOrigin: true,
-          pathRewrite: {
-            '/apis': ''
-          }
+    }
+  },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
         }
-      }
-        
       },
-      configureWebpack: {
-        resolve: {
-          alias: {
-            "assets": "@/assets",
-            "network": "@/network",
-            "components": "@/components",
-            "common": "@/common",
-            "views": "@/views",
-            "utils": "@/utils"
-          }
+      '/apis': {
+        target: 'http://tm.lilanz.com/qywx/project/facepass/pushmessage.ashx',
+        changeOrigin: true,
+        pathRewrite: {
+          '/apis': ''
         }
       }
     }
+
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        "assets": "@/assets",
+        "network": "@/network",
+        "components": "@/components",
+        "common": "@/common",
+        "views": "@/views",
+        "utils": "@/utils"
+      }
+    }
+  }
+}
