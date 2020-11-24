@@ -411,7 +411,7 @@ export default {
 <style lang="scss" scoped>
 #homes-contains {
   overflow-y: scroll;
-  background: #f7f7f7;
+  // background: #f7f7f7;
   margin-bottom: 44px;
   height: 100vh;
   .title-headers {

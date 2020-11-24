@@ -88,7 +88,6 @@ export default {
         this.activecolorI = true;
         break;
     }
-   
   },
   watch: {
     $route(newVal) {
@@ -111,6 +110,11 @@ export default {
 </script>
 <style lang="scss">
 @import url(./assets/css/base.css);
+html,
+body {
+  height: 100%;
+  background: #f7f7f7;
+}
 #apps {
   .home—footer-contain {
     width: 100%;
