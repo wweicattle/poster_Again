@@ -18,7 +18,11 @@ import {
   SwipeItem,
   Popup,
   Tab,
-  Tabs
+  Tabs,
+  List,
+  Cell,
+  CellGroup,
+  Search 
 } from 'vant';
 
 import {
@@ -42,6 +46,10 @@ Vue.use(Popup);
 Vue.use(Empty)
 Vue.use(Tab);
 Vue.use(Tabs);
+Vue.use(List);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(Search)
 
 // 注册时可以配置额外的选项
 Vue.use(Lazyload, {

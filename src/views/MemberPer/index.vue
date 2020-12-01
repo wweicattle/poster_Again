@@ -11,121 +11,51 @@
       @scroll="scrollTabBtn"
       ref="tabsRef"
     >
-      <van-tab title="全部" name="a" ref="allPerRef"
-        >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit
-        voluptatem excepturi dolorum aspernatur nesciunt porro sunt officiis
-        consectetur nam vel? Quibusdam quaerat, id ipsam sapiente, ea sit
-        corporis commodi dolor laboriosam nam, sint veniam doloremque doloribus
-        facere et ab cumque repellendus illum soluta temporibus impedit! Aliquid
-        debitis ea doloribus, repudiandae ad qui earum? Accusamus ad a
-        reiciendis, repudiandae corporis maiores quia assumenda! Error animi
-        adipisci amet fugit explicabo accusamus aliquid hic possimus,
-        perspiciatis nemo voluptas placeat incidunt eligendi a ad iste
-        laudantium ab illum. Ipsam architecto necessitatibus suscipit,
-        consequatur quae tempore neque temporibus expedita odit. Dignissimos at
-        explicabo non laudantium incidunt deleniti fugiat impedit quae eaque
-        neque itaque eligendi necessitatibus excepturi, provident illum.
-        Expedita veritatis excepturi fugiat quam, sint corrupti eos ab? Libero,
-        esse. Enim doloremque, dicta, id numquam odio natus voluptatibus,
-        aliquam quo quis tenetur nostrum dignissimos! Dignissimos totam minus
-        tempora nostrum repellendus maxime velit officia veritatis quasi! Illum
-        reiciendis repellat fugiat, officia iure quisquam impedit totam
-        reprehenderit laudantium incidunt velit odit rem quod? Rem, itaque.
-        Ipsum aut soluta sequi, doloribus repudiandae consequuntur officia.
-        Reprehenderit, accusantium veritatis, ipsam, maiores assumenda dolores
-        nemo earum vel neque sint voluptatibus. Excepturi omnis corrupti natus
-        quo enim delectus, velit voluptas doloremque dolorem est doloribus
-        exercitationem modi, aspernatur fuga eaque illum! Eveniet exercitationem
-        similique eligendi! Iusto perferendis nostrum eligendi ex temporibus
-        atque quis rem, odit similique tenetur perspiciatis ipsam porro, cumque
-        pariatur, voluptatibus expedita non laudantium! Eaque, alias modi.
-        Eligendi ab repellat nemo quos, eaque consequatur animi modi nostrum
-        laborum. Id ea aperiam vitae molestias, expedita est sequi numquam error
-        praesentium repellat, consequatur ullam doloremque suscipit in
-        repudiandae soluta voluptas neque obcaecati placeat sint nihil
-        recusandae laborum commodi. Dolores debitis laboriosam nisi quibusdam
-        nemo minima earum adipisci ab temporibus, modi amet aliquam suscipit
-        nesciunt recusandae dicta quo ea accusamus eveniet saepe iste cum illo.
-        Vitae nesciunt neque ipsum magnam minima reiciendis accusantium eius
-        tempore fugiat praesentium repudiandae, suscipit, blanditiis doloremque
-        doloribus aliquid recusandae laborum pariatur exercitationem, non
-        perferendis quis. Officia molestias voluptatem eligendi architecto
-        sapiente. Dignissimos atque culpa nemo magni ullam aperiam nobis sequi,
-        ab facere quibusdam magnam at ipsa quae eaque accusamus amet. Aliquid,
-        labore qui? Quo, ratione delectus. Debitis, voluptatum veniam? Iusto,
-        ipsum cumque nam molestiae ex, eius maxime deleniti repellendus eos quod
-        eaque voluptatum nostrum optio rerum praesentium cum delectus unde
-        corporis! Perferendis ex exercitationem nesciunt dolorem asperiores
-        error sint ut enim. Cum cumque odit voluptatem iste tenetur, placeat
-        inventore, accusantium accusamus sit quae quia expedita modi atque
-        recusandae sint harum quis dignissimos? Dolorum, quisquam. Quos vel
-        nulla culpa doloremque cumque ratione in necessitatibus veniam
-        voluptatum quisquam laudantium sapiente assumenda quas quae at
-        reiciendis expedita, possimus provident fugit officiis natus? Accusamus
-        quod veniam, harum modi repudiandae eos ipsam voluptate vero non
-        repellat laboriosam quos enim adipisci mollitia dolore iusto tempore,
-        sint vel accusantium temporibus dicta deleniti est! Suscipit, velit
-        nisi! Sed optio commodi dolorum iusto beatae eum, laudantium recusandae
-        sequi! Quas a laudantium magnam vero. Nam incidunt nemo repellat
-        repellendus dicta quos quaerat ex quis fugiat quas, harum laboriosam
-        alias sint in illo quasi! Culpa numquam nihil non voluptatem excepturi
-        harum distinctio, quibusdam nobis incidunt nulla iure similique illum,
-        hic aut esse quasi quod modi vitae praesentium iusto veniam? Explicabo
-        amet mollitia deleniti nam laboriosam aliquid? Fugiat consequatur quae,
-        quo porro vitae iste id laudantium, dolores nam impedit nobis obcaecati
-        saepe mollitia? Dicta fuga esse totam cumque, consequatur enim vitae?
-        Dolorem est temporibus earum facere, totam natus ullam autem, vel sit
-        reprehenderit exercitationem, quas porro accusantium neque consequatur
-        maxime maiores. Sequi sit, voluptatem optio unde quidem minima magnam
-        omnis dolorum dolorem. Quae, error. Illo sint, rerum, velit dolorum odio
-        doloribus expedita possimus omnis optio ullam assumenda inventore
-        necessitatibus minus aliquam. Quia beatae corporis consequatur vitae
-        laborum sit. Qui eius vero doloribus eveniet sed itaque illum incidunt,
-        numquam laboriosam provident, vitae iste ipsa asperiores labore. Error
-        quibusdam, reprehenderit fuga labore eligendi quod quo eveniet debitis
-        quae reiciendis, eum dolorem ab corrupti delectus? Facere incidunt eum
-        ducimus rem fuga excepturi sunt nam, totam laudantium accusamus
-        aspernatur quia commodi magnam veritatis, magni aperiam consequatur,
-        voluptate ullam iusto ad dolor obcaecati corporis perspiciatis illum!
-        Reprehenderit, voluptates ducimus enim dignissimos consequatur eum
-        placeat, laudantium hic inventore quibusdam, quas totam? Exercitationem
-        eum aut officiis aliquid aspernatur possimus ratione dolorem quam
-        excepturi natus sint amet error enim maiores perspiciatis aperiam,
-        illum, harum nulla. Rerum porro optio nihil provident vero asperiores
-        error ratione vitae deleniti itaque quibusdam reiciendis aliquid amet
-        eos, culpa odio! Ipsam corrupti eum atque aperiam deserunt delectus quia
-        ab dicta excepturi sed beatae, harum voluptates inventore molestias
-        consequuntur numquam quos fugiat incidunt molestiae soluta. Odit dolores
-        velit ut autem, excepturi quia officia nemo ex eveniet repellat. Porro,
-        assumenda! Accusantium recusandae, nam aliquid molestiae atque eius
-        aperiam ad labore voluptatum iure eligendi nesciunt nisi ipsum, officia
-        porro dignissimos. Saepe corrupti exercitationem esse nisi odit nemo
-        excepturi nulla eius repudiandae est, iste error possimus, reiciendis
-        modi beatae neque. Repellat, illum explicabo alias culpa deserunt at
-        ratione ad minus, corrupti, vitae aliquid non nostrum modi voluptatibus?
-        Culpa provident voluptate ducimus nemo, ut vel, labore enim repellat
-        illo unde rerum fuga ea sint iste earum possimus vitae, esse laborum
-        officia error qui doloremque ipsum? Voluptate eos ducimus natus! Non
-        voluptates perferendis odio distinctio natus porro ducimus nemo fugiat
-        consequuntur cum aspernatur laudantium dolores, necessitatibus nulla
-        expedita amet voluptas iusto repellendus temporibus suscipit, reiciendis
-        ut sint quae quas? Consectetur repudiandae non ad accusantium velit unde
-        officiis maiores nam veritatis, excepturi incidunt eaque cupiditate
-        consequatur cumque? Excepturi hic quis reprehenderit earum quo sapiente
-        ullam nam quibusdam. Veritatis error ea voluptatem hic iste nostrum
-        possimus porro ullam maxime sed qui, nesciunt perspiciatis, expedita
-        accusamus reiciendis cumque repellendus! Labore quibusdam aliquid
-        dignissimos facilis maiores numquam fuga laborum odio officia
-        voluptatibus, ducimus blanditiis hic temporibus ullam quae quia eum
-        magni rem veritatis ipsum sunt! Voluptates sit a debitis est, similique
-        delectus quasi obcaecati unde laboriosam molestias culpa rem
-        consectetur, earum, eveniet rerum possimus pariatur asperiores? Sit
-        corrupti harum voluptate quae. Voluptas velit ratione aspernatur,
-        mollitia sapiente, animi fugiat reiciendis iusto ab excepturi quos a
-        qui?</van-tab
+      <van-tab title="全部" name="a" ref="allPerRef">
+        <user-info :isSelectAll="selectAll" :userState="0"></user-info>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
+        deserunt. Ipsam porro labore, deleniti, mollitia earum suscipit et
+        facere fugit amet modi velit iste cumque recusandae, animi accusamus ad
+        architecto? Exercitationem nesciunt reiciendis perferendis quasi
+        mollitia sapiente officiis fugit, praesentium harum porro. Nobis
+        suscipit distinctio sed obcaecati sint, quia quisquam commodi assumenda
+        odit nam ducimus impedit soluta iste, autem quo illum iusto eaque
+        eligendi, dolorum voluptas molestiae officiis! Pariatur deleniti
+        veritatis in iusto? Animi voluptas inventore neque dignissimos. Hic
+        inventore, itaque eveniet fugit illum assumenda excepturi voluptas
+        laboriosam expedita mollitia sint, repellat nihil dignissimos
+        blanditiis! Adipisci, tempore. Itaque, iste consequatur?
+      </van-tab>
+      <van-tab title="公众号" name="b">
+        <user-info :isSelectAll="selectAll" :userState="1"></user-info> Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
+        Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
+        amet modi velit iste cumque recusandae, animi accusamus ad architecto?
+        Exercitationem nesciunt reiciendis perferendis quasi mollitia sapiente
+        officiis fugit, praesentium harum porro. Nobis suscipit distinctio sed
+        obcaecati sint, quia quisquam commodi assumenda odit nam ducimus impedit
+        soluta iste, autem quo illum iusto eaque eligendi, dolorum voluptas
+        molestiae officiis! Pariatur deleniti veritatis in iusto? Animi voluptas
+        inventore neque dignissimos. Hic inventore, itaque eveniet fugit illum
+        assumenda excepturi voluptas laboriosam expedita mollitia sint, repellat
+        nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
+        consequatur?</van-tab
       >
-      <van-tab title="公众号" name="b">公众号</van-tab>
-      <van-tab title="企业号" name="c">企业员</van-tab>
+      <van-tab title="企业号" name="c">
+        <user-info :isSelectAll="selectAll" :userState="2"></user-info> Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
+        Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
+        amet modi velit iste cumque recusandae, animi accusamus ad architecto?
+        Exercitationem nesciunt reiciendis perferendis quasi mollitia sapiente
+        officiis fugit, praesentium harum porro. Nobis suscipit distinctio sed
+        obcaecati sint, quia quisquam commodi assumenda odit nam ducimus impedit
+        soluta iste, autem quo illum iusto eaque eligendi, dolorum voluptas
+        molestiae officiis! Pariatur deleniti veritatis in iusto? Animi voluptas
+        inventore neque dignissimos. Hic inventore, itaque eveniet fugit illum
+        assumenda excepturi voluptas laboriosam expedita mollitia sint, repellat
+        nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
+        consequatur?</van-tab
+      >
       <van-tab>
         <template #title name="d">
           <img
@@ -217,7 +147,7 @@
         </div>
       </div>
     </van-popup>
-    <div class="load-more" @click="clickLoadMoreBtn">点击加载更多....</div>
+    <!-- <div class="load-more" @click="clickLoadMoreBtn">点击加载更多....</div> -->
     <div class="all-selct">
       <div class="all-item">
         <van-checkbox v-model="selectAll">全选(已选2个)</van-checkbox>
@@ -232,6 +162,7 @@
 </template>
 
 <script>
+import UserInfo from "./childComponents/UserInfo";
 export default {
   name: "tab",
   data() {
@@ -239,7 +170,7 @@ export default {
       activeName: "a",
       state: "a",
       showPop: false,
-      selectAll:false
+      selectAll: false,
     };
   },
   created() {
@@ -251,24 +182,23 @@ export default {
       console.log(this.$refs.tabsRef.$el.clientHeight);
       console.log(index);
     },
-    clickLoadMoreBtn() {
-      console.log(this.$refs.allPerRef.$el);
-
-      let div = document.createElement("div");
-      div.innerText = "wuweinsufuddsfuisfshfuisbdfsfsufuusfsfbusfb";
-      this.$refs.allPerRef.$el.appendChild(div);
-    },
     tabClickBtn(val) {
       if (typeof val == "string") {
         this.state = val;
       }
-      if (this.activeName == 3 || this.activeName == 4) {
+      if (this.activeName == 4) {
         this.$nextTick(() => {
           this.activeName = this.state;
         });
         this.showPop = true;
       }
+      if (this.activeName == 3) {
+        this.$router.push("/serachUser");
+      }
     },
+  },
+  components: {
+    UserInfo,
   },
 };
 </script>
@@ -383,6 +313,8 @@ export default {
     justify-content: space-around;
     border-bottom: 1px solid #ccc;
     .all-item {
+      font-size: 12px;
+      letter-spacing: 1px;
       display: flex;
       align-items: center;
       // line-height: 50px;

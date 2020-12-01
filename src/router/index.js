@@ -5,62 +5,66 @@ import 'nprogress/nprogress.css'
 Vue.use(VueRouter)
 
 const routes = [{
-  path: '/',
-  redirect: '/home',
-  name: 'index'
-},
-{
-  path: '/home',
-  name: 'Home',
-  component: () => import( /* webpackChunkName: "about" */ 'views/home/index.vue')
-},
-{
-  path: '/editposter',
-  name: 'Poster',
-  component: () => import( /* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
-},
-{
-  path: '/saveposter',
-  name: 'savePoster',
-  component: () => import( /* webpackChunkName: "about" */ '../components/Poster/SavePoster.vue')
-},
-{
-  path: '/saveposter/memberpull',
-  name: 'Member',
-  component: () => import( /* webpackChunkName: "about" */ '../components/MemberPull')
-},
-{
-  path: '/saveposter/fanspull',
-  name: 'fans',
-  component: () => import( /* webpackChunkName: "about" */ '../components/FansList')
-},
-{
-  path: '/birthBack',
-  name: 'birthBack',
-  component: () => import( /* webpackChunkName: "about" */ '../components/BirthdayVisit')
-},
-{
-  path: '/salevisit',
-  name: 'saleVisit',
-  component: () => import( /* webpackChunkName: "about" */ '../components/SalesVisit')
-},
-{
-  path: '/memberretention',
-  name: 'memberretention',
-  component: () => import( /* webpackChunkName: "about" */ '../components/MemberRetention')
-},
-{
-  path: '/cardvouchar',
-  name: 'vouchar',
-  component: () => import( /* webpackChunkName: "about" */ '../components/CardVoucher')
-},
-{
-  path: '/memberPer',
-  name: 'memberPer',
-  component: () => import( /* webpackChunkName: "about" */ 'views/MemberPer/index.vue')
+    path: '/',
+    redirect: '/home',
+    name: 'index'
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import( /* webpackChunkName: "about" */ 'views/home/index.vue')
+  },
+  {
+    path: '/editposter',
+    name: 'Poster',
+    component: () => import( /* webpackChunkName: "about" */ '../components/Poster/Poster.vue')
+  },
+  {
+    path: '/saveposter',
+    name: 'savePoster',
+    component: () => import( /* webpackChunkName: "about" */ '../components/Poster/SavePoster.vue')
+  },
+  {
+    path: '/saveposter/memberpull',
+    name: 'Member',
+    component: () => import( /* webpackChunkName: "about" */ '../components/MemberPull')
+  },
+  {
+    path: '/saveposter/fanspull',
+    name: 'fans',
+    component: () => import( /* webpackChunkName: "about" */ '../components/FansList')
+  },
+  {
+    path: '/birthBack',
+    name: 'birthBack',
+    component: () => import( /* webpackChunkName: "about" */ '../components/BirthdayVisit')
+  },
+  {
+    path: '/salevisit',
+    name: 'saleVisit',
+    component: () => import( /* webpackChunkName: "about" */ '../components/SalesVisit')
+  },
+  {
+    path: '/memberretention',
+    name: 'memberretention',
+    component: () => import( /* webpackChunkName: "about" */ '../components/MemberRetention')
+  },
+  {
+    path: '/cardvouchar',
+    name: 'vouchar',
+    component: () => import( /* webpackChunkName: "about" */ '../components/CardVoucher')
+  },
+  {
+    path: '/memberPer',
+    name: 'memberPer',
+    component: () => import( /* webpackChunkName: "about" */ 'views/MemberPer/index.vue')
 
-},
-
+  },
+  {
+    path: '/serachUser',
+    name: 'serachUser',
+    component: () => import( /* webpackChunkName: "about" */ 'views/MemberPer/childComponents/serachUser.vue')
+  }
 ]
 
 const router = new VueRouter({
@@ -73,7 +77,7 @@ const router = new VueRouter({
 //   NProgress.start()
 //   console.log(to);
 
-  
+
 
 
 //   // if (to.path == "/home") {
