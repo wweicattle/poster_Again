@@ -43,10 +43,10 @@ export default {
       type: Boolean,
       default: false,
     },
-    userState:{
-        type:Number,
-        default:0
-    }
+    userState: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
   },
   created() {},
   mounted() {
-      console.log(this.userState);
+    console.log(this.userState);
   },
   methods: {
     onLoad() {
@@ -83,15 +83,17 @@ export default {
     isSelectAll(newVal, oldVal) {
       this.$refs.checkboxGroup.toggleAll(newVal);
     },
-    userState(newVal){
-        console.log(newVal);
-    }
+    userState(newVal) {
+      console.log(newVal);
+    },
   },
 };
 </script>
 
 <style  lang="scss">
 .user-infos {
+  font-size: 16px;
+  line-height:auto;
   .user-details {
     padding: 20px 15px;
     margin: 15px 20px;
@@ -131,7 +133,6 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #888888;
-          // line-height: 17px;
         }
       }
     }

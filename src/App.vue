@@ -98,6 +98,7 @@ export default {
         "/salevisit",
         "/memberretention",
         "/cardvouchar",
+        "/serachUser"
       ];
       if (arr.indexOf(newVal.path) != -1) {
         this.isshowFooter = false;

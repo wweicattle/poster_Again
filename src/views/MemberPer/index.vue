@@ -174,7 +174,7 @@ export default {
     };
   },
   created() {
-    document.title = "会员列表";
+    // document.title = "会员列表";
   },
   mounted() {},
   methods: {
@@ -186,14 +186,17 @@ export default {
       if (typeof val == "string") {
         this.state = val;
       }
-      if (this.activeName == 4) {
+      if (this.activeName == 4 || this.activeName == 3) {
         this.$nextTick(() => {
           this.activeName = this.state;
         });
-        this.showPop = true;
-      }
-      if (this.activeName == 3) {
-        this.$router.push("/serachUser");
+
+        //
+        if (this.activeName == 3) {
+          this.$router.push("/serachUser");
+        } else {
+          this.showPop = true;
+        }
       }
     },
   },
