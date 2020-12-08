@@ -1,5 +1,6 @@
 <template>
-  <div class="member-contains">
+  <div class="member-contains" @scroll="scrollTabBtn" ref="tabsRef">
+    <!-- tab选择项 -->
     <van-tabs
       v-model="activeName"
       color="#5192fc"
@@ -8,10 +9,8 @@
       sticky
       animated
       class="tabs-content"
-      @scroll="scrollTabBtn"
-      ref="tabsRef"
     >
-      <van-tab title="全部" name="a" ref="allPerRef">
+      <!-- <van-tab title="全部" name="a" ref="allPerRef">
         <user-info :isSelectAll="selectAll" :userState="0"></user-info>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
         deserunt. Ipsam porro labore, deleniti, mollitia earum suscipit et
@@ -25,7 +24,7 @@
         inventore, itaque eveniet fugit illum assumenda excepturi voluptas
         laboriosam expedita mollitia sint, repellat nihil dignissimos
         blanditiis! Adipisci, tempore. Itaque, iste consequatur?
-      </van-tab>
+      </van-tab> -->
       <van-tab title="公众号" name="b">
         <user-info :isSelectAll="selectAll" :userState="1"></user-info> Lorem
         ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
@@ -70,21 +69,56 @@
         /></template>
       </van-tab>
     </van-tabs>
+    <!-- 点击右侧标签页选择项 -->
     <van-popup
       v-model="showPop"
       position="right"
       :style="{ height: '100%', width: '70%' }"
     >
-      <div class="tab-content">
+      <template v-for="(val, indexs) in 5">
+        <div class="tab-content" :key="indexs">
+          <div class="tab-name">品牌</div>
+          <ul>
+            <template v-for="(val, index) in 6">
+              <li
+                :class="{
+                  'active-item': nowSelectIndex.includes('' + indexs + index),
+                }"
+                @click="itemBtn({ num: indexs, page: index })"
+                :key="index"
+              >
+                包邮
+                <div>
+                  <div class="active-icon"></div>
+                  <span class="active-real-icon">
+                    <van-icon name="cross" />
+                  </span>
+                </div>
+              </li>
+            </template>
+
+            <!-- <li>天猫</li>
+            <li>淘金币讨钱</li>
+            <li>消费者保障</li>
+            <li>货到付款</li>
+            <li>公益宝贝</li>
+            <li>通用排序</li> -->
+          </ul>
+        </div>
+      </template>
+      <!-- <div class="tab-content">
         <div class="tab-name">品牌</div>
         <ul>
           <li class="active-item">
             包邮
-            <div class="active-icon"></div>
-            <span class="active-real-icon">
-              <van-icon name="cross" />
-            </span>
+            <div>
+              <div class="active-icon"></div>
+              <span class="active-real-icon">
+                <van-icon name="cross" />
+              </span>
+            </div>
           </li>
+
           <li>天猫</li>
           <li>淘金币讨钱</li>
           <li>消费者保障</li>
@@ -140,10 +174,11 @@
           <li>公益宝贝</li>
           <li>通用排序</li>
         </ul>
-      </div>
+      </div> -->
       <div class="reload-confirm">
         <div class="btn-contain">
-          <span class="reload">重置</span> <span class="confirm">确定</span>
+          <span class="reload" @click="reloadBtn">重置</span>
+          <span class="confirm">确定</span>
         </div>
       </div>
     </van-popup>
@@ -158,10 +193,14 @@
         </div>
       </div>
     </div>
+    <section class="up-init" @click="topBtn" v-show="top">
+      <van-icon name="back-top" />
+    </section>
   </div>
 </template>
 
 <script>
+const TOPMAX = 1000;
 import UserInfo from "./childComponents/UserInfo";
 export default {
   name: "tab",
@@ -171,6 +210,8 @@ export default {
       state: "a",
       showPop: false,
       selectAll: false,
+      nowSelectIndex: [],
+      top: false,
     };
   },
   created() {
@@ -178,11 +219,36 @@ export default {
   },
   mounted() {},
   methods: {
-    scrollTabBtn(index) {
-      console.log(this.$refs.tabsRef.$el.clientHeight);
-      console.log(index);
+    topBtn() {
+      this.$refs.tabsRef.scrollTop = 0;
+    },
+    // 重置标签页
+    reloadBtn() {
+      this.nowSelectIndex = [];
+    },
+    // 点击标签页
+    itemBtn(obj) {
+      let { num, page } = obj;
+      if (this.nowSelectIndex.includes("" + num + page)) {
+        this.nowSelectIndex.splice(
+          this.nowSelectIndex.indexOf("" + num + page),
+          1
+        );
+        return;
+      }
+      this.nowSelectIndex.push("" + num + page);
+    },
+
+    scrollTabBtn(e) {
+      let top = this.$refs.tabsRef.scrollTop;
+      if (top > TOPMAX) {
+        this.top = true;
+      } else {
+        this.top = false;
+      }
     },
     tabClickBtn(val) {
+      console.log(val);
       if (typeof val == "string") {
         this.state = val;
       }
@@ -208,8 +274,27 @@ export default {
 
 <style  lang="scss">
 .member-contains {
+  overflow: hidden;
+  overflow-y: scroll;
   font-size: 16px;
-  height: 100%;
+  height: 100vh;
+  // &::-webkit-scrollbar {
+  //   // display: ;
+  // }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(138, 114, 114);
+  }
   .tab-search {
     // height: 48.5px;
     // line-height: 48.5px;
@@ -267,7 +352,6 @@ export default {
               position: absolute;
               right: 0;
               bottom: 0;
-              z-index: 1000;
             }
           }
         }
@@ -351,6 +435,22 @@ export default {
           // background: #33496C;
         }
       }
+    }
+  }
+  .up-init {
+    position: fixed;
+    right: 20px;
+    bottom: 120px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px 1px rgba(27, 27, 27, 0.08);
+    i {
+      top: 10px;
+      font-size: 20px;
+      color: #000;
     }
   }
 }

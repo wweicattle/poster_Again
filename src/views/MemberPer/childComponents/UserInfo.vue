@@ -1,37 +1,43 @@
 <template>
-  <div class="user-infos">
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-checkbox-group v-model="result" ref="checkboxGroup">
-        <ul>
-          <!-- 进行遍历用户 -->
-          <template v-for="(item, index) in list">
-            <li :key="index">
-              <div class="user-details">
-                <van-checkbox name="a"></van-checkbox>
-                <div class="user-name">
-                  <img src="~assets/avator.png" alt="" class="avator" />
-                  <div class="details">
-                    <div>
-                      <span class="name">张萌萌 </span>
-                      <img src="static/img/memberPull/icon_woman.png" alt="" />
+  <div>
+    <div class="user-infos">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-checkbox-group v-model="result" ref="checkboxGroup">
+          <ul>
+            <!-- 进行遍历用户 -->
+            <template v-for="(item, index) in list">
+              <li :key="index">
+                <div class="user-details">
+                  <van-checkbox name="a"></van-checkbox>
+                  <div class="user-name">
+                    <img src="~assets/avator.png" alt="" class="avator" />
+                    <div class="details">
+                      <div>
+                        <span class="name">张萌萌 </span>
+                        <img
+                          src="static/img/memberPull/icon_woman.png"
+                          alt=""
+                        />
+                      </div>
+                      <div class="member">公众号会员</div>
                     </div>
-                    <div class="member">公众号会员</div>
                   </div>
+                  <div class="mem-date">2019/08/20入会</div>
                 </div>
-                <div class="mem-date">2019/08/20入会</div>
-              </div>
-            </li>
-          </template>
-        </ul>
-      </van-checkbox-group>
+              </li>
+            </template>
+          </ul>
+        </van-checkbox-group>
 
-      <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
-    </van-list>
+        <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
+      </van-list>
+      <!-- <section class="up-init">lorem</section> -->
+    </div>
   </div>
 </template>
 
@@ -92,8 +98,11 @@ export default {
 
 <style  lang="scss">
 .user-infos {
+  // position: relative;
+  transform: none;
+
   font-size: 16px;
-  line-height:auto;
+  line-height: auto;
   .user-details {
     padding: 20px 15px;
     margin: 15px 20px;
@@ -144,5 +153,17 @@ export default {
       line-height: 17px;
     }
   }
+  // .up-init {
+  //   position: sticky;
+  //   right: 20px;
+  //   top: 0px;
+  //   // bottom: 120px;
+  //   width: 40px;
+  //   height: 40px;
+  //   text-align: center;
+  //   background-color: rgba(209, 36, 36, 0.95);
+  //   border-radius: 50%;
+  //   box-shadow: 0 2px 6px 1px rgba(27, 27, 27, 0.08);
+  // }
 }
 </style>
