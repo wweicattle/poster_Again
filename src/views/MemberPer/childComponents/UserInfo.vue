@@ -18,11 +18,8 @@
                     <img src="~assets/avator.png" alt="" class="avator" />
                     <div class="details">
                       <div>
-                        <span class="name">张萌萌 </span>
-                        <img
-                          src="static/img/memberPull/icon_woman.png"
-                          alt=""
-                        />
+                        <span class="name">张萌萌{{ item.fansname }}</span>
+                        <img :src="item.avatar" alt="" />
                       </div>
                       <div class="member">公众号会员</div>
                     </div>
@@ -42,6 +39,8 @@
 </template>
 
 <script>
+import { getUserInfos } from "network/userInfo.js";
+
 export default {
   name: "userInfo",
   props: {
@@ -60,24 +59,70 @@ export default {
       loading: false,
       finished: false,
       result: [],
+      cid: Number(window.localStorage.getItem("cid")),
+      page: 1,
     };
   },
-  created() {},
+  created() {
+    // this.$toast.loading({
+    //   forbidClick: true,
+    //   duration: 0,
+    // });
+    // 请求用户数据
+    this.getUserInfos();
+  },
   mounted() {
     console.log(this.userState);
   },
   methods: {
+    // 获取用户信息
+    getUserInfos() {
+      let objs;
+      if (this.userState == 1) {
+        objs = {
+          type: "wx",
+        };
+      } else {
+      }
+      let obj = {
+        cid: this.cid,
+        type: this.indentfyState,
+        taglist: "",
+        searchname: "",
+        // 用户还是个人，后面再调整
+        searchtype: 0,
+        page: this.page,
+        ...objs,
+      };
+      getUserInfos(obj).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          if (this.list.length) {
+            let d = this.list.concat(da.data.data.datalist);
+            console.log(d);
+          }
+        }
+        console.log(da);
+        // this.$toast.clear();
+        // 加载状态结束
+        this.loading = false;
+      });
+    },
     onLoad() {
+      console.log(3343434);
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       setTimeout(() => {
+        console.log(234343434);
         for (let i = 0; i < 10; i++) {
           this.list.push(this.list.length + 1);
         }
+        this.page = ++this.page;
 
-        // 加载状态结束
-        this.loading = false;
-
+        setTimeout(() => {
+          // this.getUserInfos();
+          this.loading = false;
+        }, 5000);
         // 数据全部加载完成
         if (this.list.length >= 40) {
           this.finished = true;

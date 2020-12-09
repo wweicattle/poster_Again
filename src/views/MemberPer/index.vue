@@ -2,7 +2,7 @@
   <div class="member-contains" @scroll="scrollTabBtn" ref="tabsRef">
     <!-- tab选择项 -->
     <van-tabs
-      v-model="activeName"
+      v-model="state"
       color="#5192fc"
       swipeable
       @click="tabClickBtn"
@@ -10,22 +10,7 @@
       animated
       class="tabs-content"
     >
-      <!-- <van-tab title="全部" name="a" ref="allPerRef">
-        <user-info :isSelectAll="selectAll" :userState="0"></user-info>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
-        deserunt. Ipsam porro labore, deleniti, mollitia earum suscipit et
-        facere fugit amet modi velit iste cumque recusandae, animi accusamus ad
-        architecto? Exercitationem nesciunt reiciendis perferendis quasi
-        mollitia sapiente officiis fugit, praesentium harum porro. Nobis
-        suscipit distinctio sed obcaecati sint, quia quisquam commodi assumenda
-        odit nam ducimus impedit soluta iste, autem quo illum iusto eaque
-        eligendi, dolorum voluptas molestiae officiis! Pariatur deleniti
-        veritatis in iusto? Animi voluptas inventore neque dignissimos. Hic
-        inventore, itaque eveniet fugit illum assumenda excepturi voluptas
-        laboriosam expedita mollitia sint, repellat nihil dignissimos
-        blanditiis! Adipisci, tempore. Itaque, iste consequatur?
-      </van-tab> -->
-      <van-tab title="公众号" name="b">
+      <van-tab title="公众号" name="a">
         <user-info :isSelectAll="selectAll" :userState="1"></user-info> Lorem
         ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
         Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
@@ -40,7 +25,7 @@
         nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
         consequatur?</van-tab
       >
-      <van-tab title="企业号" name="c">
+      <van-tab title="企业号" name="b">
         <user-info :isSelectAll="selectAll" :userState="2"></user-info> Lorem
         ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
         Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
@@ -55,16 +40,16 @@
         nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
         consequatur?</van-tab
       >
-      <van-tab>
-        <template #title name="d">
+      <van-tab name="d">
+        <template #title>
           <img
             src="~assets/img/memberPer/icon_search_black.png"
             class="search"
             alt=""
         /></template>
       </van-tab>
-      <van-tab>
-        <template #title name="e">
+      <van-tab name="e">
+        <template #title>
           <img src="~assets/img/memberPer/icon_filter.png" alt=""
         /></template>
       </van-tab>
@@ -74,107 +59,53 @@
       v-model="showPop"
       position="right"
       :style="{ height: '100%', width: '70%' }"
+      @close="closePop"
     >
-      <template v-for="(val, indexs) in 5">
-        <div class="tab-content" :key="indexs">
-          <div class="tab-name">品牌</div>
-          <ul>
-            <template v-for="(val, index) in 6">
-              <li
-                :class="{
-                  'active-item': nowSelectIndex.includes('' + indexs + index),
-                }"
-                @click="itemBtn({ num: indexs, page: index })"
-                :key="index"
-              >
-                包邮
-                <div>
+      <div v-show="state == 'a'">
+        <template v-for="(val, indexs) in tabDatas">
+          <div class="tab-content" :key="indexs">
+            <div class="tab-name">{{ val.groupname }}</div>
+            <ul>
+              <template v-for="(val, index) in val.tagnameList">
+                <li
+                  :class="{
+                    'active-item': nowSelectIndex.includes('' + indexs + index),
+                  }"
+                  @click="itemBtn({ num: indexs, page: index })"
+                  :key="index"
+                >
+                  {{ val.tagname }}
                   <div class="active-icon"></div>
-                  <span class="active-real-icon">
-                    <van-icon name="cross" />
-                  </span>
-                </div>
-              </li>
-            </template>
+                  <span class="active-real-icon"> x </span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+      <div v-show="state != 'a'">
+        <template v-for="(val, indexs) in tabQywxDatas">
+          <div class="tab-content" :key="indexs">
+            <div class="tab-name">{{ val.groupname }}</div>
+            <ul>
+              <template v-for="(val, index) in val.tagnameList">
+                <li
+                  :class="{
+                    'active-item': nowSelectIndex.includes('' + indexs + index),
+                  }"
+                  @click="itemBtn({ num: indexs, page: index })"
+                  :key="index"
+                >
+                  {{ val.tagname }}
+                  <div class="active-icon"></div>
+                  <span class="active-real-icon"> x </span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
 
-            <!-- <li>天猫</li>
-            <li>淘金币讨钱</li>
-            <li>消费者保障</li>
-            <li>货到付款</li>
-            <li>公益宝贝</li>
-            <li>通用排序</li> -->
-          </ul>
-        </div>
-      </template>
-      <!-- <div class="tab-content">
-        <div class="tab-name">品牌</div>
-        <ul>
-          <li class="active-item">
-            包邮
-            <div>
-              <div class="active-icon"></div>
-              <span class="active-real-icon">
-                <van-icon name="cross" />
-              </span>
-            </div>
-          </li>
-
-          <li>天猫</li>
-          <li>淘金币讨钱</li>
-          <li>消费者保障</li>
-          <li>货到付款</li>
-          <li>公益宝贝</li>
-          <li>通用排序</li>
-        </ul>
-      </div>
-      <div class="tab-content">
-        <div class="tab-name">品牌</div>
-        <ul>
-          <li>包邮</li>
-          <li>天猫</li>
-          <li>淘金币讨钱</li>
-          <li>消费者保障</li>
-          <li>货到付款</li>
-          <li>公益宝贝</li>
-          <li>通用排序</li>
-        </ul>
-      </div>
-      <div class="tab-content">
-        <div class="tab-name">品牌</div>
-        <ul>
-          <li>包邮</li>
-          <li>天猫</li>
-          <li>淘金币讨钱</li>
-          <li>消费者保障</li>
-          <li>货到付款</li>
-          <li>公益宝贝</li>
-          <li>通用排序</li>
-        </ul>
-      </div>
-      <div class="tab-content">
-        <div class="tab-name">品牌</div>
-        <ul>
-          <li>包邮</li>
-          <li>天猫</li>
-          <li>淘金币讨钱</li>
-          <li>消费者保障</li>
-          <li>货到付款</li>
-          <li>公益宝贝</li>
-          <li>通用排序</li>
-        </ul>
-      </div>
-      <div class="tab-content">
-        <div class="tab-name">品牌</div>
-        <ul>
-          <li>包邮</li>
-          <li>天猫</li>
-          <li>淘金币讨钱</li>
-          <li>消费者保障</li>
-          <li>货到付款</li>
-          <li>公益宝贝</li>
-          <li>通用排序</li>
-        </ul>
-      </div> -->
       <div class="reload-confirm">
         <div class="btn-contain">
           <span class="reload" @click="reloadBtn">重置</span>
@@ -202,23 +133,57 @@
 <script>
 const TOPMAX = 1000;
 import UserInfo from "./childComponents/UserInfo";
+import { getTabData, getUserInfos } from "network/userInfo.js";
 export default {
   name: "tab",
   data() {
     return {
-      activeName: "a",
+      cid:Number(window.localStorage.getItem("cid")),
       state: "a",
       showPop: false,
       selectAll: false,
       nowSelectIndex: [],
       top: false,
+      saveSate: "a",
+      indentfyState: "wx",
+      tabDatas: [],
+      haveQywxTabDate: false,
+      haveWxTabDate: false,
+      tabQywxDatas: [],
     };
   },
   created() {
     // document.title = "会员列表";
   },
-  mounted() {},
+  mounted() {
+    this.getTabData();
+  },
   methods: {
+    // 关闭pop，清除tab标签
+    closePop() {
+      this.nowSelectIndex = [];
+    },
+   
+    // 获取标签数据
+    getTabData() {
+      getTabData({
+        cid:this.cid,
+        type: this.indentfyState,
+      }).then((da) => {
+        console.log(333, da);
+        if (da.data.errcode == 0) {
+          //用户企业身份返回的数据格式不一，需做判断
+          this.state == "a"
+            ? (this.tabDatas = da.data.data)
+            : (this.tabQywxDatas = da.data.data);
+        } else {
+          this.$notify({
+            type: "warning",
+            message: da.data.errmsg || "获取标签列表失败！请稍后重试",
+          });
+        }
+      });
+    },
     topBtn() {
       this.$refs.tabsRef.scrollTop = 0;
     },
@@ -240,29 +205,36 @@ export default {
     },
 
     scrollTabBtn(e) {
+      // 显示向上图标
       let top = this.$refs.tabsRef.scrollTop;
-      if (top > TOPMAX) {
-        this.top = true;
-      } else {
-        this.top = false;
-      }
+      this.top = top > TOPMAX ? true : false;
     },
     tabClickBtn(val) {
-      console.log(val);
-      if (typeof val == "string") {
-        this.state = val;
-      }
-      if (this.activeName == 4 || this.activeName == 3) {
-        this.$nextTick(() => {
-          this.activeName = this.state;
-        });
-
-        //
-        if (this.activeName == 3) {
-          this.$router.push("/serachUser");
+      // 进行保存用户身份到变量，之后请求数据
+      if (val == "b" || val == "a") {
+        this.saveSate = val;
+        if (val == "b") {
+          this.indentfyState = "qywx";
+          // 请求标签判断是否已经 请求，可使用缓存
+          if (!this.haveWxTabDate) {
+            this.getTabData();
+            this.haveWxTabDate = true;
+          }
         } else {
-          this.showPop = true;
+          this.indentfyState = "wx";
+          if (!this.haveQywxTabDate) {
+            this.haveQywxTabDate = true;
+          }
         }
+      }
+      //
+      if (this.state == "d" || this.state == "e") {
+        // 放在下一帧，因为切换tab，会有变化
+        this.$nextTick(() => {
+          this.state = this.saveSate;
+        });
+        // 搜索内容与标签 大全
+        val == "d" ? this.$router.push("/serachUser") : (this.showPop = true);
       }
     },
   },
@@ -307,7 +279,7 @@ export default {
     }
   }
   .search {
-    padding-left: 60px;
+    padding-left: 80px;
   }
   .van-popup {
     .tab-content {
@@ -317,12 +289,13 @@ export default {
       }
       ul {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         flex-wrap: wrap;
         text-align: center;
         margin: 10px 0;
         border-bottom: 1px solid #ccc;
         li {
+          margin: 0 4px;
           position: relative;
           font-size: 13px;
           border-radius: 2px;
@@ -339,19 +312,19 @@ export default {
               position: absolute;
               right: 0;
               bottom: -26px;
-              width: 0;
-              height: 0;
-              border-top: 24px solid transparent;
+              // width: 0;
+              // height: 0;
+              border-top: 18px solid transparent;
               border-bottom: 23px solid transparent;
-              border-right: 30px solid #f97327;
+              border-right: 26px solid #f97327;
             }
             .active-real-icon {
-              line-height: 0;
-              color: #fff;
-              font-size: 8px;
+              padding-top: 1px;
+              line-height: normal;
               position: absolute;
-              right: 0;
+              color: #fff;
               bottom: 0;
+              right: 1px;
             }
           }
         }

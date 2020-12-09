@@ -5,28 +5,12 @@ import qs from 'qs';
 
 
 // 获取标签数据
-export function addTabData(obj) {
-    let params = {
-      action: "fans",
-      ctrl: "taglist",
-      servername: "svr-saletool133",
-      ...obj,
-      // pagesize:10,
-    }
-    let url = "/apis"
-    return request.post(url, qs.stringify(params))
-  }
-  
-  
-
-// 获取售后回访记录
-export function addUserInfo(obj) {
+export function getTabData(obj) {
   let params = {
     action: "fans",
-    ctrl: "addfeedback",
+    ctrl: "taglist",
     servername: "svr-saletool133",
     ...obj,
-    typecode: "SHHF"
     // pagesize:10,
   }
   let url = "/apis"
@@ -34,3 +18,16 @@ export function addUserInfo(obj) {
 }
 
 
+
+// 获取售后回访记录
+export function getUserInfos(obj) {
+  let params = {
+    action: "fans",
+    ctrl: "userlist",
+    servername: "svr-saletool133",
+    ...obj,
+    pagesize:10,
+  }
+  let url = "/apis"
+  return request.post(url, qs.stringify(params))
+}
