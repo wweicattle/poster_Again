@@ -13,18 +13,33 @@
             <template v-for="(item, index) in list">
               <li :key="index">
                 <div class="user-details">
-                  <van-checkbox name="a"></van-checkbox>
+                  <van-checkbox :name="index"></van-checkbox>
                   <div class="user-name">
-                    <img src="~assets/avator.png" alt="" class="avator" />
+                    <img
+                      :src="item.avatar ? item.avatar : 'static/img/avatar.jpg'"
+                      alt=""
+                      class="avator"
+                    />
                     <div class="details">
                       <div>
-                        <span class="name">张萌萌{{ item.fansname }}</span>
-                        <img :src="item.avatar" alt="" />
+                        <span class="name">{{
+                          item.fansname.slice(0, 3).padEnd(3, ".")
+                        }}</span>
+                        <img
+                          src="~assets/common/icon_man.png"
+                          alt=""
+                          v-if="item.gender == '0'"
+                        />
+                        <img
+                          src="~assets/common/icon_woman.png"
+                          alt=""
+                          v-else
+                        />
                       </div>
                       <div class="member">公众号会员</div>
                     </div>
                   </div>
-                  <div class="mem-date">2019/08/20入会</div>
+                  <div class="mem-date">{{ item.rhrq }}入会</div>
                 </div>
               </li>
             </template>
@@ -49,8 +64,8 @@ export default {
       default: false,
     },
     userState: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
     },
   },
   data() {
@@ -61,73 +76,72 @@ export default {
       result: [],
       cid: Number(window.localStorage.getItem("cid")),
       page: 1,
+      userStates: null,
     };
   },
   created() {
-    // this.$toast.loading({
-    //   forbidClick: true,
-    //   duration: 0,
-    // });
+    console.log(2222222222222222222);
+    // 判断是企业用户 还是普通用户
+    // if (this.userState == 1) {
+    //   this.userState = "wx";
+    // } else if (this.userState == 2) {
+    //   this.userState = "qywx";
+    // }
+    console.log(window.localStorage.getItem("identifyState"));
+    this.userStates = window.localStorage.getItem("identifyState");
+    // this.userStates==1?this.userStates="wx":this.userStates="qywx";
+    this.$toast.loading({
+      forbidClick: true,
+      duration: 0,
+    });
     // 请求用户数据
     this.getUserInfos();
   },
-  mounted() {
-    console.log(this.userState);
-  },
+  mounted() {},
   methods: {
     // 获取用户信息
-    getUserInfos() {
-      let objs;
-      if (this.userState == 1) {
-        objs = {
-          type: "wx",
-        };
-      } else {
-      }
+    getUserInfos(serachDetail) {
       let obj = {
         cid: this.cid,
-        type: this.indentfyState,
+        type: this.userStates,
         taglist: "",
-        searchname: "",
+        // searchname: "",
         // 用户还是个人，后面再调整
         searchtype: 0,
         page: this.page,
-        ...objs,
+        ...serachDetail,
       };
       getUserInfos(obj).then((da) => {
+        console.log("当前页码是"+this.page)
         console.log(da);
         if (da.data.errcode == 0) {
-          if (this.list.length) {
-            let d = this.list.concat(da.data.data.datalist);
-            console.log(d);
+          this.$toast.clear();
+
+          // da.data.data.datalist.forEach(val=>{
+          //     new Date(val.rhrq).toLocaleDateString().split("/").forEach(val=>{
+          //       val.
+          //     })
+          // })
+          if (this.userState.length > 0) {
+            this.list = da.data.data.datalist;
+          } else {
+            this.list = this.list.concat(da.data.data.datalist);
           }
+          this.loading = false;
         }
-        console.log(da);
+        // console.log(da);
         // this.$toast.clear();
         // 加载状态结束
-        this.loading = false;
+        // this.loading = false;
       });
     },
     onLoad() {
-      console.log(3343434);
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        console.log(234343434);
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        this.page = ++this.page;
-
-        setTimeout(() => {
-          // this.getUserInfos();
-          this.loading = false;
-        }, 5000);
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 1000);
+      console.log("load加载一次");
+      this.page = ++this.page;
+      this.getUserInfos();
+      if (this.list.length >= 1) {
+        this.finished = true;
+      }
     },
   },
   watch: {
@@ -136,6 +150,15 @@ export default {
     },
     userState(newVal) {
       console.log(newVal);
+      this.page = 1;
+      let obj = {
+        searchname: newVal.trim(),
+      };
+      this.$toast.loading({
+        forbidClick: true,
+        duration: 0,
+      });
+      this.getUserInfos(obj);
     },
   },
 };
@@ -171,15 +194,25 @@ export default {
       }
       display: flex;
       .details {
+        width: 64px;
+        overflow: hidden;
         .name {
-          font-size: 14px;
+          font-size: 13px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #323232;
+          padding-right: 3px;
+          // width:43px ;
+          // white-space: nowrap;
+          // text-overflow: ellipsis;
+          // overflow: hidden;
+          // display: inline-block;
+          // vertical-align: -4px;
         }
         img {
           width: 14px;
           height: 14px;
+          vertical-align: -1px;
         }
         .member {
           padding-top: 5px;

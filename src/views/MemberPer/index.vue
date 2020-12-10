@@ -11,7 +11,7 @@
       class="tabs-content"
     >
       <van-tab title="公众号" name="a">
-        <user-info :isSelectAll="selectAll" :userState="1"></user-info> Lorem
+        <user-info :isSelectAll="selectAll" ></user-info> Lorem
         ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
         Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
         amet modi velit iste cumque recusandae, animi accusamus ad architecto?
@@ -26,7 +26,7 @@
         consequatur?</van-tab
       >
       <van-tab title="企业号" name="b">
-        <user-info :isSelectAll="selectAll" :userState="2"></user-info> Lorem
+        <user-info :isSelectAll="selectAll" ></user-info> Lorem
         ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
         Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
         amet modi velit iste cumque recusandae, animi accusamus ad architecto?
@@ -138,7 +138,7 @@ export default {
   name: "tab",
   data() {
     return {
-      cid:Number(window.localStorage.getItem("cid")),
+      cid: Number(window.localStorage.getItem("cid")),
       state: "a",
       showPop: false,
       selectAll: false,
@@ -163,14 +163,14 @@ export default {
     closePop() {
       this.nowSelectIndex = [];
     },
-   
+
     // 获取标签数据
     getTabData() {
       getTabData({
-        cid:this.cid,
+        cid: this.cid,
         type: this.indentfyState,
       }).then((da) => {
-        console.log(333, da);
+        // console.log(333, da);
         if (da.data.errcode == 0) {
           //用户企业身份返回的数据格式不一，需做判断
           this.state == "a"
@@ -213,6 +213,7 @@ export default {
       // 进行保存用户身份到变量，之后请求数据
       if (val == "b" || val == "a") {
         this.saveSate = val;
+
         if (val == "b") {
           this.indentfyState = "qywx";
           // 请求标签判断是否已经 请求，可使用缓存
@@ -226,6 +227,8 @@ export default {
             this.haveQywxTabDate = true;
           }
         }
+        // 保存点击用户身份到本地，因为搜索 的 时候 需要 使用
+        window.localStorage.setItem("identifyState", this.indentfyState);
       }
       //
       if (this.state == "d" || this.state == "e") {
@@ -234,7 +237,18 @@ export default {
           this.state = this.saveSate;
         });
         // 搜索内容与标签 大全
-        val == "d" ? this.$router.push("/serachUser") : (this.showPop = true);
+
+        // val == "d" ? this.$router.push("/serachUser") : (this.showPop = true);
+        if (val == "d") {
+          this.$router.push({
+            name: "serachUser",
+            params: {
+              userState: this.indentfyState,
+            },
+          });
+        } else {
+          this.showPop = true;
+        }
       }
     },
   },

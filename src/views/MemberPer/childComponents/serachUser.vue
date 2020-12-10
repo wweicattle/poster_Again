@@ -1,19 +1,39 @@
 <template>
   <div class="search-contain" @scroll="scrollTabBtn" ref="tabsRef">
-    <van-search
-      v-model="value"
-      show-action
-      label=""
-      placeholder="请输入搜索关键词"
-      @search="onSearch"
-    >
-      <template #action>
-        <div @click="onSearch">搜索</div>
-      </template>
-    </van-search>
-    <div class="serach-counts">你的搜索结果如下: 2020条</div>
-    <div>
-      <user-info :isSelectAll="selectAll" :userState="0"></user-info>
+    <van-sticky>
+      <!-- <div class="input-content">
+        <div class="inputs">
+        <input list="browsers" name="browser" />
+        <datalist id="browsers">
+          <option value="Internet Explorer"></option>
+          <option value="Firefox"></option>
+          <option value="Chrome"></option>
+          <option value="Opera"></option>
+          <option value="Safari"></option>
+        </datalist>
+        <span class="confirm">确定</span>
+        </div>
+      </div> -->
+      <van-search
+        v-model="value"
+        show-action
+        label=""
+        placeholder="请输入搜索关键词"
+        @search="onSearch"
+      >
+        <template #action>
+          <div @click="onSearch">搜索</div>
+        </template>
+      </van-search>
+    </van-sticky>
+    <div v-if="showUserInfos">
+      <div class="serach-counts">你的搜索结果如下: 2020条</div>
+      <div class="users">
+        <user-info
+          :isSelectAll="selectAll"
+          :userState="serachContent"
+        ></user-info>
+      </div>
     </div>
     <div class="all-selct">
       <div class="all-item">
@@ -35,14 +55,20 @@
 const TOPMAX = 1000;
 import UserInfo from "./UserInfo";
 export default {
+  name: "serachCom",
   data() {
     return {
       value: "",
       selectAll: false,
       top: false,
+      userState: window.localStorage.getItem("identifyState"),
+      serachContent: null,
+      showUserInfos: false,
     };
   },
-  created() {},
+  created() {
+    console.log(this.$route);
+  },
   mounted() {},
   methods: {
     scrollTabBtn(e) {
@@ -57,7 +83,8 @@ export default {
       this.$refs.tabsRef.scrollTop = 0;
     },
     onSearch() {
-      console.log(222);
+      this.showUserInfos = true;
+      this.serachContent = this.value;
     },
   },
   components: {
@@ -66,14 +93,53 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .search-contain {
   height: 100vh;
   overflow: hidden;
-  overflow-y:scroll;
+  overflow-y: scroll;
+  .van-sticky {
+    height: 44px;
+    box-sizing: border-box;
+  }
+  // .input-content {
+  //   background: rgb(184, 171, 171);
+  //   position: relative;
+  //   // .inputs {
+  //   // position: absolute;
+  //   // outline: hidden;
+  //   // left: 0;
+  //   // top: 0;
+  //   // right: 0;
+  //   // bottom: 0;
+  //   // margin: auto;
+  //   // width: 360px;
+  //   // height: 30px;
+  //   // // text-align: right;
+  //   // box-sizing: border-box;
+  //   display: block;
+  //   align-items: center;
+  //   input {
+  //     border-radius: 2px;
+  //     border: none;
+  //     text-indent: 8px;
+  //     background: #f7f7f7;
+  //     font-size: 14px;
+  //     width: 280px;
+  //     height: 33px;
+  //   }
+  //   .confirm {
+  //     font-size: 14px;
+  //     padding: 0 10px;
+  //   }
+  //   // }
+  // }
+  .users {
+    margin-bottom: 100px;
+  }
   .serach-counts {
     font-size: 13px;
-    margin: 15px 0 15px 15px;
+    margin: 25px 0 15px 15px;
   }
   .all-selct {
     background: #fff;
