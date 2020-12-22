@@ -4,42 +4,16 @@
     <van-tabs
       v-model="state"
       color="#5192fc"
-      swipeable
       @click="tabClickBtn"
       sticky
-      animated
       class="tabs-content"
     >
       <van-tab title="公众号" name="a">
-        <user-info :isSelectAll="selectAll" ></user-info> Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
-        Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
-        amet modi velit iste cumque recusandae, animi accusamus ad architecto?
-        Exercitationem nesciunt reiciendis perferendis quasi mollitia sapiente
-        officiis fugit, praesentium harum porro. Nobis suscipit distinctio sed
-        obcaecati sint, quia quisquam commodi assumenda odit nam ducimus impedit
-        soluta iste, autem quo illum iusto eaque eligendi, dolorum voluptas
-        molestiae officiis! Pariatur deleniti veritatis in iusto? Animi voluptas
-        inventore neque dignissimos. Hic inventore, itaque eveniet fugit illum
-        assumenda excepturi voluptas laboriosam expedita mollitia sint, repellat
-        nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
-        consequatur?</van-tab
-      >
+        <user-info :isSelectAll="selectAll" :user="indentfyState"></user-info>
+      </van-tab>
       <van-tab title="企业号" name="b">
-        <user-info :isSelectAll="selectAll" ></user-info> Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Adipisci, deserunt.
-        Ipsam porro labore, deleniti, mollitia earum suscipit et facere fugit
-        amet modi velit iste cumque recusandae, animi accusamus ad architecto?
-        Exercitationem nesciunt reiciendis perferendis quasi mollitia sapiente
-        officiis fugit, praesentium harum porro. Nobis suscipit distinctio sed
-        obcaecati sint, quia quisquam commodi assumenda odit nam ducimus impedit
-        soluta iste, autem quo illum iusto eaque eligendi, dolorum voluptas
-        molestiae officiis! Pariatur deleniti veritatis in iusto? Animi voluptas
-        inventore neque dignissimos. Hic inventore, itaque eveniet fugit illum
-        assumenda excepturi voluptas laboriosam expedita mollitia sint, repellat
-        nihil dignissimos blanditiis! Adipisci, tempore. Itaque, iste
-        consequatur?</van-tab
-      >
+        <user-info :isSelectAll="selectAll" :user="indentfyState"></user-info>
+      </van-tab>
       <van-tab name="d">
         <template #title>
           <img
@@ -98,7 +72,7 @@
                 >
                   {{ val.tagname }}
                   <div class="active-icon"></div>
-                  <span class="active-real-icon"> x </span>
+                  <span class="active-real-icon"> x</span>
                 </li>
               </template>
             </ul>
@@ -120,7 +94,12 @@
       </div>
       <div class="reload-confirm">
         <div class="btn-contain">
-          <span class="reload">发海报</span> <span class="confirm">发卡券</span>
+          <span class="reload" @click="$router.push('/upload_pho')"
+            >发海报</span
+          >
+          <span class="confirm" @click="$router.push('/upload_card')"
+            >发卡券</span
+          >
         </div>
       </div>
     </div>
@@ -138,6 +117,8 @@ export default {
   name: "tab",
   data() {
     return {
+      wx: "wx",
+      qx: "qx",
       cid: Number(window.localStorage.getItem("cid")),
       state: "a",
       showPop: false,
@@ -333,7 +314,8 @@ export default {
               border-right: 26px solid #f97327;
             }
             .active-real-icon {
-              padding-top: 1px;
+              // font-size: 4px;
+              // padding-top: 1px;
               line-height: normal;
               position: absolute;
               color: #fff;

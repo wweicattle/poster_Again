@@ -64,7 +64,19 @@ const routes = [{
     path: '/serachUser',
     name: 'serachUser',
     component: () => import( /* webpackChunkName: "about" */ 'views/MemberPer/childComponents/serachUser.vue')
-  }
+  },
+  {
+    path: '/upload_pho',
+    name: 'uploadPho',
+    component: () => import( /* webpackChunkName: "about" */ 'components/UploadMeg/UploadPho.vue')
+  },
+  {
+    path: '/upload_card',
+    name: 'uploadCard',
+    component: () => import( /* webpackChunkName: "about" */ 'components/UploadMeg/UploadCard.vue')
+  },
+ 
+
 ]
 
 const router = new VueRouter({

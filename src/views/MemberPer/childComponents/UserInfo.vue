@@ -1,11 +1,14 @@
 <template>
   <div>
     <div class="user-infos">
+      <div class="serach-counts">你的搜索结果如下: {{ totalUserNum }}条</div>
       <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
+        :error.sync="error"
+        error-text="请求失败，点击重新加载"
       >
         <van-checkbox-group v-model="result" ref="checkboxGroup">
           <ul>
@@ -13,7 +16,7 @@
             <template v-for="(item, index) in list">
               <li :key="index">
                 <div class="user-details">
-                  <van-checkbox :name="index"></van-checkbox>
+                  <van-checkbox :name="index"> </van-checkbox>
                   <div class="user-name">
                     <img
                       :src="item.avatar ? item.avatar : 'static/img/avatar.jpg'"
@@ -67,16 +70,23 @@ export default {
       type: String,
       default: "",
     },
+    user: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
+      error: false,
       list: [],
       loading: false,
       finished: false,
       result: [],
       cid: Number(window.localStorage.getItem("cid")),
-      page: 1,
-      userStates: null,
+      page: 0,
+      userStates: "wx",
+      searchname: null,
+      totalUserNum: null,
     };
   },
   created() {
@@ -87,46 +97,50 @@ export default {
     // } else if (this.userState == 2) {
     //   this.userState = "qywx";
     // }
-    console.log(window.localStorage.getItem("identifyState"));
-    this.userStates = window.localStorage.getItem("identifyState");
-    // this.userStates==1?this.userStates="wx":this.userStates="qywx";
-    this.$toast.loading({
-      forbidClick: true,
-      duration: 0,
-    });
+    // console.log(window.localStorage.getItem("identifyState"));
+    // this.userStates = window.localStorage.getItem("identifyState");
+    // this.userStates == "wx" ? "" : (this.userStates = "qywx");
+    // this.$toast.loading({
+    //   forbidClick: true,
+    //   duration: 0,
+    // });
     // 请求用户数据
-    this.getUserInfos();
+    // this.getUserInfos();
   },
   mounted() {},
   methods: {
     // 获取用户信息
-    getUserInfos(serachDetail) {
+    getUserInfos(length) {
+      // console.log(serachDetail);
+      // serachDetail = serachDetail ? serachDetail : [];
+      // let length = Object.keys(serachDetail)
+      //   ? Object.keys(serachDetail).length
+      //   : 0;
+      if (length) this.list = [];
       let obj = {
         cid: this.cid,
         type: this.userStates,
         taglist: "",
-        // searchname: "",
+        searchname: this.searchname,
         // 用户还是个人，后面再调整
         searchtype: 0,
         page: this.page,
-        ...serachDetail,
       };
       getUserInfos(obj).then((da) => {
-        console.log("当前页码是"+this.page)
+        console.log("当前页码是" + this.page);
         console.log(da);
         if (da.data.errcode == 0) {
           this.$toast.clear();
-
           // da.data.data.datalist.forEach(val=>{
           //     new Date(val.rhrq).toLocaleDateString().split("/").forEach(val=>{
           //       val.
           //     })
           // })
-          if (this.userState.length > 0) {
-            this.list = da.data.data.datalist;
-          } else {
-            this.list = this.list.concat(da.data.data.datalist);
-          }
+          // 保存第一页 返回的页数
+          if (this.page == 1) this.totalUserNum = da.data.data.totalcount;
+          // 如果返回的用户数组为空那么就是没有更多的状态了
+          if (!da.data.data.datalist.length) return (this.finished = true);
+          this.list = this.list.concat(da.data.data.datalist);
           this.loading = false;
         }
         // console.log(da);
@@ -139,38 +153,65 @@ export default {
       console.log("load加载一次");
       this.page = ++this.page;
       this.getUserInfos();
-      if (this.list.length >= 1) {
-        this.finished = true;
-      }
+
+      // this.loading = false;
+      // if (this.list.length >= 1) {
+      //   this.finished = true;
+      // }
     },
   },
   watch: {
+    user: {
+      handler(newVal) {
+        console.log(newVal);
+        this.userStates = newVal;
+      },
+      immediate:true
+    },
     isSelectAll(newVal, oldVal) {
       this.$refs.checkboxGroup.toggleAll(newVal);
     },
     userState(newVal) {
-      console.log(newVal);
+      // this.finished = false;
       this.page = 1;
-      let obj = {
-        searchname: newVal.trim(),
-      };
+      // let obj = {
+      //   searchname: newVal.trim(),
+      // };
+      this.searchname = newVal.trim();
       this.$toast.loading({
         forbidClick: true,
         duration: 0,
       });
-      this.getUserInfos(obj);
+      this.getUserInfos(true);
     },
+    // userState: {
+    //   handler(newVal) {
+    //     console.log(newVal.trim());
+    //     this.page = 1;
+    //     let obj = {
+    //       searchname: newVal.trim(),
+    //     };
+    //     this.$toast.loading({
+    //       forbidClick: true,
+    //       duration: 0,
+    //     });
+    //     this.getUserInfos(obj);
+    //   },
+    //   immediate: true,
+    // },
   },
 };
 </script>
 
 <style  lang="scss">
 .user-infos {
+  // transform: `scale(${this.scale/100})`
   // position: relative;
-  transform: none;
+  // transform: none;
 
   font-size: 16px;
   line-height: auto;
+  margin-bottom: 100px;
   .user-details {
     padding: 20px 15px;
     margin: 15px 20px;
@@ -230,6 +271,11 @@ export default {
       color: #b2b2b2;
       line-height: 17px;
     }
+  }
+
+  .serach-counts {
+    font-size: 13px;
+    margin: 25px 0 15px 15px;
   }
   // .up-init {
   //   position: sticky;

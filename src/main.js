@@ -9,12 +9,24 @@ import 'lib-flexible'
 // 进行引入折线图
 import VeLine from 'v-charts/lib/line.common'
 
-
 Vue.component(VeLine.name, VeLine)
-
-
-new Vue({
+Vue.component('heading', {
+  render: function (h) {
+    return h(
+      'h', // 标签名称
+      [h("div", "wukai")] // 子节点数组
+    )
+  },
+})
+var version =Vue.version
+console.log(version);
+console.log(App);
+// console.log(1rem=="12px");
+var vue = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+});
+console.dir(Vue);
+console.log(vue);
+vue.$mount('#app')

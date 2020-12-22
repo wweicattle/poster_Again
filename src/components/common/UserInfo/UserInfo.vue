@@ -2,7 +2,6 @@
   <div class="user-contains">
     <div class="user-title">
       <span class="wait-birthuser">待回访({{ userInfo.length }})</span>
-
       <div>
         <slot name="selectSlot"></slot>
       </div>
@@ -47,9 +46,10 @@
             </div>
           </div>
           <div v-if="$route.path == '/cardvouchar'" class="open-card-details">
-            <div v-if="isshowCardItem==index">
-              <template v-for="(val, index) in val.cardInfoList">
-                <div class="card-content" :key="index">
+            <transition name="bounce">
+              <div v-if="isshowCardItem == index" class="show-card">
+                <template v-for="(val, index) in val.cardInfoList">
+                  <!-- <div class="card-content" :key="index">
                   <div class="card-money">
                     <div>
                       <span class="money-icon">￥</span>
@@ -94,12 +94,24 @@
                     <span class="card-use-name">使用范围：</span>
                     <span class="content">{{ val.storelist }}</span>
                   </div>
-                </div>
-              </template>
-            </div>
+                </div> -->
+
+                  <!-- 卡券列表 数组值与数组下标给子组件 -->
+                  <card-update
+                    :key="index"
+                    :cardInfo="{ val, index }"
+                  ></card-update>
+                </template>
+              </div>
+            </transition>
 
             <div
-              @click="isshowCardItem==index?isshowCardItem=null:isshowCardItem=index,isshowUserRange=null"
+              @click="
+                isshowCardItem == index
+                  ? (isshowCardItem = null)
+                  : (isshowCardItem = index),
+                  (isshowUserRange = null)
+              "
               class="open-records-card"
             >
               <span class="open-card">展开卡券详情</span>
@@ -134,8 +146,8 @@
             <span @click="saveUserInfoBtn" class="savecss">保存</span>
           </div>
         </div>
-      </div> -->
-      <!-- <div class="user-details">
+      </div> 
+       <div class="user-details">
         <div class="user-avator"><img src="~assets/avator.png" /></div>
         <div class="user-right-content">
           <div class="user-sex">
@@ -154,8 +166,8 @@
             <span @click="saveUserInfoBtn" class="savecss">保存</span>
           </div>
         </div>
-      </div> -->
-      <!-- <div class="user-details">
+      </div> 
+       <div class="user-details">
         <div class="user-avator"><img src="~assets/avator.png" /></div>
         <div class="user-right-content">
           <div class="user-sex">
@@ -174,8 +186,8 @@
             <span @click="saveUserInfoBtn" class="savecss">保存</span>
           </div>
         </div>
-      </div> -->
-      <!-- <div class="user-details">
+      </div> 
+       <div class="user-details">
         <div class="user-avator"><img src="~assets/avator.png" /></div>
         <div class="user-right-content">
           <div class="user-sex">
@@ -194,8 +206,8 @@
             <span @click="saveUserInfoBtn" class="savecss">保存</span>
           </div>
         </div>
-      </div> -->
-      <!-- <div class="user-details">
+      </div> 
+       <div class="user-details">
         <div class="user-avator"><img src="~assets/avator.png" /></div>
         <div class="user-right-content">
           <div class="user-sex">
@@ -214,193 +226,20 @@
             <span @click="saveUserInfoBtn" class="savecss">保存</span>
           </div>
         </div>
-      </div> -->
-
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="user-details">
-        <div class="user-avator"><img src="~assets/avator.png" /></div>
-        <div class="user-right-content">
-          <div class="user-sex">
-            <span class="u-name">李小伟</span>
-            <img src="~assets/common/icon_man.png" alt="" />
-          </div>
-          <div class="recent-day">
-            <span class="rec-detail">生日：1992-07-32</span>
-            <img src="~assets/common/icon_arrow_blackbg.png" alt="" />
-          </div>
-          <div class="user-photo">
-            <img src="~assets/common/icon_phone.png" alt="" />
-            <span class="phonecss">
-              <a href="tel:136268908307">13626908307</a>
-            </span>
-            <span @click="saveUserInfoBtn" class="savecss">保存</span>
-          </div>
-        </div>
-      </div> -->
+      </div>  -->
     </div>
-
-    <!-- <div class="symbol-without" >无待生日回访的用户！</div> -->
-
     <user-popup
       :isshowVis="isshowViss"
       :userInfo="userInfoDetail"
       @closePop="isshowViss = false"
     >
     </user-popup>
-    <!-- <van-popup
-      v-model="isshow"
-      position="bottom"
-      closeable
-      round
-      :style="{ height: '50%' }"
-    >
-      <div style="borderbottom: 1px solid #ccc">tiltle</div>
-    </van-popup> -->
   </div>
 </template>
 
 <script>
 import UserPopup from "../UserPopup";
+import CardUpdate from "../CardUpdate";
 export default {
   props: {
     userInfo: {
@@ -430,11 +269,31 @@ export default {
       this.isshowViss = true;
     },
   },
-  components: { UserPopup },
+  components: { UserPopup, CardUpdate },
 };
 </script>
 
 <style scoped lang="scss">
+.bounce-enter-active {
+  transition: opacity 4s;
+}
+.bounce-leave-active {
+ opacity: 0;
+}
+.bounce-enter-active, .bounce-leave-active {
+  transition: opacity .5s;
+}
+.bounce-enter, .bounce-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+// @keyframes bounce-in {
+//   0% {
+//     opacity: 0;
+//   }
+//   100% {
+//     opacity: 1;
+//   }
+// }
 .user-contains {
   // height: 390px;
   line-height: none;
@@ -569,110 +428,111 @@ export default {
         font-weight: 400;
         color: #888888;
         font-size: 12px;
-        .card-content {
-          border-radius: 8px;
-          margin: 20px;
-          display: flex;
-          flex-wrap: wrap;
-          position: relative;
-          .card-money {
-            background: #fcf4f6;
-            width: 35%;
-            height: 90px;
-            border-radius: 8px 18px 18px 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            // align-items: center;
-            // border-right: 1px dotted #999 ;
-            position: relative;
-            .money-icon {
-              font-size: 14px;
-              font-family: PingFangSC-Semibold, PingFang SC;
-              font-weight: 600;
-              color: #de617f;
-              line-height: 20px;
-            }
-            .money-num {
-              font-size: 26px;
-              font-family: PingFangSC-Semibold, PingFang SC;
-              font-weight: 600;
-              color: #de617f;
-              line-height: 37px;
-            }
-            .arrive-val {
-              align-self: center;
-              padding: 3px 6px;
-              background: #f5e2e7;
-              border-radius: 2px;
-              font-size: 12px;
-              font-family: PingFangSC-Regular, PingFang SC;
-              font-weight: 400;
-              color: #de617f;
-              line-height: 17px;
-            }
-            .dotted {
-              height: 80%;
-              top: 0;
-              bottom: 0;
-              margin: auto;
-              // width: 1px;
-              border-right: 1px dashed #f8d2d2;
-              position: absolute;
-              right: 0;
-            }
-          }
-          .card-detail {
-            background: #fcf4f6;
-            border-radius: 18px 8px 8px 18px;
-            height: 90px;
-            width: 65%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            font-size: 12px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: #888888;
-            line-height: 17px;
-            .card-name {
-              font-size: 14px;
-              font-family: PingFangSC-Regular, PingFang SC;
-              font-weight: 400;
-              color: #323232;
-              line-height: 20px;
-            }
-            .card-date {
-              padding: 5px 0;
-            }
-            .card-info-detail {
-              vertical-align: center;
-            }
-          }
-          .card-use-daterange {
-            background: #f8eef1;
-            height: 55px;
-            overflow-y: scroll;
-            width: 100%;
-            padding: 0 20px;
-            font-size: 12px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: #999999;
-            display: flex;
-            line-height: 20px;
-            align-items: center;
-            .card-use-name {
-              width: 80px;
-            }
-            .content {
-              flex: 1;
-              padding-top: 13px;
-              height: 55px;
-              overflow-y: scroll;
-            }
-          }
-        }
+       
+        // .card-content {
+        //   border-radius: 8px;
+        //   margin: 20px;
+        //   display: flex;
+        //   flex-wrap: wrap;
+        //   position: relative;
+        //   .card-money {
+        //     background: #fcf4f6;
+        //     width: 35%;
+        //     height: 90px;
+        //     border-radius: 8px 18px 18px 8px;
+        //     display: flex;
+        //     flex-direction: column;
+        //     justify-content: center;
+        //     // align-items: center;
+        //     // border-right: 1px dotted #999 ;
+        //     position: relative;
+        //     .money-icon {
+        //       font-size: 14px;
+        //       font-family: PingFangSC-Semibold, PingFang SC;
+        //       font-weight: 600;
+        //       color: #de617f;
+        //       line-height: 20px;
+        //     }
+        //     .money-num {
+        //       font-size: 26px;
+        //       font-family: PingFangSC-Semibold, PingFang SC;
+        //       font-weight: 600;
+        //       color: #de617f;
+        //       line-height: 37px;
+        //     }
+        //     .arrive-val {
+        //       align-self: center;
+        //       padding: 3px 6px;
+        //       background: #f5e2e7;
+        //       border-radius: 2px;
+        //       font-size: 12px;
+        //       font-family: PingFangSC-Regular, PingFang SC;
+        //       font-weight: 400;
+        //       color: #de617f;
+        //       line-height: 17px;
+        //     }
+        //     .dotted {
+        //       height: 80%;
+        //       top: 0;
+        //       bottom: 0;
+        //       margin: auto;
+        //       // width: 1px;
+        //       border-right: 1px dashed #f8d2d2;
+        //       position: absolute;
+        //       right: 0;
+        //     }
+        //   }
+        //   .card-detail {
+        //     background: #fcf4f6;
+        //     border-radius: 18px 8px 8px 18px;
+        //     height: 90px;
+        //     width: 65%;
+        //     display: flex;
+        //     flex-direction: column;
+        //     justify-content: center;
+        //     font-size: 12px;
+        //     font-family: PingFangSC-Regular, PingFang SC;
+        //     font-weight: 400;
+        //     color: #888888;
+        //     line-height: 17px;
+        //     .card-name {
+        //       font-size: 14px;
+        //       font-family: PingFangSC-Regular, PingFang SC;
+        //       font-weight: 400;
+        //       color: #323232;
+        //       line-height: 20px;
+        //     }
+        //     .card-date {
+        //       padding: 5px 0;
+        //     }
+        //     .card-info-detail {
+        //       vertical-align: center;
+        //     }
+        //   }
+        //   .card-use-daterange {
+        //     background: #f8eef1;
+        //     height: 55px;
+        //     overflow-y: scroll;
+        //     width: 100%;
+        //     padding: 0 20px;
+        //     font-size: 12px;
+        //     font-family: PingFangSC-Regular, PingFang SC;
+        //     font-weight: 400;
+        //     color: #999999;
+        //     display: flex;
+        //     line-height: 20px;
+        //     align-items: center;
+        //     .card-use-name {
+        //       width: 80px;
+        //     }
+        //     .content {
+        //       flex: 1;
+        //       padding-top: 13px;
+        //       height: 55px;
+        //       overflow-y: scroll;
+        //     }
+        //   }
+        // }
 
         .open-records-card {
           .open-card {

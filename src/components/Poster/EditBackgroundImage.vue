@@ -14,6 +14,7 @@
           :key="index"
           class="imgContent"
           @click="imgindex(index)"
+          @load="imgload"
         />
       </div>
     </van-dialog>
@@ -40,12 +41,24 @@ export default {
     return {
       show: true,
       textContent: "",
+      imgNum:0
     };
+  },
+  created() {
+       this.$toast.loading({
+        forbidClick: true,
+        duration: 0,
+      });
   },
   mounted() {
    
   },
   methods: {
+    imgload(){
+      ++this.imgNum;
+      console.log(this.imgNum);
+      if(this.imgNum==this.imageLists.length)this.$toast.clear();
+    },
     imgindex(index) {
       // 后台所给接口一开始是不允许跨域，所以后台给中转了一下
       // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
@@ -55,7 +68,6 @@ export default {
       this.$emit("closeVisable");
     },
     confirmBtn() {
-      
       // 文本传到父组件上
       this.$emit("textInfo", this.textContent);
       this.$emit("closeVisable");

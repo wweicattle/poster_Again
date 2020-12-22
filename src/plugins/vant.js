@@ -22,8 +22,10 @@ import {
   List,
   Cell,
   CellGroup,
-  Search ,
-  Sticky 
+  Search,
+  Sticky,
+  CouponCell,
+  CouponList
 } from 'vant';
 
 import {
@@ -52,7 +54,8 @@ Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Search)
 Vue.use(Sticky);
-
+Vue.use(CouponCell);
+Vue.use(CouponList);
 // 注册时可以配置额外的选项
 Vue.use(Lazyload, {
   lazyComponent: true,

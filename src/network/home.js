@@ -121,3 +121,16 @@ export function requestHomeInfo(obj){
   }
   return request.post(url, qs.stringify(params))
 }
+
+
+// 获取主页销售金额信息
+export function getSaledData(obj){
+  let url = `/apis`
+  let params = {
+    action:"fans",
+    ctrl:"getsaledata",
+    servername: "svr-saletool133",
+    ...obj
+  }
+  return request.post(url, qs.stringify(params))
+}

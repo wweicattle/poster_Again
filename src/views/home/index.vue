@@ -15,7 +15,7 @@
         <div class="sale-number-content">
           <span class="sale-num">销售金额(元)</span>
           <div class="sale-money">
-            <span class="sale-detail-num">{{ salecount + ".00" }}</span>
+            <span class="sale-detail-num">{{ salecount }}</span>
             <img src="~assets/img/home/icon_arrow_blackbg.png" alt />
           </div>
         </div>
@@ -199,7 +199,7 @@
 <script>
 import TitleHeader from "components/common/Title";
 import SelectItem from "components/common/SelectItem";
-import { requestHomeInfo, requestUserInfo } from "network/home";
+import { requestHomeInfo, requestUserInfo, getSaledData } from "network/home";
 import { eventBus } from "utils/eventbus";
 export default {
   name: "Home",
@@ -224,6 +224,13 @@ export default {
   components: {
     TitleHeader,
     SelectItem,
+  },
+  created() {
+    this.$toast.loading({
+      message: "查询数据中..",
+      forbidClick: true,
+      duration: 0,
+    });
   },
   methods: {
     // 挑選今日，本月事件
@@ -266,9 +273,11 @@ export default {
 
     // 请求主页数据
     requestHomeInfo(obj) {
+  
+
       requestHomeInfo(obj).then((da) => {
         if (da.data.errcode == 0) {
-          this.salecount = da.data.data.salecount;
+          this.salecount = da.data.data.salecount.toFixed(2);
           this.salefeedbackcount = da.data.data.salefeedbackcount;
           this.vipcontactcount = da.data.data.vipcontactcount;
           this.cardovertimecount = da.data.data.cardovertimecount;
@@ -278,7 +287,7 @@ export default {
           this.$nextTick(() => {
             // 清除加载提示框
             this.$toast.clear();
-            this.$toast.success("查询数据成功！");
+            // this.$toast.success("查询数据成功！");
           });
         } else {
           this.$notify({
@@ -292,37 +301,35 @@ export default {
   mounted() {
     // 如果有用户已经登陆，本地可查询不需要
     // if (!window.localStorage.getItem("cid")) {
-    new Promise((res) => {
-     
-      requestUserInfo().then((da) => {
-        if (da.data.errcode === 0) {
-          // 进行用户cid进行保存本地，方便调用
-          window.localStorage.setItem("cid", da.data.data.cid);
-          // 进行用户cid进行保存本地，方便调用
-          window.localStorage.setItem("cname", da.data.data.cname);
-          // 进行用户cid进行保存本地，方便调用
-          window.localStorage.setItem("systemkey", da.data.data.systemkey);
-          // 进行请求主页信息数据
-          this.requestHomeInfo({
-            cid: window.localStorage.getItem("cid"),
-            ...this.identify,
-          });
-        } else {
-          this.$notify({
-            type: "warning",
-            message: "获取用户信息错误！请检查网络",
-            duration: 10000,
-          });
-          return;
-        }
-      });
-    }).catch((da) => {
-      this.$notify({
-        type: "warning",
-        message: da,
-        duration: 10000,
-      });
+    requestUserInfo().then((da) => {
+      if (da.data.errcode === 0) {
+        // 进行用户cid进行保存本地，方便调用
+        window.localStorage.setItem("cid", da.data.data.cid);
+        // 进行用户cid进行保存本地，方便调用
+        window.localStorage.setItem("cname", da.data.data.cname);
+        // 进行用户cid进行保存本地，方便调用
+        window.localStorage.setItem("systemkey", da.data.data.systemkey);
+        // 进行请求主页信息数据
+        this.requestHomeInfo({
+          cid: window.localStorage.getItem("cid"),
+          ...this.identify,
+        });
+      } else {
+        this.$notify({
+          type: "warning",
+          message: "获取用户信息错误！请检查网络",
+          duration: 10000,
+        });
+        return;
+      }
     });
+    // }).catch((da) => {
+    //   this.$notify({
+    //     type: "warning",
+    //     message: da,
+    //     duration: 10000,
+    //   });
+    // });
     // }
 
     // 设置标题
@@ -330,7 +337,7 @@ export default {
     //门店或者导购信息识别存本地
     window.localStorage.setItem("indentifyState", 1);
 
-    // // 由子组件进行改变生日回访人数，主页必须刷新重新获取主页数据
+    // 由子组件进行改变生日回访人数，主页必须刷新重新获取主页数据
     eventBus.$on("freshGetBirth", (obj) => {
       switch (obj.type) {
         case 0:

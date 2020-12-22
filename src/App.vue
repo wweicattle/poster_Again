@@ -98,7 +98,8 @@ export default {
         "/salevisit",
         "/memberretention",
         "/cardvouchar",
-        "/serachUser"
+        "/serachUser",
+        "/upload_pho"
       ];
       if (arr.indexOf(newVal.path) != -1) {
         this.isshowFooter = false;

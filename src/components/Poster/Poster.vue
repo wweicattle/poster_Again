@@ -38,7 +38,7 @@
               </div>
               <div @click="isshowAddTextVisable = true" v-if="isshowAttr">
                 <!-- <div class="iconname">T</div> -->
-                <img src="~assets/img/home/fontIcon.png" alt="">
+                <img src="~assets/img/home/fontIcon.png" alt="" />
                 <span>文字</span>
               </div>
               <div @click="addPhotoBtn" v-if="isshowAttr" class="font-icon">
@@ -201,17 +201,26 @@ export default {
     async initGetData() {
       // 背景图获取
       this.backImages = await new Promise((res) => {
-        requestBacImage().then((da) => {
-          // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
-          let data = da.data.data.map((val) => {
-            return `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${val.urladdress}`;
+        requestBacImage()
+          .then((da) => {
+            // let url=`http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${this.imageLists[index].urladdress}`
+            let data = da.data.data.map((val) => {
+              return `http://tm.lilanz.com/qywx/project/FacePass/PushMessage.ashx?action=transferimage&imageurl=${val.urladdress}`;
+            });
+            res(data);
+          })
+          .catch((da) => {
+            this.$notify({
+              type: "warning",
+              message: da.data.errmsg || "获取背景图片数据失败！",
+            });
           });
-          res(data);
-        });
       });
 
-      this.userInfo={cid:window.localStorage.getItem("cid"),cname:window.localStorage.getItem("cname")
-      }
+      this.userInfo = {
+        cid: window.localStorage.getItem("cid"),
+        cname: window.localStorage.getItem("cname"),
+      };
 
       // 获取二维码成功
       let a = await new Promise((res) => {
@@ -228,7 +237,7 @@ export default {
       });
 
       let t = await Promise.all([a, b]).then((da) => {
-        console.log(da)
+        console.log(da);
         if (da.length == 2) {
           this.usercode = da[0];
           this.avator = da[1];
@@ -236,7 +245,6 @@ export default {
           this.canvasDetail();
         }
       });
-
     },
     // 进行海报截图
     takePosterPhoto() {
@@ -252,7 +260,6 @@ export default {
 
       this.takePhotoUrl = dataURL;
       console.log(this.takePhotoUrl);
-
     },
     // 背景图片
     sendPhotoUrlBtn(url) {
@@ -565,7 +572,7 @@ export default {
       justify-content: space-between;
       font-size: 14px;
       align-items: flex-start;
-      
+
       .poster-oprate {
         // height:60px;
         padding-top: 10px;
@@ -581,7 +588,7 @@ export default {
         .back-name {
           // padding-top: 8px;
         }
-        .font-icon{
+        .font-icon {
           padding-left: 6px;
         }
         & > div {
@@ -591,7 +598,7 @@ export default {
           display: flex;
           flex-direction: column;
           text-align: center;
-          
+
           span {
             padding-top: 4px;
             display: block;
@@ -602,14 +609,12 @@ export default {
             font-size: 20px;
             // line-height: 28px;
           }
-          img{
+          img {
             width: 16px;
             padding-bottom: 5px;
             margin: auto;
           }
-         
         }
-        
       }
     }
     .print—cicle-btn {

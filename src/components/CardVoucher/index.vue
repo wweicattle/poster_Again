@@ -20,28 +20,26 @@
               </div>
             </van-swipe-item>
           </template>
-          
+
           <van-swipe-item v-if="talkskills.length == 0">
             <div class="componey-provide">默认</div>
             <div class="swiper-title">话术</div>
             <div class="swiper-content">默认话术</div>
           </van-swipe-item>
-
-  
         </van-swipe>
       </div>
     </div>
 
     <div class="wait-back-content">
       <user-info :userInfo="birthbackusers">
-        <div slot="selectSlot">
+        <template v-slot:selectSlot>
           <select-item
             @slectbtn="slectIndexBtn"
             :listArr="['一周内']"
             :listVal="['']"
             :colorSelect="'black'"
           ></select-item>
-        </div>
+        </template>
       </user-info>
     </div>
   </div>
@@ -49,7 +47,11 @@
 <script>
 import UserInfo from "components/common/UserInfo/UserInfo";
 import SelectItem from "components/common/SelectItem";
-import { getCardOvertimelist, addFeedBack, getTalkSkill } from "network/cardVourchar";
+import {
+  getCardOvertimelist,
+  addFeedBack,
+  getTalkSkill,
+} from "network/cardVourchar";
 import { eventBus } from "utils/eventbus";
 
 export default {
@@ -76,7 +78,7 @@ export default {
           // 关闭底框组件
           eventBus.$emit("closePopup");
 
-          this.getCardOvertimelist({ cid: this.cid});
+          this.getCardOvertimelist({ cid: this.cid });
         } else {
           this.$notify({
             type: "warning",
@@ -107,14 +109,37 @@ export default {
       });
       getCardOvertimelist(obj)
         .then((da) => {
-          console.log(da);
           if (da.data.errcode == 0) {
             this.$toast.clear();
             this.$toast.success("查询数据成功！");
             this.birthbackusers = da.data.data;
-
-              // 进行更新首页的回访人数
-             eventBus.$emit("freshGetBirth",{type:3,num:da.data.data.length})
+            this.birthbackusers.length = 3;
+            this.birthbackusers.fill({
+              fansname: "(☆_☆)",
+              mainmobile: "13541889798",
+              avatar:
+                "http://wx.qlogo.cn/mmopen/Yan4GiajMaSzsAlJs2dxFvfzUfyDals7HWOs9dzvL37DQz8Z1mCZwV4ibf3FncQgWCZOQc60obxntN88H94ECCpJqTcJbuvqUW/0",
+              fansuserid: "",
+              vipid: 245189,
+              xm: "王长洋积分",
+              gender: 1,
+              cardInfoList: [
+                {
+                  title: "测试:5元现金券",
+                  color: "Color082",
+                  begintimestamp: "2016-09-01 00:00:00.0",
+                  endtimestamp: "2020-10-15 00:00:00.0",
+                  reducecost: 5,
+                  leastcost: 200,
+                  storelist: "总部门店,总部展厅",
+                },
+              ],
+            });
+            // 进行更新首页的回访人数
+            eventBus.$emit("freshGetBirth", {
+              type: 3,
+              num: da.data.data.length,
+            });
           } else {
             this.$notify({
               type: "warning",

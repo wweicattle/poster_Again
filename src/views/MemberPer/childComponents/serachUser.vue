@@ -1,39 +1,27 @@
 <template>
   <div class="search-contain" @scroll="scrollTabBtn" ref="tabsRef">
     <van-sticky>
-      <!-- <div class="input-content">
-        <div class="inputs">
-        <input list="browsers" name="browser" />
-        <datalist id="browsers">
-          <option value="Internet Explorer"></option>
-          <option value="Firefox"></option>
-          <option value="Chrome"></option>
-          <option value="Opera"></option>
-          <option value="Safari"></option>
-        </datalist>
-        <span class="confirm">确定</span>
-        </div>
-      </div> -->
       <van-search
         v-model="value"
         show-action
         label=""
         placeholder="请输入搜索关键词"
         @search="onSearch"
+
       >
         <template #action>
           <div @click="onSearch">搜索</div>
         </template>
       </van-search>
     </van-sticky>
-    <div v-if="showUserInfos">
-      <div class="serach-counts">你的搜索结果如下: 2020条</div>
-      <div class="users">
-        <user-info
-          :isSelectAll="selectAll"
-          :userState="serachContent"
-        ></user-info>
-      </div>
+    <div >
+    <div class="users">
+      <user-info
+        :isSelectAll="selectAll"
+        :userState="serachContent"
+        :user="userState"
+      ></user-info>
+    </div>
     </div>
     <div class="all-selct">
       <div class="all-item">
@@ -41,7 +29,7 @@
       </div>
       <div class="reload-confirm">
         <div class="btn-contain">
-          <span class="reload">发海报</span> <span class="confirm">发卡券</span>
+          <span class="reload"  @click="$router.push('/upload_pho')">发海报</span> <span class="confirm">发卡券</span>
         </div>
       </div>
     </div>
@@ -58,6 +46,7 @@ export default {
   name: "serachCom",
   data() {
     return {
+      userState:window.localStorage.getItem("identifyState"),
       value: "",
       selectAll: false,
       top: false,
