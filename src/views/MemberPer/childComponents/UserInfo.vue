@@ -48,10 +48,7 @@
             </template>
           </ul>
         </van-checkbox-group>
-
-        <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
       </van-list>
-      <!-- <section class="up-init">lorem</section> -->
     </div>
   </div>
 </template>
@@ -87,36 +84,19 @@ export default {
       userStates: "wx",
       searchname: null,
       totalUserNum: null,
+      totalUserNum:0
     };
   },
   created() {
-    console.log(2222222222222222222);
-    // 判断是企业用户 还是普通用户
-    // if (this.userState == 1) {
-    //   this.userState = "wx";
-    // } else if (this.userState == 2) {
-    //   this.userState = "qywx";
-    // }
-    // console.log(window.localStorage.getItem("identifyState"));
-    // this.userStates = window.localStorage.getItem("identifyState");
-    // this.userStates == "wx" ? "" : (this.userStates = "qywx");
-    // this.$toast.loading({
-    //   forbidClick: true,
-    //   duration: 0,
-    // });
-    // 请求用户数据
-    // this.getUserInfos();
+    this.userStates = window.localStorage.getItem("identifyState") || "wx";
   },
   mounted() {},
   methods: {
     // 获取用户信息
     getUserInfos(length) {
-      // console.log(serachDetail);
-      // serachDetail = serachDetail ? serachDetail : [];
-      // let length = Object.keys(serachDetail)
-      //   ? Object.keys(serachDetail).length
-      //   : 0;
+      // 搜索时候把用户列表清除
       if (length) this.list = [];
+      console.log(this.userStates);
       let obj = {
         cid: this.cid,
         type: this.userStates,
@@ -137,7 +117,12 @@ export default {
           //     })
           // })
           // 保存第一页 返回的页数
-          if (this.page == 1) this.totalUserNum = da.data.data.totalcount;
+          if (this.page == 1) {
+            this.totalUserNum = da.data.data.totalcount;
+            // console.log();
+            console.log(this.totalUserNum);
+            this.$emit("sendTotalPer",this.totalUserNum);
+          }
           // 如果返回的用户数组为空那么就是没有更多的状态了
           if (!da.data.data.datalist.length) return (this.finished = true);
           this.list = this.list.concat(da.data.data.datalist);
@@ -161,22 +146,16 @@ export default {
     },
   },
   watch: {
-    user: {
-      handler(newVal) {
-        console.log(newVal);
-        this.userStates = newVal;
-      },
-      immediate:true
-    },
+    // user: {
+    //   handler(newVal) {
+    //     this.userStates = newVal;
+    //   },
+    // },
     isSelectAll(newVal, oldVal) {
       this.$refs.checkboxGroup.toggleAll(newVal);
     },
     userState(newVal) {
-      // this.finished = false;
       this.page = 1;
-      // let obj = {
-      //   searchname: newVal.trim(),
-      // };
       this.searchname = newVal.trim();
       this.$toast.loading({
         forbidClick: true,
@@ -184,6 +163,9 @@ export default {
       });
       this.getUserInfos(true);
     },
+    result(newval){
+      // this.$emit("editSelectNum",newval.length)
+    }
     // userState: {
     //   handler(newVal) {
     //     console.log(newVal.trim());

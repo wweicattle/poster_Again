@@ -32,7 +32,7 @@
 
     <div class="wait-back-content">
       <user-info :userInfo="birthbackusers">
-        <template v-slot:selectSlot>
+        <template #selectSlot>
           <select-item
             @slectbtn="slectIndexBtn"
             :listArr="['一周内']"

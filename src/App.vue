@@ -1,6 +1,8 @@
 <template>
   <div id="apps">
-    <keep-alive include="Home,birthVisit,SaleVisit,MemberRetention,CardVouchar,tab">
+    <keep-alive
+      include="Home,birthVisit,SaleVisit,MemberRetention,CardVouchar,tab"
+    >
       <router-view />
     </keep-alive>
 
@@ -33,6 +35,8 @@
 </template>
 <script>
 import Home from "views/home/index.vue";
+import { eventBus } from "utils/eventbus";
+
 export default {
   name: "App",
   data: function () {
@@ -71,23 +75,38 @@ export default {
       this.activecolorIII = true;
       window.localStorage.setItem("footerState", 3);
     },
+    changeTab(num = Number(window.localStorage.getItem("footerState"))) {
+      switch (num) {
+        case 1:
+          this.activecolorI = true;
+          break;
+        case 2:
+          this.activecolorII = true;
+          break;
+        case 3:
+          this.activecolorIII = true;
+          break;
+        default:
+          console.log(Number(window.localStorage.getItem("footerState")));
+          this.activecolorI = true;
+          break;
+      }
+    },
   },
   mounted() {
-    switch (Number(window.localStorage.getItem("footerState"))) {
-      case 1:
-        this.activecolorI = true;
-        break;
-      case 2:
-        this.activecolorII = true;
-        break;
-      case 3:
-        this.activecolorIII = true;
-        break;
-      default:
-        console.log(Number(window.localStorage.getItem("footerState")));
-        this.activecolorI = true;
-        break;
-    }
+    console.log(111111111111111111);
+    // let num = Number(window.localStorage.getItem("footerState"));
+    // if (num) {
+    // } else {
+    this.changeTab();
+    // }
+
+    eventBus.$on("watchTab", (tabNum) => {
+      this.this.changeTab(tabNum);
+    });
+    // if (Number(window.localStorage.getItem("footerState"))) {
+
+    // }
   },
   watch: {
     $route(newVal) {
@@ -99,7 +118,8 @@ export default {
         "/memberretention",
         "/cardvouchar",
         "/serachUser",
-        "/upload_pho"
+        "/upload_pho",
+        "/upload_card",
       ];
       if (arr.indexOf(newVal.path) != -1) {
         this.isshowFooter = false;

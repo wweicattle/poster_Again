@@ -97,10 +97,9 @@
                 </div> -->
 
                   <!-- 卡券列表 数组值与数组下标给子组件 -->
-                  <card-update
-                    :key="index"
-                    :cardInfo="{ val, index }"
-                  ></card-update>
+                  <card-update :key="index" :cardInfo="{ val, index }" >
+                    <!-- <template #enoughNum> 满{{ val.leastcost }}可用 </template> -->
+                  </card-update>
                 </template>
               </div>
             </transition>
@@ -278,10 +277,11 @@ export default {
   transition: opacity 4s;
 }
 .bounce-leave-active {
- opacity: 0;
+  opacity: 0;
 }
-.bounce-enter-active, .bounce-leave-active {
-  transition: opacity .5s;
+.bounce-enter-active,
+.bounce-leave-active {
+  transition: opacity 0.5s;
 }
 .bounce-enter, .bounce-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
@@ -428,7 +428,7 @@ export default {
         font-weight: 400;
         color: #888888;
         font-size: 12px;
-       
+
         // .card-content {
         //   border-radius: 8px;
         //   margin: 20px;

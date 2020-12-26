@@ -468,6 +468,11 @@ export default {
     },
   },
   mounted() {
+    eventBus.$emit("watchTab", 2);
+
+    console.log(4344343434);
+    // 当用户 直接进行 url改变时，footer是2
+    window.localStorage.setItem("footerState", 2);
     // 设置标题
     document.title = "海报制作";
     // 进行计算画布的大小

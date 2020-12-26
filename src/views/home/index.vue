@@ -226,6 +226,11 @@ export default {
     SelectItem,
   },
   created() {
+    // console.log(
+    //   3232323232323
+    // );
+    // // 当用户 直接进行 url改变时，footer是1
+    // window.localStorage.setItem("footerState", 1);
     this.$toast.loading({
       message: "查询数据中..",
       forbidClick: true,
@@ -273,8 +278,6 @@ export default {
 
     // 请求主页数据
     requestHomeInfo(obj) {
-  
-
       requestHomeInfo(obj).then((da) => {
         if (da.data.errcode == 0) {
           this.salecount = da.data.data.salecount.toFixed(2);
@@ -444,7 +447,7 @@ export default {
         // align-items: flex-start;
         flex-direction: column;
         .sale-num {
-          padding-bottom: 5px;
+          padding-top: 10px;
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;

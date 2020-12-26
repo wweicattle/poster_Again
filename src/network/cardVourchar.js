@@ -43,3 +43,18 @@ export function getTalkSkill(obj) {
     let url = "/apis"
     return request.post(url, qs.stringify(params))
   }
+
+
+
+
+  // 获取卡券到期列表
+export function getCardinfoList(obj) {
+  let params = {
+    action: "fans",
+    ctrl: "getcardinfolist",
+    servername: "svr-saletool133",
+    ...obj
+  }
+  let url = "/apis"
+  return request.post(url, qs.stringify(params))
+}

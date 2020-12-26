@@ -1,6 +1,11 @@
+// 使用该复用  的组件你必须先知道复用中的组件插槽有1.全选图标select 2.满多少减多少enoughNum
 <template>
   <div class="card-contain">
-    <div class="card-content" >
+    <div class="card-content" :class="{ 'card-other-back': otherBackTheme }">
+      <div class="select-icon">
+        <slot name="select"> </slot>
+      </div>
+      <!-- <div class="card-detail-content"> -->
       <div class="card-money">
         <div>
           <span class="money-icon">￥</span>
@@ -38,9 +43,30 @@
           <van-icon name="arrow-up" v-else />
         </div>
       </div>
+      <!-- </div> -->
       <div class="card-use-daterange" v-if="isshowUserRange == cardInfo.index">
-        <span class="card-use-name">使用范围：</span>
-        <span class="content">{{ cardInfo.val.storelist }}</span>
+        <span class="card-use-name">使用注意：</span>
+        <div class="content">
+          <span>
+            {{ cardInfo.val.storelist }}
+          </span>
+          <span>
+            {{ cardInfo.val.defaultdetail }}
+          </span>
+          <span>
+            {{ cardInfo.val.notice }}
+          </span>
+        </div>
+        <!-- <span class="content">{{ cardInfo.val.defaultdetail }}</span>
+        <span class="content">{{ cardInfo.val.notice }}</span> -->
+
+        <!-- <span class="card-use-name">使用规则：</span>
+        <div class="content">
+          <div>1.你is底部is你懂啥都是</div>
+          <div>2.是多少防溺水丢那地方in发的发的</div>
+          <div>3.是多少防溺水丢那地方in发的发的</div>
+          <div>4.是多少防溺水丢那地方in发的发的</div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -48,7 +74,12 @@
 
 <script>
 export default {
+  name: "cardUpdate",
   props: {
+    otherBackTheme: {
+      type: Boolean,
+      default: false,
+    },
     cardInfo: {
       type: Object,
       default() {
@@ -71,24 +102,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$colorCard: #f61d33;
 .card-contain {
   .card-content {
+    box-shadow: 0px 4px 10px 0px #eff2f6;
     border-radius: 8px;
-    margin: 20px;
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    
+    align-items: center;
+    padding: 6px 0;
+    .select-icon {
+      margin: 0 14px;
+    }
+    // .card-detail-content {
+    //   display: flex;
+    //   width: 86%;
     .card-money {
       background: #fcf4f6;
-      width: 35%;
+      width: 26%;
       height: 90px;
       border-radius: 8px 18px 18px 8px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      // align-items: center;
-      // border-right: 1px dotted #999 ;
+      text-align: center;
       position: relative;
       .money-icon {
         font-size: 14px;
@@ -130,7 +168,7 @@ export default {
       background: #fcf4f6;
       border-radius: 18px 8px 8px 18px;
       height: 90px;
-      width: 65%;
+      width: 56%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -139,6 +177,7 @@ export default {
       font-weight: 400;
       color: #888888;
       line-height: 17px;
+      padding-left: 15px;
       .card-name {
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -153,10 +192,12 @@ export default {
         vertical-align: center;
       }
     }
+    // }
+    .sff {
+      dsfsf: 323;
+    }
     .card-use-daterange {
-      background: #f8eef1;
       height: 55px;
-      overflow-y: scroll;
       width: 100%;
       padding: 0 20px;
       font-size: 12px;
@@ -172,9 +213,57 @@ export default {
       .content {
         flex: 1;
         padding-top: 13px;
-        height: 55px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
         overflow-y: scroll;
       }
+    }
+  }
+
+  .card-other-back {
+    .card-money {
+      background: #ffffff;
+      .money-icon {
+        color: $colorCard;
+        font-size: 18px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #f61d33;
+        line-height: 25px;
+        background: linear-gradient(180deg, #fe670a 0%, #fa213c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .money-num {
+        color: $colorCard;
+        font-size: 36px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #f61d33;
+        line-height: 50px;
+        background: linear-gradient(180deg, #fe8618 0%, #eb0824 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .arrive-val {
+        color: $colorCard;
+        background: #f3f3f3;
+      }
+    }
+    .card-detail {
+      background: #ffffff;
+      .card-name {
+        font-weight: 600;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        color: #323232;
+        line-height: 20px;
+      }
+    }
+    .card-use-daterange {
+      width: 80%;
+      margin: 0 auto;
     }
   }
 }

@@ -9,10 +9,18 @@
       class="tabs-content"
     >
       <van-tab title="公众号" name="a">
-        <user-info :isSelectAll="selectAll" :user="indentfyState"></user-info>
+        <user-info
+          :isSelectAll="selectAll"
+          :user="indentfyState"
+          @sendTotalPer="editTotalNum"
+        ></user-info>
       </van-tab>
       <van-tab title="企业号" name="b">
-        <user-info :isSelectAll="selectAll" :user="indentfyState"></user-info>
+        <user-info
+          :isSelectAll="selectAll"
+          :user="indentfyState"
+          @sendTotalPer="editTotalNum"
+        ></user-info>
       </van-tab>
       <van-tab name="d">
         <template #title>
@@ -90,7 +98,7 @@
     <!-- <div class="load-more" @click="clickLoadMoreBtn">点击加载更多....</div> -->
     <div class="all-selct">
       <div class="all-item">
-        <van-checkbox v-model="selectAll">全选(已选2个)</van-checkbox>
+        <van-checkbox v-model="selectAll">全选({{ editSecNum }})</van-checkbox>
       </div>
       <div class="reload-confirm">
         <div class="btn-contain">
@@ -131,15 +139,31 @@ export default {
       haveQywxTabDate: false,
       haveWxTabDate: false,
       tabQywxDatas: [],
+      editSecNum: 0,
+      wxTotalPer: 0,
+      qywxTotalPer: 0,
     };
   },
   created() {
+    // 刷新清理默认的选中是否是企业用户还是微信普通 用户
+    window.localStorage.removeItem("identifyState");
     // document.title = "会员列表";
+    // // 当用户 直接进行 url改变时，footer是3
+    // window.localStorage.setItem("footerState", 3);
   },
   mounted() {
     this.getTabData();
   },
   methods: {
+    editTotalNum(totalNum) {
+      this.indentfyState == "wx"
+        ? (this.wxTotalPer = totalNum)
+        : (this.qywxTotalPer = totalNum);
+    },
+    // editSelectNum(index) {
+    //   // 全选中的数值
+    //   this.editSecNum = index;
+    // },
     // 关闭pop，清除tab标签
     closePop() {
       this.nowSelectIndex = [];
@@ -235,6 +259,22 @@ export default {
   },
   components: {
     UserInfo,
+  },
+  watch: {
+    indentfyState(newval) {
+      this.selectAll = false;
+      this.editSecNum = 0;
+    },
+    selectAll(val) {
+      // 全选状态时人数
+      if (val) {
+        this.indentfyState == "wx"
+          ? (this.editSecNum = this.wxTotalPer)
+          : (this.editSecNum = this.qywxTotalPer);
+      } else {
+        this.editSecNum = 0;
+      }
+    },
   },
 };
 </script>
